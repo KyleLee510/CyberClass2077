@@ -30,6 +30,15 @@
             android:paddingBottom="20dp"
             android:paddingTop="20dp"
             android:background="#99000000">
+
+            <ImageView
+                android:id="@+id/item_cover"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/roundbuttonshape"
+                android:src = "@drawable/attention"
+                android:layout_gravity="center"/>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,6 +48,7 @@
                 android:layout_marginLeft="50dp"
                 android:textColor="#9F9FA0"
                 android:textColorHint="#9F9FA0"
+                android:layout_marginTop="10dp"
                 android:hint="your username"/>
 
             <View
