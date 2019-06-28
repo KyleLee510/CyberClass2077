@@ -8,6 +8,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //nothing change
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
         //透明状态栏
