@@ -2,46 +2,79 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/background">
 
-    <!--头像，昵称，账号，签到-->
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="50dp">
+
         <ImageView
-            android:layout_width = "80dp"
-            android:layout_height = "80dp"
-            android:scaleType="fitXY"
+            android:id="@+id/user_layout_user_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/roundbuttonshape"
-            android:src="@drawable/user" />
-        <LinearLayout
+            android:scaleType="fitXY"
+            android:src="@drawable/user"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/user_layout_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="用户名"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10sp"
-                android:textSize="20sp"
-                android:text="账号"/>
-        </LinearLayout>
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="用户名"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/user_layout_Check_in"
+            app:layout_constraintHorizontal_bias="0.022"
+            app:layout_constraintStart_toEndOf="@+id/user_layout_user_image"
+            app:layout_constraintTop_toBottomOf="@+id/user_layout_account_number"
+            app:layout_constraintVertical_bias="0.111" />
+
+        <TextView
+            android:id="@+id/user_layout_account_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="账号"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/user_layout_Check_in"
+            app:layout_constraintHorizontal_bias="0.11"
+            app:layout_constraintStart_toEndOf="@+id/user_layout_user_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Button
+            android:id="@+id/user_layout_Check_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:text="签到"
-            android:layout_marginLeft="100dp"/>
-    </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <!--分割线-->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dip"
@@ -50,30 +83,45 @@
         android:layout_marginBottom="5dp">
     </View>
 
-    <!--上传的学习资料-->
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="50dp">
+
         <ImageView
+            android:id="@+id/user_layout_upload_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:scaleType="fitXY"
-            android:src="@drawable/upload" />
+            android:src="@drawable/upload"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="8dp"
             android:text="贡献"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/user_layout_upload_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
             android:scaleType="fitXY"
             android:src="@drawable/rightcircle"
-            android:layout_marginLeft="300dp" />
-    </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <!--分割线-->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dip"
@@ -83,29 +131,44 @@
     </View>
 
     <!--收藏的学习资料-->
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="10dp">
+
         <ImageView
+            android:id="@+id/user_layout_collection_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:scaleType="fitXY"
-            android:src="@drawable/star" />
+            android:src="@drawable/star"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="8dp"
             android:text="收藏"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/user_layout_collection_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
             android:scaleType="fitXY"
             android:src="@drawable/rightcircle"
-            android:layout_marginLeft="300dp" />
-    </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dip"
@@ -115,29 +178,45 @@
     </View>
 
     <!--关注的用户-->
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="10dp">
         <ImageView
+            android:id="@+id/user_layout_followee_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:scaleType="fitXY"
-            android:src="@drawable/attention" />
+            android:src="@drawable/attention"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="8dp"
             android:text="关注"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/user_layout_followee_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
             android:scaleType="fitXY"
             android:src="@drawable/rightcircle"
-            android:layout_marginLeft="300dp" />
-    </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dip"
@@ -147,30 +226,47 @@
     </View>
 
     <!--我的粉丝-->
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="10dp">
         <ImageView
+            android:id="@+id/user_layout_fan_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:scaleType="fitXY"
-            android:src="@drawable/team" />
+            android:src="@drawable/team"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="8dp"
             android:text="粉丝"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/user_layout_fan_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
             android:scaleType="fitXY"
             android:src="@drawable/rightcircle"
-            android:layout_marginLeft="300dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+
+
+
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dip"
@@ -180,29 +276,45 @@
     </View>
 
     <!--下载的学习资料-->
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="10dp">
         <ImageView
+            android:id="@+id/user_layout_download_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:scaleType="fitXY"
-            android:src="@drawable/download" />
+            android:src="@drawable/download"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="8dp"
             android:text="下载"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/user_layout_download_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
             android:scaleType="fitXY"
             android:src="@drawable/rightcircle"
-            android:layout_marginLeft="300dp" />
-    </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dip"
@@ -211,30 +323,46 @@
         android:layout_marginBottom="5dp">
     </View>
 
+
     <!--系统设置功能-->
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="10dp">
         <ImageView
+            android:id="@+id/user_layout_setting_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:scaleType="fitXY"
-            android:src="@drawable/setting" />
+            android:src="@drawable/setting"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="8dp"
             android:text="设置"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/user_layout_setting_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
             android:scaleType="fitXY"
             android:src="@drawable/rightcircle"
-            android:layout_marginLeft="300dp" />
-    </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dip"

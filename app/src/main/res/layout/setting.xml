@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--标题行，“设置”及返回按钮-->
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageButton
+            android:id="@+id/setting_back_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/arrowleft"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/setting_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="设置"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+    <!--分割线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#83738F"
+        android:layout_marginTop="100dp">
+    </View>
+
+    <!--消息通知设置-->
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <TextView
+            android:id="@+id/setting_info_notification_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="消息通知"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/setting_info_notification_textView"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+
+        <!--分割线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#83738F"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+    </View>
+
+    <!--清除缓存设置-->
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <TextView
+            android:id="@+id/setting_clean_cache"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="清除缓存"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/setting_clean_cache"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <!--分割线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#83738F"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+    </View>
+
+
+    <!--分割线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#83738F"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="5dp">
+    </View>
+
+
+    <!--关于和帮助显示-->
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <TextView
+            android:id="@+id/setting_about_and_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关于和帮助"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/setting_about_and_help"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <!--分割线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#83738F"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+    </View>
+
+
+    <!--分割线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#83738F"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="5dp">
+    </View>
+
+    <!--退出登陆-->
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <TextView
+            android:id="@+id/setting_sign_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="退出登陆"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/setting_sign_out"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <!--分割线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#83738F"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+    </View>
+
+</LinearLayout>
