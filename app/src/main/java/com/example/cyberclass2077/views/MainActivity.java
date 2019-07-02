@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
         //透明状态栏
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        Fragment firstLayout = new Fragment1();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,firstLayout).commit();
         BottomNavigationView navView = findViewById(R.id.bnv);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
