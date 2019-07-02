@@ -3,11 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< Updated upstream
-    tools:context=".Fragment2">
-=======
     tools:context=".views.Fragment2">
->>>>>>> Stashed changes
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
