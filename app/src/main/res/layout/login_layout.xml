@@ -4,35 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".views.MainActivity">
+
+    <ImageButton
+        android:id="@+id/btn_cancel_login"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/ic_close_black_24dp"
+        android:scaleType="fitXY"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
         <!--android:background="@drawable/background"-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="30dp"
-            android:paddingTop="20dp"
             android:background="#99404348"
-            android:gravity="center">
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:paddingBottom="30dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Welcome"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#99000000"
             android:orientation="vertical"
-            android:paddingBottom="20dp"
             android:paddingTop="20dp"
-            android:background="#99000000">
+            android:paddingBottom="20dp">
 
             <EditText
                 android:id="@+id/et_username_login"
@@ -49,12 +60,11 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
-                android:background="#83738F"
-                android:layout_marginRight="40dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp">
-            </View>
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="5dp"
+                android:background="#83738F"></View>
 
             <EditText
                 android:id="@+id/et_password_login"
@@ -72,25 +82,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="30dp"
-            android:paddingTop="20dp"
             android:background="#99404348"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="20dp"
+            android:paddingBottom="30dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Forget Password?"
                 android:textColor="#DDDDDD"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Tap Here"
                 android:textColor="#FFFFFF"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
         </LinearLayout>
 
         <LinearLayout

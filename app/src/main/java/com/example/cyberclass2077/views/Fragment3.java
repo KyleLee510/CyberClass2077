@@ -18,7 +18,7 @@ import com.example.cyberclass2077.R;
 public class Fragment3 extends Fragment {
 
     ConstraintLayout to_setting;
-
+    ConstraintLayout to_login;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,6 +35,20 @@ public class Fragment3 extends Fragment {
                 getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
             }
         });
+
+        to_login = (ConstraintLayout) view.findViewById(R.id.to_login);
+        to_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+                //需要在finish和startActivity之后进行
+                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
+                getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+            }
+        });
+
         // Inflate the layout for this fragment
         return view;
     }

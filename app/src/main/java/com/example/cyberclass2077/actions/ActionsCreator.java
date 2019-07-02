@@ -16,7 +16,7 @@ public class ActionsCreator {
         return instance;
     }
     public void login(String userName,String passWord){
-        User user=new User();
+        User user = new User();
         user.setUserName(userName);
         user.setPassWord(passWord);
 

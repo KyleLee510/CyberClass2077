@@ -1,10 +1,12 @@
 package com.example.cyberclass2077.views;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.cyberclass2077.R;
@@ -20,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText vUserNameEditor;
     private EditText vPassWordEditor;
     private Button vLoginButton;
+    private ImageButton vCancelButton; //add By Lee
 
 
     //在这里声明其他引用变量
@@ -58,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         vUserNameEditor=(EditText)findViewById(R.id.et_username_login);
         vPassWordEditor=(EditText)findViewById(R.id.et_password_login);
         vLoginButton=(Button)findViewById(R.id.btn_login_login);
+        vCancelButton = (ImageButton) findViewById(R.id.btn_cancel_login);
 
         //设置控件相应事件，这里采用匿名函数
         vLoginButton.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +75,20 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+        vCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //点击事件方法
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("fragment",2);
+                startActivity(intent);
+                finish();
+                //需要在finish和startActivity之后进行
+                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
+                overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+            }
+        } );
 
     }
     private void initDependencies() {
@@ -88,12 +106,12 @@ public class LoginActivity extends AppCompatActivity {
     @Subscribe
     public void onStoreChange(Store.StoreChangeEvent event) {
         //响应方法
-        if(userStore.getUser().isLoginState()==true){
+        if(userStore.getUser().isLoginState()==true) {
             Toast.makeText(this,
                     String.format("登录成功! 欢迎%s",userStore.getUser().getUserName()),
                     Toast.LENGTH_SHORT
             ).show();
-
+            //添加对应的界面跳转和信息传递
         }
         else {
             Toast.makeText(this,

@@ -1,6 +1,7 @@
 package com.example.cyberclass2077.views;
 
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ public class Fragment3SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment3_setting);
+
         backButton = findViewById(R.id.setting_back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
