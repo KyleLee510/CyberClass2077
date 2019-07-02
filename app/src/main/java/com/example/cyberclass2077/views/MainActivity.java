@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment selectFragment=null;
+            Fragment selectFragment;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     selectFragment=firstLayout;
@@ -44,32 +44,39 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_notifications:
                     selectFragment=thirdLayout;
                     break;
+                default:
+                    selectFragment=firstLayout;
+                    break;
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,selectFragment).commit();
             return true;
         }
     };
-    /*
+
     @Override
     protected void onResume() {
         super.onResume();
+        BottomNavigationView navView = findViewById(R.id.bnv);
         int id= getIntent().getIntExtra("fragment", 0);
         switch (id) {
             case 0: {
+                navView.setSelectedItemId(navView.getMenu().getItem(0).getItemId());
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,firstLayout).commit();
                 break;
             }
             case 1: {
+                navView.setSelectedItemId(navView.getMenu().getItem(1).getItemId());
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,secondLayout).commit();
                 break;
             }
             case 2: {
+                navView.setSelectedItemId(navView.getMenu().getItem(2).getItemId());
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,thirdLayout).commit();
                 break;
             }
         }
     }
-    */
+
     void initFragment() {
         firstLayout = new Fragment1();
         secondLayout = new Fragment2();
