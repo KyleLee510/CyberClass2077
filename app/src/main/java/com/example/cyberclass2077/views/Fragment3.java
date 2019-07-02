@@ -1,9 +1,13 @@
 package com.example.cyberclass2077.views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +17,26 @@ import com.example.cyberclass2077.R;
 
 public class Fragment3 extends Fragment {
 
-
-
+    ConstraintLayout to_setting;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.user_layout, container, false);
+        to_setting = (ConstraintLayout) view.findViewById(R.id.to_setting);
+        to_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Fragment3SettingActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+                //需要在finish和startActivity之后进行
+                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
+                getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+            }
+        });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.user_layout, container, false);
+        return view;
     }
-
 
 }

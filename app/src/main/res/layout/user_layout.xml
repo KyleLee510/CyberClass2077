@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".views.Fragment3">
 
-
-
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -90,6 +88,7 @@
     </View>
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/to_contribution"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp">
@@ -138,6 +137,7 @@
 
     <!--收藏的学习资料-->
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/to_collection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
@@ -185,6 +185,7 @@
 
     <!--关注的用户-->
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/to_attention"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
@@ -233,6 +234,7 @@
 
     <!--我的粉丝-->
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/to_follower"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
@@ -283,6 +285,7 @@
 
     <!--下载的学习资料-->
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/to_download"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
@@ -332,6 +335,7 @@
 
     <!--系统设置功能-->
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/to_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
