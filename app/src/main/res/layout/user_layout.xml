@@ -36,35 +36,36 @@
             android:id="@+id/user_layout_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:text="用户名"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/user_layout_Check_in"
-            app:layout_constraintHorizontal_bias="0.022"
+            app:layout_constraintEnd_toStartOf="@+id/btn_user_layout_Check_in"
+            app:layout_constraintHorizontal_bias="0.11"
             app:layout_constraintStart_toEndOf="@+id/user_layout_user_image"
-            app:layout_constraintTop_toBottomOf="@+id/user_layout_account_number"
-            app:layout_constraintVertical_bias="0.111" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/user_layout_account_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:text="账号"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toStartOf="@+id/user_layout_Check_in"
-            app:layout_constraintHorizontal_bias="0.11"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_user_layout_Check_in"
+            app:layout_constraintHorizontal_bias="0.022"
             app:layout_constraintStart_toEndOf="@+id/user_layout_user_image"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/user_layout_username"
+            app:layout_constraintVertical_bias="0.111" />
+
 
         <Button
-            android:id="@+id/user_layout_Check_in"
+            android:id="@+id/btn_user_layout_Check_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"

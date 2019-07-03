@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tag">
+        <item>标签1</item>
+        <item>标签2</item>
+        <item>标签3</item>
+        <item>标签4</item>
+        <item>标签5</item>
+        <item>标签6</item>
+    </string-array>
+</resources>
