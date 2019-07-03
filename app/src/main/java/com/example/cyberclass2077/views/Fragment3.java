@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cyberclass2077.R;
+import com.example.cyberclass2077.model.User;
+import com.example.cyberclass2077.stores.UserStore;
 
 
 public class Fragment3 extends Fragment {
@@ -29,10 +31,16 @@ public class Fragment3 extends Fragment {
     TextView txtAccountnumber;
     ImageView imagePhoto;
 
+    private UserStore userStore;
+    private User user;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_layout, container, false);
+
+        userStore = UserStore.getInstance(); //使用Store来进行传值判定
+        user = userStore.getUser();
 
         initWidget(view);   //初始化控件
         userLogin();   //用户是否登录的界面设置
@@ -79,7 +87,7 @@ public class Fragment3 extends Fragment {
     }
 
     void userLogin() {
-        if (!isLogin) {
+        if (!user.isLoginState()) {
             //未登录状态的控件显示
             btnCheckin.setVisibility(View.GONE);
             txtAccountnumber.setVisibility(View.GONE);

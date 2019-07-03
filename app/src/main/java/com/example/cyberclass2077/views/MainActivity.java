@@ -57,8 +57,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         BottomNavigationView navView = findViewById(R.id.bnv);
-        int id= getIntent().getIntExtra("fragment", 0);
-        int isLogin = getIntent().getIntExtra("isLogin", 0);
+        int id = getIntent().getIntExtra("fragment", 0);
         switch (id) {
             case 0: {
                 navView.setSelectedItemId(navView.getMenu().getItem(0).getItemId());
