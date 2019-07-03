@@ -7,6 +7,7 @@ import com.squareup.otto.Bus;
 
 public abstract class Store {
     private static final Bus bus=new Bus();
+    private static StoreChangeEvent storeChangeEvent;
 
 
     protected Store(){
@@ -21,7 +22,19 @@ public abstract class Store {
     public void emitStoreChange(){
         this.bus.post(changeEvent());
     }
-    public abstract StoreChangeEvent changeEvent();
+    public  StoreChangeEvent changeEvent(){
+        return getStoreChangeEvent();
+    }
     public abstract void onAction(Action action);
     public class StoreChangeEvent{}
+    public void  setStoreChangeEvent(StoreChangeEvent event){
+        storeChangeEvent=event;
+    }
+    public StoreChangeEvent getStoreChangeEvent(){
+        if (storeChangeEvent!=null)
+            return storeChangeEvent;
+        else{
+            return new StoreChangeEvent();
+        }
+    }
 }

@@ -102,23 +102,28 @@ public class LoginActivity extends AppCompatActivity {
         dispatcher.register(userStore);
     }
 
-    //对事件总线EventBus发出的StoreChangeEvent做出响应                  ,
+    //对事件总线EventBus发出的StoreChangeEvent（及其子类）做出响应                  ,
     @Subscribe
-    public void onStoreChange(Store.StoreChangeEvent event) {
-        //响应方法
-        if(userStore.getUser().isLoginState()==true) {
+    public void onStoreChange(UserStore.LoginStateChangeEvent event){
+        if(event.isLoginSuccessful==true&&event.isAlreadyLogin==false){
             Toast.makeText(this,
-                    String.format("登录成功! 欢迎%s",userStore.getUser().getUserName()),
-                    Toast.LENGTH_SHORT
-            ).show();
-            //添加对应的界面跳转和信息传递
-        }
-        else {
-            Toast.makeText(this,
-                    String.format("登录失败!"),
+                    String.format("登录成功! %n欢迎您，%s!",userStore.getUser().getUserName()),
                     Toast.LENGTH_SHORT
             ).show();
         }
+        else if(event.isLoginSuccessful==true&&event.isAlreadyLogin==true){
+            Toast.makeText(this,
+                    String.format("用户%s已登录%n现已重新登录！",userStore.getUser().getUserName()),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+        else if(event.isLoginSuccessful==false&&event.isAlreadyLogin==false){
+            Toast.makeText(this,
+                    String.format("用户名或密码错误%n登录失败！",userStore.getUser().getUserName()),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+
     }
 
 }
