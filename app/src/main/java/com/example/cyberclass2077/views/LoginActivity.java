@@ -22,7 +22,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText vUserNameEditor;
     private EditText vPassWordEditor;
     private Button vLoginButton;
+    private Button vSignupButton; //注册按钮
     private ImageButton vCancelButton; //add By Lee
+
 
 
     //在这里声明其他引用变量
@@ -61,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         vUserNameEditor=(EditText)findViewById(R.id.et_username_login);
         vPassWordEditor=(EditText)findViewById(R.id.et_password_login);
         vLoginButton=(Button)findViewById(R.id.btn_login_login);
+        vSignupButton = (Button) findViewById(R.id.btn_signup_login);
         vCancelButton = (ImageButton) findViewById(R.id.btn_cancel_login);
 
         //设置控件相应事件，这里采用匿名函数
@@ -73,6 +76,20 @@ public class LoginActivity extends AppCompatActivity {
                 actionsCreator.login(userName,passWord);
 
 
+            }
+        });
+
+        vSignupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转至注册页面
+                //点击事件方法
+                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                startActivity(intent);
+                finish();
+                //需要在finish和startActivity之后进行
+                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
+                overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
             }
         });
 
@@ -102,23 +119,28 @@ public class LoginActivity extends AppCompatActivity {
         dispatcher.register(userStore);
     }
 
-    //对事件总线EventBus发出的StoreChangeEvent做出响应                  ,
+    //对事件总线EventBus发出的StoreChangeEvent（及其子类）做出响应                  ,
     @Subscribe
-    public void onStoreChange(Store.StoreChangeEvent event) {
-        //响应方法
-        if(userStore.getUser().isLoginState()==true) {
+    public void onStoreChange(UserStore.LoginStateChangeEvent event){
+        if(event.isLoginSuccessful==true&&event.isAlreadyLogin==false){
             Toast.makeText(this,
-                    String.format("登录成功! 欢迎%s",userStore.getUser().getUserName()),
-                    Toast.LENGTH_SHORT
-            ).show();
-            //添加对应的界面跳转和信息传递
-        }
-        else {
-            Toast.makeText(this,
-                    String.format("登录失败!"),
+                    String.format("登录成功! %n欢迎您，%s!",userStore.getUser().getUserName()),
                     Toast.LENGTH_SHORT
             ).show();
         }
+        else if(event.isLoginSuccessful==true&&event.isAlreadyLogin==true){
+            Toast.makeText(this,
+                    String.format("用户%s已登录%n现已重新登录！",userStore.getUser().getUserName()),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+        else if(event.isLoginSuccessful==false&&event.isAlreadyLogin==false){
+            Toast.makeText(this,
+                    String.format("用户名或密码错误%n登录失败！",userStore.getUser().getUserName()),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+
     }
 
 }
