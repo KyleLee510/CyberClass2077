@@ -10,7 +10,7 @@ import android.support.v4.app.Fragment;
 import com.example.cyberclass2077.R;
 
 public class MainActivity extends AppCompatActivity {
-
+//
     Fragment firstLayout;
     Fragment secondLayout;
     Fragment thirdLayout;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         BottomNavigationView navView = findViewById(R.id.bnv);
-        int id = getIntent().getIntExtra("fragment", 0);
+        int id= getIntent().getIntExtra("fragment", 0);
         switch (id) {
             case 0: {
                 navView.setSelectedItemId(navView.getMenu().getItem(0).getItemId());
