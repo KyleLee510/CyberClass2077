@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".views.ChangePasswordActivity"></activity>
+        <activity android:name=".views.Fragment3UploadActivity"></activity>
+        <activity android:name=".views.ChangePasswordActivity" />
         <activity android:name=".views.SignupActivity" />
         <activity android:name=".views.UserDataSettingActivity" />
         <activity android:name=".views.Fragment3SettingActivity" />
