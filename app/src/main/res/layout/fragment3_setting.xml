@@ -127,6 +127,7 @@
 
     <!--修改密码-->
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout_change_password"
         android:layout_width="match_parent"
         android:layout_height="30dp">
 
@@ -153,6 +154,7 @@
             app:layout_constraintStart_toEndOf="@+id/setting_change_password"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
+
     <!--分割线-->
     <View
         android:layout_width="match_parent"
@@ -229,15 +231,16 @@
 
         <TextView
             android:id="@+id/setting_sign_out"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="退出登录"
             android:textSize="25sp"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <ImageView
+        <!--<ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
 
@@ -248,7 +251,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/setting_sign_out"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />-->
     </android.support.constraint.ConstraintLayout>
 
     <!--分割线-->
