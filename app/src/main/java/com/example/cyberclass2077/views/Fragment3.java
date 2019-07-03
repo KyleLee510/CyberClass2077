@@ -21,6 +21,7 @@ import com.example.cyberclass2077.R;
 public class Fragment3 extends Fragment {
 
     ConstraintLayout to_setting;
+    ConstraintLayout to_contribution;
     ConstraintLayout to_login;
     Boolean isLogin = false; //默认false未登录状态
     Button btnCheckin;
@@ -35,10 +36,25 @@ public class Fragment3 extends Fragment {
 
         initWidget(view);   //初始化控件
         userLogin();   //用户是否登录的界面设置
+
+        //跳转到设置界面的监听器
         to_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Fragment3SettingActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+                //需要在finish和startActivity之后进行
+                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
+                getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+            }
+        });
+
+        //跳转到贡献界面的监听器
+        to_contribution.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getActivity(), Fragment3UploadActivity.class);
                 startActivity(intent);
                 getActivity().finish();
                 //需要在finish和startActivity之后进行
@@ -54,6 +70,7 @@ public class Fragment3 extends Fragment {
     //控件的可见与不可见：GONE不可见不占位置，VISIBLE表示可见，INVISIBLE表示不可见但是占用空间
     void initWidget(View view) {
         to_setting = (ConstraintLayout) view.findViewById(R.id.to_setting); //跳转设置的控件
+        to_contribution = (ConstraintLayout) view.findViewById(R.id.to_contribution);//跳转到贡献的控件
         to_login = (ConstraintLayout) view.findViewById(R.id.to_login); //跳转至用户登录的控件
         btnCheckin = (Button) view.findViewById(R.id.btn_user_layout_Check_in); //用来完成用户签到
         txtUserName = (TextView) view.findViewById(R.id.user_layout_username); //显示用户名即昵称
