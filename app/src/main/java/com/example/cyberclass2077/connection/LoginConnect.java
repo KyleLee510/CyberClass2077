@@ -30,7 +30,7 @@ public class LoginConnect extends Connect<User>{
 
 
     }
-
+    @Override
     void emitRequestResult(){
         //服务器返回的结果已经转为Json字符串，调用getResponseStr()可以获取
         //下面这个方法可以将Json字符串转换为指定的类，注意不是什么类都行，不然会报错

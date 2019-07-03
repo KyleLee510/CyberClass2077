@@ -24,6 +24,8 @@ public class Connect <T>{
     public Connect(){}
 
     //用这个方法建立请求的body
+    //这里的type对应key:value中的key，数据以key:value的形式放入POST请求的方法体body中，
+    //不能给type随意赋值，后端是以type为参数获取请求的body中的数据的。
     public FormEncodingBuilder requestBodyBuilder(String type,T data){
         FormEncodingBuilder builder = new FormEncodingBuilder();
         String dataStr=JSON.toJSONString(data);

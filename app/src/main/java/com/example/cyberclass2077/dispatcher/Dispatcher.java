@@ -21,7 +21,8 @@ public class Dispatcher {
     }
 
     public void register(final Store store) {
-        stores.add(store);
+        if(!stores.contains(store))
+            stores.add(store);
     }
 
     public void unregister(final Store store) {

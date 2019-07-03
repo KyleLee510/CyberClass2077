@@ -39,17 +39,19 @@
                 android:background="@drawable/roundbuttonshape"
                 android:src = "@drawable/attention"
                 android:layout_gravity="center"/>
+
             <EditText
+                android:id="@+id/et_username_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
                 android:layout_gravity="center"
-                android:layout_marginRight="50dp"
                 android:layout_marginLeft="50dp"
-                android:textColor="#9F9FA0"
-                android:textColorHint="#9F9FA0"
                 android:layout_marginTop="10dp"
-                android:hint="your username"/>
+                android:layout_marginRight="50dp"
+                android:background="@null"
+                android:hint="your username"
+                android:textColor="#9F9FA0"
+                android:textColorHint="#9F9FA0" />
 
             <View
                 android:layout_width="match_parent"
@@ -62,15 +64,16 @@
             </View>
 
             <EditText
+                android:id="@+id/et_password_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
                 android:layout_gravity="center"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:background="@null"
                 android:hint="your password"
                 android:textColor="#9F9FA0"
-                android:textColorHint="#9F9FA0"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"/>
+                android:textColorHint="#9F9FA0" />
 
             <View
                 android:layout_width="match_parent"
@@ -83,15 +86,16 @@
             </View>
 
             <EditText
+                android:id="@+id/et_passwordagain_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
                 android:layout_gravity="center"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:background="@null"
                 android:hint="confirm your password"
                 android:textColor="#9F9FA0"
-                android:textColorHint="#9F9FA0"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"/>
+                android:textColorHint="#9F9FA0" />
         </LinearLayout>
 
         <LinearLayout

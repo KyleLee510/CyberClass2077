@@ -22,5 +22,11 @@ public class ActionsCreator {
 
         dispatcher.dispatch(new LoginAction(LoginAction.ACTION_LOGIN,user));
     }
+    public void signup(String userName,String passWord){
+        User user = new User();
+        user.setUserName(userName);
+        user.setPassWord(passWord);
+        dispatcher.dispatch(new SignupAction(SignupAction.ACTION_SIGNUP,user));
+    }
 
 }

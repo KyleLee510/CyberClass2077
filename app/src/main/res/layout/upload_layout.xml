@@ -35,21 +35,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!--上传按钮-->
+        <!--确认按钮-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="上传"
+            android:text="确认"
             android:textColor="@color/RoyalBlue2"
-            android:textSize="30sp"
+            android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
-
+        <!--封面图片-->
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
@@ -79,6 +79,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <!--标题输入-->
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -102,7 +103,6 @@
             android:textColorHint="#9F9FA0"
             android:hint="在此输入标题"/>
     </LinearLayout>
-
     <!--标签选择-->
     <LinearLayout
         android:layout_width="wrap_content"
@@ -136,7 +136,7 @@
             android:layout_width="80sp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:text="标题"
+            android:text="简介"
             android:textSize="20dp"/>
 
         <EditText

@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dispatcher.unregister(userStore);
+       // dispatcher.unregister(userStore);
     }
     @Override
     protected void onResume() {
@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
         dispatcher = Dispatcher.get();
         //获取动作创建者单例
         actionsCreator = ActionsCreator.get(dispatcher);
-        //创建 用户 数据仓库
+        //获取 用户 数据仓库
         userStore = UserStore.getInstance();
         //在调度者里注册 用户 数据仓库
         dispatcher.register(userStore);
@@ -121,7 +121,8 @@ public class LoginActivity extends AppCompatActivity {
 
     //对事件总线EventBus发出的StoreChangeEvent（及其子类）做出响应                  ,
     @Subscribe
-    public void onStoreChange(UserStore.LoginStateChangeEvent event){
+    //函数取名不重要，甚至可以重载，重要的是参数的类型一定要匹配上对应的事件
+    public void onLoginEvent(UserStore.LoginStateChangeEvent event){
         if(event.isLoginSuccessful==true&&event.isAlreadyLogin==false){
             Toast.makeText(this,
                     String.format("登录成功! %n欢迎您，%s!",userStore.getUser().getUserName()),
