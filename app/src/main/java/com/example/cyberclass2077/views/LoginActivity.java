@@ -112,6 +112,14 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT
             ).show();
             //添加对应的界面跳转和信息传递
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("fragment",2);
+            intent.putExtra("isLogin",1);
+            startActivity(intent);
+            finish();
+            //需要在finish和startActivity之后进行
+            //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
+            overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
         }
         else {
             Toast.makeText(this,
