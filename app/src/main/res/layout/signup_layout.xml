@@ -110,6 +110,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/btn_confirm_signup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
@@ -118,6 +119,7 @@
                 android:background="@drawable/buttonstyle"
                 android:text="确认"/>
             <Button
+                android:id="@+id/btn_cancel_signup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="40dp"
