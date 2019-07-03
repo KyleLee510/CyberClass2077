@@ -27,7 +27,6 @@ public class UserStore extends Store{
     public User getUser(){return user.getUser();}
     public void setUser(User user){
         this.user=user;
-        emitStoreChange();
     }
     @Override
     @Subscribe
@@ -39,9 +38,10 @@ public class UserStore extends Store{
                 //发送给服务器的user对象只包含用户名和密码
                 //从服务器返回的user对象包含用户名密码,用户ID以及登录状态（布尔）
                 //主线程到这里终止，OKHTTP发出异步请求，得到结果后在回调里调用handler回到主线程，通知Store
-
+                //得到请求结果后的操作在LoginConnect里的emitRequestResult()修改,Connection包的其他内容不需要改
                 connect.sendLoginRequest((User)action.getData());
 
+                //不能在这里调用这个函数，因为OKHTTP用的异步方法，在主线程中，还没得到数据。
                 //emitStoreChange();
 
             break;
@@ -50,7 +50,15 @@ public class UserStore extends Store{
         }
 
     }
-    @Override
-    public StoreChangeEvent changeEvent(){return new StoreChangeEvent();}
+    //登录事件
+    public class LoginStateChangeEvent extends StoreChangeEvent{
+        public  boolean isLoginSuccessful=false;
+        public boolean isAlreadyLogin=false;
+        public LoginStateChangeEvent(boolean isLoginSuccessful,boolean isAlreadyLogin){
+            this.isLoginSuccessful=isLoginSuccessful;
+            this.isAlreadyLogin=isAlreadyLogin;
+        }
+    }
+
 
 }
