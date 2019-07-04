@@ -2,6 +2,7 @@ package com.example.cyberclass2077.actions;
 
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
+import com.example.cyberclass2077.stores.UserStore;
 
 public class ActionsCreator {
     private static ActionsCreator instance;
@@ -27,6 +28,9 @@ public class ActionsCreator {
         user.setUserName(userName);
         user.setPassWord(passWord);
         dispatcher.dispatch(new SignupAction(SignupAction.ACTION_SIGNUP,user));
+    }
+    public void logout(String userName){
+        dispatcher.dispatch(new LogoutAction(LogoutAction.ACTION_LOGOUT,userName));
     }
 
 }

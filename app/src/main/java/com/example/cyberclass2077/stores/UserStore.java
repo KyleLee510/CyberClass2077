@@ -3,9 +3,11 @@ package com.example.cyberclass2077.stores;
 import com.alibaba.fastjson.JSON;
 import com.example.cyberclass2077.actions.Action;
 import com.example.cyberclass2077.actions.LoginAction;
+import com.example.cyberclass2077.actions.LogoutAction;
 import com.example.cyberclass2077.actions.SignupAction;
 import com.example.cyberclass2077.connection.Connect;
 import com.example.cyberclass2077.connection.LoginConnect;
+import com.example.cyberclass2077.connection.LogoutConnect;
 import com.example.cyberclass2077.connection.SignupConnect;
 import com.example.cyberclass2077.model.User;
 import com.squareup.otto.Subscribe;
@@ -26,7 +28,9 @@ public class UserStore extends Store{
         }
         return instance;
     }
-    public User getUser(){return user.getUser();}
+    public User getUser(){
+        return user.getUser();
+    }
     public void setUser(User user){
         this.user=user;
     }
@@ -53,6 +57,14 @@ public class UserStore extends Store{
                 connect=null;
                 connect=new SignupConnect();
                 ((SignupConnect)connect).sendSignupRequest((User)action.getData());
+                break;
+
+
+            case LogoutAction
+                        .ACTION_LOGOUT:
+                connect=null;
+                connect=new LogoutConnect();
+                ((LogoutConnect)connect).sendLogoutRequest((String)action.getData());
                 break;
             default:
 
@@ -81,6 +93,11 @@ public class UserStore extends Store{
         public NameCheckEvent(boolean isNameExist){
             this.isNameExist=isNameExist;
         }
+    }
+    //用户登出事件
+    public class LogoutEvent extends StoreChangeEvent{
+        public boolean isLogoutSuccessful=false;
+        public LogoutEvent(boolean isLogoutSuccessful){this.isLogoutSuccessful=isLogoutSuccessful;}
     }
 
 

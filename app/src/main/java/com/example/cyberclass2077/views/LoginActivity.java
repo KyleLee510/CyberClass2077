@@ -128,6 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                     String.format("用户%s已登录%n现已重新登录！",userStore.getUser().getUserName()),
                     Toast.LENGTH_SHORT
             ).show();
+            jumpActivity();
         }
         else if(event.isLoginSuccessful==false&&event.isAlreadyLogin==false){
             Toast.makeText(this,

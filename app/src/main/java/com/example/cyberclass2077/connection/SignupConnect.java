@@ -28,9 +28,11 @@ public class SignupConnect extends Connect<User>{
         );
     }
     @Override
-    void emitRequestResult(){
+    public void emitRequestResult(){
         Map signupResultMap =JSON.parseObject(getResponseStr(),Map.class);
         UserStore store =UserStore.getInstance();
+        if(!signupResultMap.containsKey("isSignupSuccessful"))
+            return;
         boolean isSignupSuccessful=(boolean)signupResultMap.get("isSignupSuccessful");
         if(isSignupSuccessful==true){
             //注册成功，向UserStore写入这个注册的用户的用户名和密码
