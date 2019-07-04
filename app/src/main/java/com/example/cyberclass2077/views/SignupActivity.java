@@ -74,9 +74,7 @@ public class SignupActivity extends AppCompatActivity{
         vCheckUsernameTextView = (TextView) findViewById(R.id.txt_hint_exist);
         vCheckPassWordTextView = (TextView) findViewById(R.id.txt_hint_empty);
         vCheckPassWordAgainTextView = (TextView) findViewById(R.id.txt_hint_consistent);
-
         setEdittext();
-
         vCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -8,4 +8,10 @@
         <item>标签5</item>
         <item>标签6</item>
     </string-array>
+    <string-array name="tag_gender">
+        <item name = "default">保密</item>
+        <item name = "man">男</item>
+        <item name = "woman">女</item>
+    </string-array>
+
 </resources>

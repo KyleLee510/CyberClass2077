@@ -44,9 +44,9 @@ public class UserInfoStore extends Store {
 
     }
     public class UpdateUserInfoEvent extends StoreChangeEvent{
-        boolean isUpdateUserInfoSuccessful=false;
+        public boolean isUpdateUserInfoSuccessful = false;
         public UpdateUserInfoEvent(boolean isUpdateUserInfoSuccessful){
-            this.isUpdateUserInfoSuccessful=isUpdateUserInfoSuccessful;
+            this.isUpdateUserInfoSuccessful = isUpdateUserInfoSuccessful;
         }
     }
 }
