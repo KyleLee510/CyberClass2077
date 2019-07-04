@@ -2,9 +2,11 @@ package com.example.cyberclass2077.views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.renderscript.ScriptGroup;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -91,7 +93,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         et_old_password = (EditText) findViewById(R.id.et_change_password_now_password);
         et_new_password = (EditText) findViewById(R.id.et_change_password_new_password);
         et_new_passwordAgain = (EditText) findViewById(R.id.et_change_password_confirm_password);
-        //setEdittext();
+        setEdittext();
         txt_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,13 +108,18 @@ public class ChangePasswordActivity extends AppCompatActivity {
         txt_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String newPassword = et_new_passwordAgain.getText().toString();
-                actionsCreator.updatePassword(user.getUserName(), newPassword);
+                String newPassword = et_new_password.getText().toString();
+                String newPasswordAgain = et_new_passwordAgain.getText().toString();
+                if (newPassword.equals(newPasswordAgain)) {
+                    actionsCreator.updatePassword(user.getUserName(), newPassword);//密码一致才会去注册
+                }
+
             }
         });
     }
 
     void setEdittext() {
+        //et_old_password.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD|InputType.TYPE_CLASS_TEXT);
         et_old_password.addTextChangedListener(new JumpTextWatcher(et_old_password, et_new_password, true));
         et_new_password.addTextChangedListener(new JumpTextWatcher(et_new_password, et_new_passwordAgain, false));
         et_new_passwordAgain.addTextChangedListener(new JumpTextWatcher(et_new_passwordAgain));
@@ -143,34 +150,26 @@ public class ChangePasswordActivity extends AppCompatActivity {
         }
         @Override
         public void afterTextChanged(Editable s) {
-            String str=s.toString();
-            editText1.setText(str.replace("\r","").replace("\n",""));//去掉回车符和换行符
-            if (editText2 != null) {
-                editText2.requestFocus();//让下一个editText获取焦点
-                editText2.setSelection(editText2.getText().length());//若editText2有内容就将光标移动到文本末尾
-                if(isFirst) {
-                    String oldpassWord = editText1.getText().toString();
-                    if(oldpassWord.equals(user.getPassWord())) {
-                        txt_hint_right.setVisibility(View.INVISIBLE);
-                    }
-                    else {
-                        txt_hint_right.setVisibility(View.VISIBLE);
-                    }
-                }
-            }
-            else {
-                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                in.hideSoftInputFromWindow(editText1.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                //密码不一致的检测
-                String passWord = et_new_password.getText().toString();
-                String passWordAgain = et_new_passwordAgain.getText().toString();
-                if(!passWord.equals(passWordAgain)) {
-                    txt_hint_equal.setVisibility(View.VISIBLE);
-
+            //对于旧用户名的检测
+            if(isFirst) {
+                String oldpassWord = editText1.getText().toString();
+                if(oldpassWord.equals(user.getPassWord())) {
+                    txt_hint_right.setVisibility(View.INVISIBLE);
                 }
                 else {
-                    txt_hint_equal.setVisibility(View.INVISIBLE);
+                    txt_hint_right.setVisibility(View.VISIBLE);
                 }
+            }
+            //对于两次新密码的输入匹配问题
+            String passWord = et_new_password.getText().toString();
+            String passWordAgain = et_new_passwordAgain.getText().toString();
+
+            if(!passWord.equals(passWordAgain)) {
+                txt_hint_equal.setVisibility(View.VISIBLE);
+
+            }
+            else {
+                txt_hint_equal.setVisibility(View.INVISIBLE);
             }
         }
     }

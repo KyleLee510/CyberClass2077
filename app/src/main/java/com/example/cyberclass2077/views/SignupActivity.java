@@ -142,6 +142,8 @@ public class SignupActivity extends AppCompatActivity{
     }
 
     void setEdittext() {
+        vUserNameEditor.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        vUserNameEditor.setSingleLine();
         vUserNameEditor.addTextChangedListener(new JumpTextWatcher(vUserNameEditor, vPassWordEditor));
         vPassWordEditor.addTextChangedListener(new JumpTextWatcher(vPassWordEditor, vPassWordAgainEditor));
         vPassWordAgainEditor.addTextChangedListener(new JumpTextWatcher(vPassWordAgainEditor));
@@ -171,29 +173,16 @@ public class SignupActivity extends AppCompatActivity{
         }
         @Override
         public void afterTextChanged(Editable s) {
-            String str=s.toString();
-            if (str.indexOf("\r")>=0 || str.indexOf("\n")>=0){//发现输入回车符或换行符
-                editText1.setText(str.replace("\r","").replace("\n",""));//去掉回车符和换行符
-                if (editText2 != null) {
-                    editText2.requestFocus();//让下一个editText获取焦点
-                    editText2.setSelection(editText2.getText().length());//若editText2有内容就将光标移动到文本末尾
-                }
-                else {
-                    InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    in.hideSoftInputFromWindow(editText1.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                    //密码不一致的检测
-                    String passWord = vPassWordEditor.getText().toString();
-                    String passWordAgain = vPassWordAgainEditor.getText().toString();
+            //密码不一致的检测
+            String passWord = vPassWordEditor.getText().toString();
+            String passWordAgain = vPassWordAgainEditor.getText().toString();
 
-                    if(!passWord.equals(passWordAgain)) {
-                        vCheckPassWordTextView.setVisibility(View.VISIBLE);
-                    }
-                    else {
-                        vCheckPassWordTextView.setVisibility(View.INVISIBLE);
-                    }
-                }
+            if(!passWord.equals(passWordAgain)) {
+                vCheckPassWordTextView.setVisibility(View.VISIBLE);
             }
-
+            else {
+                vCheckPassWordTextView.setVisibility(View.INVISIBLE);
+            }
         }
     }
 }
