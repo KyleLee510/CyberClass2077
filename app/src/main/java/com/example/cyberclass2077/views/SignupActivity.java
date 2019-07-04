@@ -2,11 +2,15 @@ package com.example.cyberclass2077.views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -88,7 +92,11 @@ public class SignupActivity extends AppCompatActivity{
                 String userName = vUserNameEditor.getText().toString();
                 String passWord = vPassWordEditor.getText().toString();
                 String passWordAgain = vPassWordAgainEditor.getText().toString();
-                if (passWordAgain.equals(passWord)) {
+                if(userName.equals("")) {
+                    vCheckUsernameTextView.setVisibility(View.VISIBLE);
+                    vCheckUsernameTextView.setText("用户名不可为空");
+                }
+                else if (passWordAgain.equals(passWord)) {
                     actionsCreator.signup(userName, passWord);
                 }
                 else {
@@ -111,10 +119,11 @@ public class SignupActivity extends AppCompatActivity{
     public void onNameCheckEvent(UserStore.NameCheckEvent event) {
         //在这里写对重名检测的业务逻辑和显示逻辑
             if(event.isNameExist) {
-                vCheckPassWordTextView.setVisibility(View.VISIBLE);
+                vCheckUsernameTextView.setVisibility(View.VISIBLE);
+                vCheckUsernameTextView.setText("用户名已存在");
             }
             else {
-                vCheckPassWordTextView.setVisibility(View.INVISIBLE);
+                vCheckUsernameTextView.setVisibility(View.INVISIBLE);
             }
     }
     @Subscribe
@@ -144,18 +153,32 @@ public class SignupActivity extends AppCompatActivity{
     void setEdittext() {
         vUserNameEditor.setImeOptions(EditorInfo.IME_ACTION_DONE);
         vUserNameEditor.setSingleLine();
-        vUserNameEditor.addTextChangedListener(new JumpTextWatcher(vUserNameEditor, vPassWordEditor));
-        vPassWordEditor.addTextChangedListener(new JumpTextWatcher(vPassWordEditor, vPassWordAgainEditor));
+        vUserNameEditor.addTextChangedListener(new JumpTextWatcher(vUserNameEditor, vPassWordEditor, true));
+        vUserNameEditor.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+
+                }
+                else {
+                    //失去焦点后的判断
+                    String username = vUserNameEditor.getText().toString();
+                    actionsCreator.nameCheck(username);
+                }
+            }
+        });
+        vPassWordEditor.addTextChangedListener(new JumpTextWatcher(vPassWordEditor, vPassWordAgainEditor, false));
         vPassWordAgainEditor.addTextChangedListener(new JumpTextWatcher(vPassWordAgainEditor));
     }
 
     private class JumpTextWatcher implements TextWatcher {
         private EditText editText1;
         private EditText editText2;
-        JumpTextWatcher(EditText editTextFirst, EditText editTextNext) {
+        private boolean isName;
+        JumpTextWatcher(EditText editTextFirst, EditText editTextNext, boolean is) {
             editText1 = editTextFirst;
             editText2 = editTextNext;
-            //isName = is;
+            isName = is;
         }
         JumpTextWatcher(EditText editTextLast) {
             editText1 = editTextLast;
@@ -173,6 +196,9 @@ public class SignupActivity extends AppCompatActivity{
         }
         @Override
         public void afterTextChanged(Editable s) {
+            if(isName) {
+                //String userName = vUserNameEditor.getText().toString();
+            }
             //密码不一致的检测
             String passWord = vPassWordEditor.getText().toString();
             String passWordAgain = vPassWordAgainEditor.getText().toString();
