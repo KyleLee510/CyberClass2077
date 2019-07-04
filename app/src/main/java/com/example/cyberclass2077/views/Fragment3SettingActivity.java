@@ -31,45 +31,8 @@ public class Fragment3SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment3_setting);
-
         initDependencies();
-        user = userStore.getUser();
-
-        //返回个人主页
-        backButton = findViewById(R.id.setting_back_button);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(Fragment3SettingActivity.this, MainActivity.class);
-                intent.putExtra("fragment",2);
-                startActivity(intent);
-                finish();
-                //需要在finish和startActivity之后进行
-                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
-            }
-        });
-
-//        跳转到更改密码界面
-        to_changePassword = (ConstraintLayout) findViewById(R.id.constraintLayout_change_password);
-        to_changePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Fragment3SettingActivity.this, ChangePasswordActivity.class);
-                startActivity(intent);
-                finish();
-                //需要在finish和startActivity之后进行
-                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
-            }
-        });
-        vLogout_ConsrtraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout_logout);
-        vLogout_ConsrtraintLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                actionsCreator.logout(user.getUserName());
-            }
-        });
+        initWidget();
     }
 
     @Override
@@ -93,15 +56,61 @@ public class Fragment3SettingActivity extends AppCompatActivity {
         userStore = UserStore.getInstance();
         //在调度者里注册 用户 数据仓库，若已注册，不会重复注册
         dispatcher.register(userStore);
+        user = userStore.getUser();
     }
 
     @Subscribe
     void onLogoutEvent(UserStore.LogoutEvent event) {
         if(event.isLogoutSuccessful) {
             Toast.makeText(this,
-                    String.format("退出成功! %n欢迎您，%s!",userStore.getUser().getUserName()),
+                    String.format("退出成功!",userStore.getUser().getUserName()),
                     Toast.LENGTH_SHORT
             ).show();
         }
+        else {
+            Toast.makeText(this,
+                    String.format("退出失败! %n，%s!",userStore.getUser().getUserName()),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+    }
+
+    void initWidget() {
+        //返回个人主页
+        backButton = findViewById(R.id.setting_back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(Fragment3SettingActivity.this, MainActivity.class);
+                intent.putExtra("fragment",2);
+                startActivity(intent);
+                finish();
+                //需要在finish和startActivity之后进行
+                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
+                overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+            }
+        });
+
+        //跳转到更改密码界面
+        to_changePassword = (ConstraintLayout) findViewById(R.id.constraintLayout_change_password);
+        to_changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Fragment3SettingActivity.this, ChangePasswordActivity.class);
+                startActivity(intent);
+                finish();
+                //需要在finish和startActivity之后进行
+                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
+                overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+            }
+        });
+        //退出控件
+        vLogout_ConsrtraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout_logout);
+        vLogout_ConsrtraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actionsCreator.logout(user.getUserName());
+            }
+        });
     }
 }

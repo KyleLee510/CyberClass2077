@@ -81,7 +81,7 @@ public class SignupActivity extends AppCompatActivity{
                 overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
             }
         });
-
+        //信息确认提交
         vConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
