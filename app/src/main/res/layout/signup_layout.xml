@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
@@ -40,18 +41,39 @@
                 android:src = "@drawable/attention"
                 android:layout_gravity="center"/>
 
-            <EditText
-                android:id="@+id/et_username_signup"
+            <!--用户名输入-->
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="50dp"
-                android:background="@null"
-                android:hint="your username"
-                android:textColor="#9F9FA0"
-                android:textColorHint="#9F9FA0" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_username_signup"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="50dp"
+                    android:background="@null"
+                    android:hint="your username"
+                    android:textColor="#9F9FA0"
+                    android:textColorHint="#9F9FA0"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_hint_exist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="50dp"
+                    android:visibility="invisible"
+                    android:text="用户名已存在"
+                    android:textColor="@color/Firebrick3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+            </android.support.constraint.ConstraintLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -63,13 +85,12 @@
                 android:layout_marginBottom="5dp">
             </View>
 
+            <!--密码输入-->
             <EditText
                 android:id="@+id/et_password_signup"
-                android:layout_width="match_parent"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
                 android:background="@null"
                 android:hint="your password"
                 android:textColor="#9F9FA0"
@@ -85,17 +106,49 @@
                 android:layout_marginBottom="5dp">
             </View>
 
-            <EditText
-                android:id="@+id/et_passwordagain_signup"
+            <!--确认密码-->
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                android:background="@null"
-                android:hint="confirm your password"
-                android:textColor="#9F9FA0"
-                android:textColorHint="#9F9FA0" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_passwordagain_signup"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="50dp"
+                    android:background="@null"
+                    android:hint="confirm your password"
+                    android:textColor="#9F9FA0"
+                    android:textColorHint="#9F9FA0"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_hint_consistent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="50dp"
+                    android:visibility="invisible"
+                    android:text="密码不一致"
+                    android:textColor="@color/Firebrick3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="#83738F"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp">
+            </View>
         </LinearLayout>
 
         <LinearLayout

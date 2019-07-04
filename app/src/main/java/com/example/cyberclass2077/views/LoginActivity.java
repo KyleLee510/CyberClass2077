@@ -96,14 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         vCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //点击事件方法
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                intent.putExtra("fragment",2);
-                startActivity(intent);
-                finish();
-                //需要在finish和startActivity之后进行
-                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+                jumpActivity();
             }
         } );
 
@@ -128,6 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                     String.format("登录成功! %n欢迎您，%s!",userStore.getUser().getUserName()),
                     Toast.LENGTH_SHORT
             ).show();
+            jumpActivity();
         }
         else if(event.isLoginSuccessful==true&&event.isAlreadyLogin==true){
             Toast.makeText(this,
@@ -141,7 +135,16 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT
             ).show();
         }
+    }
 
+    public void jumpActivity() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.putExtra("fragment",2);
+        startActivity(intent);
+        finish();
+        //需要在finish和startActivity之后进行
+        //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
+        overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
     }
 
 }

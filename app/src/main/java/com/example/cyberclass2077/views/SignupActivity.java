@@ -1,11 +1,17 @@
 package com.example.cyberclass2077.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cyberclass2077.R;
@@ -14,13 +20,15 @@ import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
 
-public class SignupActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity{
     //在这里声明控件的引用变量
     private Button vConfirmButton;
     private Button vCancelButton;
     private EditText vUserNameEditor;
     private EditText vPassWordEditor;
     private EditText vPassWordAgainEditor;
+    private TextView vCheckUsernameTextView;
+    private TextView vCheckPassWordTextView;
     //在这里声明其他引用变量
     private Dispatcher dispatcher;
     private ActionsCreator actionsCreator;
@@ -57,15 +65,11 @@ public class SignupActivity extends AppCompatActivity {
         vPassWordAgainEditor=(EditText)findViewById(R.id.et_passwordagain_signup);
         vConfirmButton = (Button) findViewById(R.id.btn_confirm_signup);
         vCancelButton = (Button) findViewById(R.id.btn_cancel_signup);
-        vConfirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String userName=vUserNameEditor.getText().toString();
-                String passWord=vPassWordEditor.getText().toString();
-                actionsCreator.signup(userName,passWord);
+        vCheckUsernameTextView = (TextView) findViewById(R.id.txt_hint_exist);
+        vCheckPassWordTextView = (TextView) findViewById(R.id.txt_hint_consistent);
 
-            }
-        });
+        setEdittext();
+
         vCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +79,21 @@ public class SignupActivity extends AppCompatActivity {
                 //需要在finish和startActivity之后进行
                 //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
                 overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+            }
+        });
+
+        vConfirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String userName = vUserNameEditor.getText().toString();
+                String passWord = vPassWordEditor.getText().toString();
+                String passWordAgain = vPassWordAgainEditor.getText().toString();
+                if (passWordAgain.equals(passWord)) {
+                    actionsCreator.signup(userName, passWord);
+                }
+                else {
+                    vCheckPassWordTextView.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -91,6 +110,7 @@ public class SignupActivity extends AppCompatActivity {
     @Subscribe
     public void onNameCheckEvent(UserStore.NameCheckEvent event){
         //在这里写对重名检测的业务逻辑和显示逻辑
+
     }
     @Subscribe
     public void onSignupEvent(UserStore.SignupEvent event){
@@ -113,6 +133,62 @@ public class SignupActivity extends AppCompatActivity {
                     String.format("注册失败! %n请重新检查您的用户名和密码!"),
                     Toast.LENGTH_SHORT
             ).show();
+        }
+    }
+
+    void setEdittext() {
+        vUserNameEditor.addTextChangedListener(new JumpTextWatcher(vUserNameEditor, vPassWordEditor));
+        vPassWordEditor.addTextChangedListener(new JumpTextWatcher(vPassWordEditor, vPassWordAgainEditor));
+        vPassWordAgainEditor.addTextChangedListener(new JumpTextWatcher(vPassWordAgainEditor));
+    }
+
+    private class JumpTextWatcher implements TextWatcher {
+        private EditText editText1;
+        private EditText editText2;
+        JumpTextWatcher(EditText editTextFirst, EditText editTextNext) {
+            editText1 = editTextFirst;
+            editText2 = editTextNext;
+        }
+        JumpTextWatcher(EditText editTextLast) {
+            editText1 = editTextLast;
+            editText2 = null;
+        }
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+        @Override
+        public void afterTextChanged(Editable s) {
+            String str=s.toString();
+            if (str.indexOf("\r")>=0 || str.indexOf("\n")>=0){//发现输入回车符或换行符
+                editText1.setText(str.replace("\r","").replace("\n",""));//去掉回车符和换行符
+                if (editText2 != null) {
+                    editText2.requestFocus();//让下一个editText获取焦点
+                    editText2.setSelection(editText2.getText().length());//若editText2有内容就将光标移动到文本末尾
+                }
+                else {
+                    /*
+                    editText1.setImeOptions(EditorInfo.IME_ACTION_DONE);
+                    editText1.setSingleLine();
+                    */
+                    InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(editText1.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    //密码不一致的检测
+                    String passWord = vPassWordEditor.getText().toString();
+                    String passWordAgain = vPassWordAgainEditor.getText().toString();
+                    if(!passWord.equals(passWordAgain)) {
+                        vCheckPassWordTextView.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        vCheckPassWordTextView.setVisibility(View.INVISIBLE);
+                    }
+                }
+            }
+
         }
     }
 }
