@@ -41,7 +41,7 @@
                 android:src = "@drawable/attention"
                 android:layout_gravity="center"/>
 
-            <!--y用户名输入-->
+            <!--用户名输入-->
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -61,10 +61,13 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/txt_hint_exist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="50dp"
+                    android:visibility="invisible"
                     android:text="用户名已存在"
+                    android:textColor="@color/Firebrick3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -103,18 +106,6 @@
                 android:layout_marginBottom="5dp">
             </View>
 
-
-            <!--<EditText-->
-                <!--android:id="@+id/et_passwordagain_signup"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:layout_marginLeft="50dp"-->
-                <!--android:layout_marginRight="50dp"-->
-                <!--android:background="@null"-->
-                <!--android:hint="confirm your password"-->
-                <!--android:textColor="#9F9FA0"-->
-                <!--android:textColorHint="#9F9FA0" />-->
             <!--确认密码-->
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -135,10 +126,13 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/txt_hint_consistent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="50dp"
+                    android:visibility="invisible"
                     android:text="密码不一致"
+                    android:textColor="@color/Firebrick3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

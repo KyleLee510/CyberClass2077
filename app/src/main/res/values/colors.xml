@@ -21,10 +21,12 @@
     <color name="viewfinder_frame">#ff000000</color>
     <color name="viewfinder_laser">#ffff0000</color>
     <color name="viewfinder_mask">#60000000</color>
+
     <color name="RoyalBlue1">#4876FF</color>
     <color name="RoyalBlue2">#436EEE</color>
     <color name="RoyalBlue3">#3A5FCD</color>
     <color name="RoyalBlue4">#27408B</color>
+    <color name="Firebrick3">#CD2626</color>
 
     <drawable name="del_button">#E96464</drawable>
     <drawable name="del_button_pressed">#AD1919</drawable>
