@@ -81,7 +81,7 @@ public class SignupActivity extends AppCompatActivity{
                 overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
             }
         });
-
+        //信息确认提交
         vConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +114,7 @@ public class SignupActivity extends AppCompatActivity{
                 vCheckPassWordTextView.setVisibility(View.VISIBLE);
             }
             else {
-                vCheckPassWordTextView.setVisibility(View.VISIBLE);
+                vCheckPassWordTextView.setVisibility(View.INVISIBLE);
             }
     }
     @Subscribe
@@ -184,6 +184,7 @@ public class SignupActivity extends AppCompatActivity{
                     //密码不一致的检测
                     String passWord = vPassWordEditor.getText().toString();
                     String passWordAgain = vPassWordAgainEditor.getText().toString();
+
                     if(!passWord.equals(passWordAgain)) {
                         vCheckPassWordTextView.setVisibility(View.VISIBLE);
                     }

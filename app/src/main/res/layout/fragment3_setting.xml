@@ -226,6 +226,7 @@
     <!--退出登陆-->
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout_logout"
         android:layout_width="match_parent"
         android:layout_height="30dp">
 
@@ -240,18 +241,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <!--<ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/right"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/setting_sign_out"
-            app:layout_constraintTop_toTopOf="parent" />-->
     </android.support.constraint.ConstraintLayout>
 
     <!--分割线-->
