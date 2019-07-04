@@ -2,6 +2,7 @@ package com.example.cyberclass2077.actions;
 
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
+import com.example.cyberclass2077.model.UserInfo;
 import com.example.cyberclass2077.stores.UserStore;
 
 public class ActionsCreator {
@@ -46,6 +47,15 @@ public class ActionsCreator {
         user.setUserName(userName);
         user.setPassWord(passWord);
         dispatcher.dispatch(new UpdatePasswordAction(UpdatePasswordAction.ACTION_UPDATE_PASSWORD,user));
+    }
+
+    //更新（修改）用户信息请求
+    //New 一个UserInfo,从控件中获取值来用这个类的set方法设定成员变量，注意转换格式
+    public void updateUserInfo(UserInfo userInfo){
+        dispatcher.dispatch(new UpdateUserInfoAction(
+                UpdateUserInfoAction.ACTION_UPDATE_USERINFO,
+                userInfo
+        ));
     }
 
 

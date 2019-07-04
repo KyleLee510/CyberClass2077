@@ -15,7 +15,7 @@ public class UpdatePasswordConnect extends Connect<User> {
         //存储UI界面发来的User数据
         userCache.setUser(user);
         postData(
-                AppConfig.SETTINGS_UPDATEPASSWORD,
+                AppConfig.SETTINGS_UPDATE_PASSWORD,
                 requestBodyBuilder("user",user)
         );
     }
