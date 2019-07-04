@@ -109,6 +109,7 @@ public class Fragment3 extends Fragment {
             btnCheckin.setVisibility(View.VISIBLE);
             txtAccountnumber.setVisibility(View.VISIBLE);
             txtUserName.setText("昵称");
+            txtAccountnumber.setText(user.getUserName());
             //点击头像
             imagePhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
