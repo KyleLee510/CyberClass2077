@@ -120,7 +120,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/buttonstyle"
-                android:text="登陆" />
+                android:text="登录" />
 
             <Button
                 android:id="@+id/btn_signup_login"
