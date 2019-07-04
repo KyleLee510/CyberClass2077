@@ -5,10 +5,12 @@ import com.example.cyberclass2077.actions.Action;
 import com.example.cyberclass2077.actions.LoginAction;
 import com.example.cyberclass2077.actions.LogoutAction;
 import com.example.cyberclass2077.actions.SignupAction;
+import com.example.cyberclass2077.actions.UpdatePasswordAction;
 import com.example.cyberclass2077.connection.Connect;
 import com.example.cyberclass2077.connection.LoginConnect;
 import com.example.cyberclass2077.connection.LogoutConnect;
 import com.example.cyberclass2077.connection.SignupConnect;
+import com.example.cyberclass2077.connection.UpdatePasswordConnect;
 import com.example.cyberclass2077.model.User;
 import com.squareup.otto.Subscribe;
 
@@ -66,6 +68,12 @@ public class UserStore extends Store{
                 connect=new LogoutConnect();
                 ((LogoutConnect)connect).sendLogoutRequest((String)action.getData());
                 break;
+            case UpdatePasswordAction
+                    .ACTION_UPDATE_PASSWORD:
+                connect=null;
+                connect=new UpdatePasswordConnect();
+                ((UpdatePasswordConnect)connect).sendUpdatePasswordRequest((User)action.getData());
+                break;
             default:
 
         }
@@ -99,7 +107,9 @@ public class UserStore extends Store{
         public boolean isLogoutSuccessful=false;
         public LogoutEvent(boolean isLogoutSuccessful){this.isLogoutSuccessful=isLogoutSuccessful;}
     }
-
-
-
+    //更新（修改）密码事件
+    public class UpdatePasswordEvent extends StoreChangeEvent{
+        public boolean isUpdatePasswordSuccessful=false;
+        public UpdatePasswordEvent(boolean isUpdatePasswordSuccessful){this.isUpdatePasswordSuccessful=isUpdatePasswordSuccessful;}
+    }
 }

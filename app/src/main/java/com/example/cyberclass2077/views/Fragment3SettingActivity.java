@@ -35,6 +35,7 @@ public class Fragment3SettingActivity extends AppCompatActivity {
         initDependencies();
         user = userStore.getUser();
 
+        //返回个人主页
         backButton = findViewById(R.id.setting_back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +49,8 @@ public class Fragment3SettingActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
             }
         });
+
+//        跳转到更改密码界面
         to_changePassword = (ConstraintLayout) findViewById(R.id.constraintLayout_change_password);
         to_changePassword.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -64,7 +64,7 @@ public class Fragment3 extends Fragment {
             public void onClick(View v){
                 Intent intent = new Intent(getActivity(), Fragment3UploadActivity.class);
                 startActivity(intent);
-                getActivity().finish();
+                //getActivity().finish();
                 //需要在finish和startActivity之后进行
                 //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
                 getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
@@ -97,7 +97,7 @@ public class Fragment3 extends Fragment {
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
-                    getActivity().finish();
+                    //getActivity().finish();
                     //需要在finish和startActivity之后进行
                     //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
                     getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
@@ -116,7 +116,7 @@ public class Fragment3 extends Fragment {
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), UserDataSettingActivity.class);
                     startActivity(intent);
-                    getActivity().finish();
+                    //getActivity().finish();
                     //需要在finish和startActivity之后进行
                     //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
                     getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
