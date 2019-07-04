@@ -32,5 +32,11 @@ public class ActionsCreator {
     public void logout(String userName){
         dispatcher.dispatch(new LogoutAction(LogoutAction.ACTION_LOGOUT,userName));
     }
+    public void updatePassword(String userName,String passWord){
+        User user = new User();
+        user.setUserName(userName);
+        user.setPassWord(passWord);
+        dispatcher.dispatch(new UpdatePasswordAction(UpdatePasswordAction.ACTION_UPDATE_PASSWORD,user));
+    }
 
 }
