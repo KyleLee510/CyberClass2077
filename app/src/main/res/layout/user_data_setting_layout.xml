@@ -169,7 +169,8 @@
             android:text="出生日期"
             android:textSize="20dp"/>
 
-        <EditText
+        <TextView
+            android:id="@+id/user_date_setting_borndate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -178,7 +179,17 @@
             android:layout_marginLeft="50dp"
             android:textColor="#9F9FA0"
             android:textColorHint="#9F9FA0"
-            android:hint="2019 - 09 - 01"/>
+            android:text="2019 - 09 - 01"/>
+
+        <!--<DatePicker-->
+            <!--android:id="@+id/user_date_setting_datepickerdialog"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginRight="50dp"-->
+            <!--android:calendarViewShown="false"-->
+            <!--android:layout_marginLeft="50dp"-->
+            <!--android:background="@null">-->
+        <!--</DatePicker>-->
     </LinearLayout>
     <View
         android:layout_width="match_parent"
