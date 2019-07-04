@@ -108,9 +108,14 @@ public class SignupActivity extends AppCompatActivity{
         dispatcher.register(userStore);
     }
     @Subscribe
-    public void onNameCheckEvent(UserStore.NameCheckEvent event){
+    public void onNameCheckEvent(UserStore.NameCheckEvent event) {
         //在这里写对重名检测的业务逻辑和显示逻辑
-
+            if(event.isNameExist) {
+                vCheckPassWordTextView.setVisibility(View.VISIBLE);
+            }
+            else {
+                vCheckPassWordTextView.setVisibility(View.VISIBLE);
+            }
     }
     @Subscribe
     public void onSignupEvent(UserStore.SignupEvent event){
@@ -148,11 +153,14 @@ public class SignupActivity extends AppCompatActivity{
         JumpTextWatcher(EditText editTextFirst, EditText editTextNext) {
             editText1 = editTextFirst;
             editText2 = editTextNext;
+            //isName = is;
         }
         JumpTextWatcher(EditText editTextLast) {
             editText1 = editTextLast;
             editText2 = null;
+            //isName = false;
         }
+
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
@@ -171,10 +179,6 @@ public class SignupActivity extends AppCompatActivity{
                     editText2.setSelection(editText2.getText().length());//若editText2有内容就将光标移动到文本末尾
                 }
                 else {
-                    /*
-                    editText1.setImeOptions(EditorInfo.IME_ACTION_DONE);
-                    editText1.setSingleLine();
-                    */
                     InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     in.hideSoftInputFromWindow(editText1.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     //密码不一致的检测
