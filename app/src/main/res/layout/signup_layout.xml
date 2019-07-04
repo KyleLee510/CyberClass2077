@@ -54,6 +54,7 @@
                     android:layout_marginLeft="50dp"
                     android:background="@null"
                     android:hint="your username"
+                    android:inputType="text"
                     android:textColor="#9F9FA0"
                     android:textColorHint="#9F9FA0"
                     app:layout_constraintBottom_toBottomOf="parent"

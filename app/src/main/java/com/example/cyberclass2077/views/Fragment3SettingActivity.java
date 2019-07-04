@@ -90,27 +90,35 @@ public class Fragment3SettingActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
             }
         });
-
-        //跳转到更改密码界面
+        //登录状态修改密码和退出登录才是可用的
         to_changePassword = (ConstraintLayout) findViewById(R.id.constraintLayout_change_password);
-        to_changePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Fragment3SettingActivity.this, ChangePasswordActivity.class);
-                startActivity(intent);
-                finish();
-                //需要在finish和startActivity之后进行
-                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
-            }
-        });
-        //退出控件
         vLogout_ConsrtraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout_logout);
-        vLogout_ConsrtraintLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                actionsCreator.logout(user.getUserName());
-            }
-        });
+        if(user.isLoginState()) {
+            //to_changePassword.setVisibility(View.VISIBLE);
+            //vLogout_ConsrtraintLayout.setVisibility(View.VISIBLE);
+            //跳转到更改密码界面
+            to_changePassword.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Fragment3SettingActivity.this, ChangePasswordActivity.class);
+                    startActivity(intent);
+                    finish();
+                    //需要在finish和startActivity之后进行
+                    //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
+                    overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+                }
+            });
+            //退出控件
+            vLogout_ConsrtraintLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    actionsCreator.logout(user.getUserName());
+                }
+            });
+        }
+        else {
+            //to_changePassword.setVisibility(View.INVISIBLE);
+            //vLogout_ConsrtraintLayout.setVisibility(View.INVISIBLE);
+        }
     }
 }
