@@ -67,4 +67,18 @@ public class UserInfo {
     public void setFollowerNum(Integer followerNum) {
         this.followerNum = followerNum;
     }
+    public UserInfo getUserInfo(){
+        return  this;
+    }
+    public void setUserInfo(UserInfo userInfo){
+        if(userInfo!=null){
+            this.userName=userInfo.getUserName();
+            this.nickName=userInfo.getNickName();
+            this.gender=userInfo.getGender();
+            this.birthDate=userInfo.getBirthDate();
+            this.portrait=userInfo.getPortrait();
+            this.followeeNum=userInfo.getFolloweeNum();
+            this.followerNum=userInfo.getFollowerNum();
+        }
+    }
 }
