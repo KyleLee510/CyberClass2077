@@ -78,7 +78,7 @@ public class Connect <T>{
         }
     };
     //仅仅作为一个接口，在handleMessage中调用的是子类重写过的方法
-    void emitRequestResult(){
+    public void emitRequestResult(){
 
     }
 }

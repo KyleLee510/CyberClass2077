@@ -31,7 +31,7 @@ public class LoginConnect extends Connect<User>{
 
     }
     @Override
-    void emitRequestResult(){
+    public void emitRequestResult(){
         //服务器返回的结果已经转为Json字符串，调用getResponseStr()可以获取
         //下面这个方法可以将Json字符串转换为指定的类，注意不是什么类都行，不然会报错
         //将服务器返回的包含登录结果信息的字符串转为Map对象(就是一种key:value数据结构，类似字典)
@@ -39,6 +39,9 @@ public class LoginConnect extends Connect<User>{
         Map loginResultMap =JSON.parseObject(getResponseStr(),Map.class);
         //获取UserStore的实例
         UserStore store =UserStore.getInstance();
+        //安全检测，防止程序崩溃
+        if(!(loginResultMap.containsKey("isLoginSuccessful")&&loginResultMap.containsKey("isAlreadyLogin")))
+            return;
         //根据返回的结果修改Store的内容
         boolean isLoginSuccessful=(boolean)loginResultMap.get("isLoginSuccessful");
         boolean isAlreadyLogin=(boolean)loginResultMap.get("isAlreadyLogin");
