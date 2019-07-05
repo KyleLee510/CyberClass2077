@@ -6,11 +6,13 @@ import com.example.cyberclass2077.actions.LoginAction;
 import com.example.cyberclass2077.actions.LogoutAction;
 import com.example.cyberclass2077.actions.SignupAction;
 import com.example.cyberclass2077.actions.UpdatePasswordAction;
+import com.example.cyberclass2077.actions.UserNameCheckAction;
 import com.example.cyberclass2077.connection.Connect;
 import com.example.cyberclass2077.connection.LoginConnect;
 import com.example.cyberclass2077.connection.LogoutConnect;
 import com.example.cyberclass2077.connection.SignupConnect;
 import com.example.cyberclass2077.connection.UpdatePasswordConnect;
+import com.example.cyberclass2077.connection.UserNameCheckConnect;
 import com.example.cyberclass2077.model.User;
 import com.squareup.otto.Subscribe;
 
@@ -59,6 +61,12 @@ public class UserStore extends Store{
                 connect=null;
                 connect=new SignupConnect();
                 ((SignupConnect)connect).sendSignupRequest((User)action.getData());
+                break;
+            case UserNameCheckAction
+                        .ACTION_USERNAMECHECK:
+                connect=null;
+                connect=new UserNameCheckConnect();
+                ((UserNameCheckConnect)connect).sendUserNameCheckRequest((String)action.getData());
                 break;
 
 

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 颜色添加参考网址https://www.sojson.com/rgb.html -->
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
     <color name="bg_color">#DBDBDB</color>
     <color name="circle_button_color">#B3C833</color>
     <color name="border">#CBCACA</color>
@@ -36,4 +38,12 @@
 
     <drawable name="actionbar_on">#B3C833</drawable>
     <drawable name="actionbar_off">#FAF3DF</drawable>
+
+
+    <color name="color_f8f8f8">#F8F8F8</color>
+    <color name="color_white">#FFFFFFFF</color>
+    <color name="color_333333">#333333</color>
+    <color name="color_f74e00">#F74E00</color>
+    <color name="color_transparent2e">#2E000000</color>
+    <color name="color_transparent00">#00000000</color>
 </resources>

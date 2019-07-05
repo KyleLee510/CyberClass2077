@@ -2,11 +2,15 @@ package com.example.cyberclass2077.views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -29,6 +33,8 @@ public class SignupActivity extends AppCompatActivity{
     private EditText vPassWordAgainEditor;
     private TextView vCheckUsernameTextView;
     private TextView vCheckPassWordTextView;
+    private TextView vCheckPassWordAgainTextView;
+
     //在这里声明其他引用变量
     private Dispatcher dispatcher;
     private ActionsCreator actionsCreator;
@@ -66,10 +72,9 @@ public class SignupActivity extends AppCompatActivity{
         vConfirmButton = (Button) findViewById(R.id.btn_confirm_signup);
         vCancelButton = (Button) findViewById(R.id.btn_cancel_signup);
         vCheckUsernameTextView = (TextView) findViewById(R.id.txt_hint_exist);
-        vCheckPassWordTextView = (TextView) findViewById(R.id.txt_hint_consistent);
-
+        vCheckPassWordTextView = (TextView) findViewById(R.id.txt_hint_empty);
+        vCheckPassWordAgainTextView = (TextView) findViewById(R.id.txt_hint_consistent);
         setEdittext();
-
         vCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,15 +90,7 @@ public class SignupActivity extends AppCompatActivity{
         vConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userName = vUserNameEditor.getText().toString();
-                String passWord = vPassWordEditor.getText().toString();
-                String passWordAgain = vPassWordAgainEditor.getText().toString();
-                if (passWordAgain.equals(passWord)) {
-                    actionsCreator.signup(userName, passWord);
-                }
-                else {
-                    vCheckPassWordTextView.setVisibility(View.VISIBLE);
-                }
+                signUp();
             }
         });
     }
@@ -111,10 +108,11 @@ public class SignupActivity extends AppCompatActivity{
     public void onNameCheckEvent(UserStore.NameCheckEvent event) {
         //在这里写对重名检测的业务逻辑和显示逻辑
             if(event.isNameExist) {
-                vCheckPassWordTextView.setVisibility(View.VISIBLE);
+                vCheckUsernameTextView.setVisibility(View.VISIBLE);
+                vCheckUsernameTextView.setText("用户名已存在");
             }
             else {
-                vCheckPassWordTextView.setVisibility(View.INVISIBLE);
+                vCheckUsernameTextView.setVisibility(View.INVISIBLE);
             }
     }
     @Subscribe
@@ -142,7 +140,22 @@ public class SignupActivity extends AppCompatActivity{
     }
 
     void setEdittext() {
+        vUserNameEditor.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        vUserNameEditor.setSingleLine();
         vUserNameEditor.addTextChangedListener(new JumpTextWatcher(vUserNameEditor, vPassWordEditor));
+        vUserNameEditor.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    vCheckUsernameTextView.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    //失去焦点后的判断
+                    String username = vUserNameEditor.getText().toString();
+                    actionsCreator.nameCheck(username);
+                }
+            }
+        });
         vPassWordEditor.addTextChangedListener(new JumpTextWatcher(vPassWordEditor, vPassWordAgainEditor));
         vPassWordAgainEditor.addTextChangedListener(new JumpTextWatcher(vPassWordAgainEditor));
     }
@@ -153,12 +166,10 @@ public class SignupActivity extends AppCompatActivity{
         JumpTextWatcher(EditText editTextFirst, EditText editTextNext) {
             editText1 = editTextFirst;
             editText2 = editTextNext;
-            //isName = is;
         }
         JumpTextWatcher(EditText editTextLast) {
             editText1 = editTextLast;
             editText2 = null;
-            //isName = false;
         }
 
         @Override
@@ -171,29 +182,53 @@ public class SignupActivity extends AppCompatActivity{
         }
         @Override
         public void afterTextChanged(Editable s) {
-            String str=s.toString();
-            if (str.indexOf("\r")>=0 || str.indexOf("\n")>=0){//发现输入回车符或换行符
-                editText1.setText(str.replace("\r","").replace("\n",""));//去掉回车符和换行符
-                if (editText2 != null) {
-                    editText2.requestFocus();//让下一个editText获取焦点
-                    editText2.setSelection(editText2.getText().length());//若editText2有内容就将光标移动到文本末尾
-                }
-                else {
-                    InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    in.hideSoftInputFromWindow(editText1.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                    //密码不一致的检测
-                    String passWord = vPassWordEditor.getText().toString();
-                    String passWordAgain = vPassWordAgainEditor.getText().toString();
+            vCheckPassWordTextView.setVisibility(View.INVISIBLE); //进行二次编辑是确保密码输入的text不可见
+            //密码不一致的检测
+            String passWord = vPassWordEditor.getText().toString();
+            String passWordAgain = vPassWordAgainEditor.getText().toString();
 
-                    if(!passWord.equals(passWordAgain)) {
-                        vCheckPassWordTextView.setVisibility(View.VISIBLE);
-                    }
-                    else {
-                        vCheckPassWordTextView.setVisibility(View.INVISIBLE);
-                    }
-                }
+            if(!passWord.equals(passWordAgain)) {
+                vCheckPassWordAgainTextView.setVisibility(View.VISIBLE);
+                vCheckPassWordAgainTextView.setText("密码不一致");
             }
-
+            else {
+                vCheckPassWordAgainTextView.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+    //注册提交后的检测
+    void signUp() {
+        boolean check = true;
+        String userName = vUserNameEditor.getText().toString();
+        String passWord = vPassWordEditor.getText().toString();
+        String passWordAgain = vPassWordAgainEditor.getText().toString();
+        if(userName.equals("")) {
+            check = false;
+            vCheckUsernameTextView.setVisibility(View.VISIBLE);
+            vCheckUsernameTextView.setText("用户名不可为空");
+        }
+        if(passWord.equals("")) {
+            check = false;
+            vCheckPassWordTextView.setVisibility(View.VISIBLE);
+            vCheckPassWordTextView.setText("不可为空");
+        }
+        if(passWordAgain.equals("")) {
+            check = false;
+            vCheckPassWordAgainTextView.setVisibility(View.VISIBLE);
+            vCheckPassWordAgainTextView.setText("不可为空");
+        }
+        //如果check仍为true，则进行密码匹配，合格就注册
+        if(check) {
+            if(passWord.equals(passWordAgain)) {
+                vCheckUsernameTextView.setVisibility(View.INVISIBLE);
+                vCheckPassWordTextView.setVisibility(View.VISIBLE);
+                vCheckPassWordAgainTextView.setVisibility(View.INVISIBLE);
+                actionsCreator.signup(userName, passWord);
+            }
+            else {
+                vCheckPassWordAgainTextView.setVisibility(View.VISIBLE);
+                vCheckPassWordAgainTextView.setText("密码不一致");
+            }
         }
     }
 }

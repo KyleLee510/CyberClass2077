@@ -6,7 +6,8 @@ public class AppConfig {
     public final static String SIGNUP_NAME_CHECK=BASE_URL_PATH.concat("/signup_name_check");
     public final static String SIGNUP=BASE_URL_PATH.concat("/signup");
     public final static String SETTINGS_LOGOUT=BASE_URL_PATH.concat("/logout");
-    public final static String SETTINGS_UPDATEPASSWORD=BASE_URL_PATH.concat("/update_password");
-
+    public final static String SETTINGS_UPDATE_PASSWORD =BASE_URL_PATH.concat("/update_password");
+    public final static String SETTINGS_UPDATE_USERINFO=BASE_URL_PATH.concat("/update_userinfo");
+    public final static String SETTINGS_GET_USERINFO=BASE_URL_PATH.concat("/get_userinfo");
 
 }
