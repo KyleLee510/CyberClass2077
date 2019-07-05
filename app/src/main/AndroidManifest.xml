@@ -31,7 +31,8 @@
         <activity android:name=".views.Fragment3SettingActivity" />
         <activity android:name=".views.LoginActivity"/>
         <activity android:name=".views.MainActivity"/>
-        <activity android:name=".pictureselector.PictureSelectActivity"></activity>
+        <activity android:name=".pictureselector.PictureSelectActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"

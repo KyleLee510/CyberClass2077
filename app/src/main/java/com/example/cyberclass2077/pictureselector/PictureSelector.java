@@ -15,7 +15,7 @@ import java.lang.ref.WeakReference;
 public class PictureSelector {
 
     public static final int    SELECT_REQUEST_CODE = 0x15;//选择图片请求码
-    public static final String PICTURE_PATH        = "image_Path";//图片路劲标记
+    public static final String PICTURE_PATH        = "image_Path";//图片路径标记
     private       int                     mRequestCode;
     private final WeakReference<Activity> mActivity;
     private final WeakReference<Fragment> mFragment;
