@@ -17,9 +17,6 @@ import com.example.cyberclass2077.R;
 
 
 /**
- * Author       wildma
- * Github       https://github.com/wildma
- * CreateDate   2018/6/10
  * Desc	        ${选择图片Dialog}
  */
 public class PictureSelectDialog extends Dialog implements View.OnClickListener {

@@ -12,9 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Author       wildma
- * Github       https://github.com/wildma
- * CreateDate   2018/6/10
  * Desc	        ${权限工具类}
  */
 

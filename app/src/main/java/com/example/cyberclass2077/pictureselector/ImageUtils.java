@@ -8,9 +8,6 @@ import android.net.Uri;
 import android.provider.MediaStore;
 
 /**
- * Author   wildma
- * Github   https://github.com/wildma
- * Date     2018/6/24
  * Desc     ${图片相关工具类}
  */
 

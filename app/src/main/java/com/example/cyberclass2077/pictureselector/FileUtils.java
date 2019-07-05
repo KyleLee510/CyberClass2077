@@ -5,8 +5,6 @@ import java.io.File;
 
 /**
  * Author       wildma
- * Github       https://github.com/wildma
- * CreateDate   2018/6/10
  * Desc	        ${文件相关工具类}
  */
 public final class FileUtils {

@@ -89,6 +89,7 @@
 
     <!--清除缓存设置-->
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout_clear_buffer"
         android:layout_width="match_parent"
         android:layout_height="30dp">
 

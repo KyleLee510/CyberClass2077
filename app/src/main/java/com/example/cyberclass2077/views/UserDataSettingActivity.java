@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
@@ -226,6 +227,7 @@ public class UserDataSettingActivity extends AppCompatActivity {
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true);
                 Glide.with(this).load(picturePath).apply(requestOptions).into(mIvImage);*/
+                Glide.with(this).load(picturePath).into(im_user_photo);
             }
         }
     }
