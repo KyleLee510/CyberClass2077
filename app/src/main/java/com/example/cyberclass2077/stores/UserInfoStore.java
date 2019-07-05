@@ -1,8 +1,10 @@
 package com.example.cyberclass2077.stores;
 
 import com.example.cyberclass2077.actions.Action;
+import com.example.cyberclass2077.actions.GetUserInfoAction;
 import com.example.cyberclass2077.actions.UpdateUserInfoAction;
 import com.example.cyberclass2077.connection.Connect;
+import com.example.cyberclass2077.connection.GetUserInfoConnect;
 import com.example.cyberclass2077.connection.UpdateUserInfoConnect;
 import com.example.cyberclass2077.model.User;
 import com.example.cyberclass2077.model.UserInfo;
@@ -38,15 +40,29 @@ public class UserInfoStore extends Store {
                 connect=new UpdateUserInfoConnect();
                 ((UpdateUserInfoConnect)connect).sendUpdateUserInfoRequest((UserInfo)action.getData());
                 break;
+            case GetUserInfoAction
+                        .ACTION_GET_USERINFO:
+                connect=null;
+                connect=new GetUserInfoConnect();
+                ((GetUserInfoConnect)connect).sendGetUserInfoRequest((String)action.getData());
+                break;
 
                 default:
         }
 
     }
+    //更新用户信息事件
     public class UpdateUserInfoEvent extends StoreChangeEvent{
         public boolean isUpdateUserInfoSuccessful = false;
         public UpdateUserInfoEvent(boolean isUpdateUserInfoSuccessful){
             this.isUpdateUserInfoSuccessful = isUpdateUserInfoSuccessful;
+        }
+    }
+    //获取用户信息事件
+    public class GetUserInfoEvent extends StoreChangeEvent{
+        boolean isGetUserInfoSuccessful=false;
+        public GetUserInfoEvent(boolean isGetUserInfoSuccessful){
+            this.isGetUserInfoSuccessful=isGetUserInfoSuccessful;
         }
     }
 }

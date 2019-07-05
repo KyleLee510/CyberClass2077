@@ -57,6 +57,15 @@ public class ActionsCreator {
                 userInfo
         ));
     }
+    //获取用户信息请求
+    //用户进入用户设置界面后就调用这个接口
+    //结果存储在UserinfoStore.getInstance.getUserInfo里
+    public void getUserInfo(String userName){
+        dispatcher.dispatch(new GetUserInfoAction(
+                GetUserInfoAction.ACTION_GET_USERINFO,
+                userName
+        ));
+    }
 
 
 }

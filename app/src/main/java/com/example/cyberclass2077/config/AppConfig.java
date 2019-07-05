@@ -8,5 +8,6 @@ public class AppConfig {
     public final static String SETTINGS_LOGOUT=BASE_URL_PATH.concat("/logout");
     public final static String SETTINGS_UPDATE_PASSWORD =BASE_URL_PATH.concat("/update_password");
     public final static String SETTINGS_UPDATE_USERINFO=BASE_URL_PATH.concat("/update_userinfo");
+    public final static String SETTINGS_GET_USERINFO=BASE_URL_PATH.concat("/get_userinfo");
 
 }
