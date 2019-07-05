@@ -89,7 +89,7 @@ public class UserDataSettingActivity extends AppCompatActivity {
         //获取 用户 数据仓库单例
         userInfoStore = UserInfoStore.getInstance();
         userInfo = userInfoStore.getUserInfo();
-        userInfo.setUserName(user.getUserName());
+        //userInfo.setUserName(user.getUserName());
         //在调度者里注册 用户 数据仓库，若已注册，不会重复注册
         dispatcher.register(userInfoStore);
     }
@@ -103,8 +103,35 @@ public class UserDataSettingActivity extends AppCompatActivity {
             ).show();
         }
     }
+    @Subscribe
+    public void onGetUserInfo(UserInfoStore.GetUserInfoEvent event) {
+        //获取用户个人信息并显示：
+        et_set_nick_name.setHint(userInfo.getNickName());
+        String gender = userInfo.getGender();
+
+        if(gender.equals("保密")) {
+            sp_set_gender.setSelection(0);
+        }
+        else if(gender.equals("男")) {
+            sp_set_gender.setSelection(1);
+        }
+        else {
+            sp_set_gender.setSelection(2);
+        }
+        txt_to_DatePickerDialog.setText(userInfo.getBirthDate());
+
+        if(event.isGetUserInfoSuccessful) {
+            Toast.makeText(this,
+                    String.format("已获取"),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+    }
+
 
     void initWidget() {
+        actionsCreator.getUserInfo(user.getUserName());//获取用户信息
+
         to_back = (ImageButton) findViewById(R.id.btn_dataSetting_back);
         txt_to_DatePickerDialog = (TextView)  findViewById(R.id.txt_set_borndate);
         cal = Calendar.getInstance();
@@ -160,7 +187,7 @@ public class UserDataSettingActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-
+        //保存个人设置
         txt_to_save_UserInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,6 +196,7 @@ public class UserDataSettingActivity extends AppCompatActivity {
             }
         });
 
+        //头像设置
         linearlayout_set_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

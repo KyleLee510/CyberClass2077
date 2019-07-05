@@ -60,7 +60,7 @@ public class UserInfoStore extends Store {
     }
     //获取用户信息事件
     public class GetUserInfoEvent extends StoreChangeEvent{
-        boolean isGetUserInfoSuccessful=false;
+        public boolean isGetUserInfoSuccessful = false;
         public GetUserInfoEvent(boolean isGetUserInfoSuccessful){
             this.isGetUserInfoSuccessful=isGetUserInfoSuccessful;
         }
