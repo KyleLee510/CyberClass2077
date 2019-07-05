@@ -2,6 +2,7 @@ package com.example.cyberclass2077.views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -161,6 +162,12 @@ public class Fragment3 extends Fragment {
             txtAccountnumber.setVisibility(View.VISIBLE);
             txtUserName.setText("昵称");
             txtAccountnumber.setText(user.getUserName());
+
+            String picturePath = "/storage/emulated/0/PictureSelector.temp.jpg";
+            if (picturePath != null) {
+                imagePhoto.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            }
+
             //点击头像
             imagePhoto.setOnClickListener(new View.OnClickListener() {
                 @Override

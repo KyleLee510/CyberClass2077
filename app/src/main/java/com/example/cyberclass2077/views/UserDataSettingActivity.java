@@ -192,13 +192,18 @@ public class UserDataSettingActivity extends AppCompatActivity {
             }
         });
 
+        String picturePath = "/storage/emulated/0/PictureSelector.temp.jpg";
+        if (picturePath != null) {
+            im_user_photo.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+        }
+
         //头像设置
         linearlayout_set_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PictureSelector
                         .create(UserDataSettingActivity.this, PictureSelector.SELECT_REQUEST_CODE)
-                        .selectPicture(true, 80, 80, 1, 1);
+                        .selectPicture(true, 60, 60, 1, 1);
             }
         });
     }
