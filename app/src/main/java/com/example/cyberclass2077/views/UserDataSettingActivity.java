@@ -26,7 +26,7 @@ import com.example.cyberclass2077.model.UserInfo;
 import com.example.cyberclass2077.stores.UserInfoStore;
 import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
-import com.wildma.pictureselector.PictureSelector;
+import com.example.cyberclass2077.pictureselector.PictureSelector;
 
 import java.util.Calendar;
 
@@ -203,7 +203,7 @@ public class UserDataSettingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 PictureSelector
                         .create(UserDataSettingActivity.this, PictureSelector.SELECT_REQUEST_CODE)
-                        .selectPicture(true, 60, 60, 1, 1);
+                        .selectPicture(true, 30, 30, 1, 1);
             }
         });
     }
@@ -216,7 +216,7 @@ public class UserDataSettingActivity extends AppCompatActivity {
             if (data != null) {
                 String picturePath = data.getStringExtra(PictureSelector.PICTURE_PATH);
                 im_user_photo.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-
+                im_user_photo.setScaleType(ImageView.ScaleType.FIT_XY);
                 /*如果使用 Glide 加载图片，则需要禁止 Glide 从缓存中加载，因为裁剪后保存的图片地址是相同的*/
                 /*RequestOptions requestOptions = RequestOptions
                         .circleCropTransform()
