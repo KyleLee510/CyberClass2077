@@ -234,6 +234,9 @@ public class UserDataSettingActivity extends AppCompatActivity {
     void setUserInfo() {
         String userName = user.getUserName();
         String nickName = et_set_nick_name.getText().toString();
+        if(nickName.equals("")) {
+            nickName = "昵称";
+        }
         String gender = sp_set_gender.getSelectedItem().toString();
         String dateBorn = txt_to_DatePickerDialog.getText().toString();
         userInfo.setUserName(userName);

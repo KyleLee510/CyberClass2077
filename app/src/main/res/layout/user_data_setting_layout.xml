@@ -127,7 +127,7 @@
             android:layout_marginLeft="50dp"
             android:textColor="#9F9FA0"
             android:textColorHint="#9F9FA0"
-            android:hint="nickname"/>
+            android:hint = "nickname"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
