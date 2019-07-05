@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -109,6 +110,9 @@ public class UserDataSettingActivity extends AppCompatActivity {
         sp_set_gender = (Spinner) findViewById(R.id.sp_set_gender);
         linearlayout_set_image = (LinearLayout) findViewById(R.id.linearlayout_set_image);
 
+        et_set_nick_name.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        et_set_nick_name.setSingleLine();
+
         txt_username.setText(user.getUserName());//设置显示当前用户的用户名
         //返回个人主页
         to_back.setOnClickListener(new View.OnClickListener() {
@@ -167,10 +171,8 @@ public class UserDataSettingActivity extends AppCompatActivity {
         String gender = sp_set_gender.getSelectedItem().toString();
         String dateBorn = txt_to_DatePickerDialog.getText().toString();
         userInfo.setUserName(userName);
-        Log.d("test",userInfo.getUserName());
         userInfo.setNickName(nickName);
         userInfo.setGender(gender);
         userInfo.setBirthDate(dateBorn);
-        Log.d("在哪里",dateBorn);
     }
 }
