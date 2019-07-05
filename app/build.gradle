@@ -37,6 +37,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'com.google.code.gson:gson:2.8.0'
 
+    //杨威 2019-7-5
+    implementation 'com.qmuiteam:qmui:1.2.0'
+
     //lee
     //implementation 'com.github.wildma:PictureSelector:1.1.3'
 }
