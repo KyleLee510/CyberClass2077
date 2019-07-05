@@ -28,6 +28,7 @@ import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
 import com.example.cyberclass2077.pictureselector.PictureSelector;
 
+import java.io.File;
 import java.util.Calendar;
 
 public class UserDataSettingActivity extends AppCompatActivity {
@@ -192,8 +193,10 @@ public class UserDataSettingActivity extends AppCompatActivity {
             }
         });
 
+        //若存在头像则设置
         String picturePath = "/storage/emulated/0/PictureSelector.temp.jpg";
-        if (picturePath != null) {
+        File photoFile = new File(picturePath);
+        if (photoFile.exists()) {
             im_user_photo.setImageBitmap(BitmapFactory.decodeFile(picturePath));
         }
 
@@ -203,7 +206,7 @@ public class UserDataSettingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 PictureSelector
                         .create(UserDataSettingActivity.this, PictureSelector.SELECT_REQUEST_CODE)
-                        .selectPicture(true, 30, 30, 1, 1);
+                        .selectPicture(true, 100, 100, 1, 1);
             }
         });
     }
