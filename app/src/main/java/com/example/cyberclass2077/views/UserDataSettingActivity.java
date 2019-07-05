@@ -2,6 +2,7 @@ package com.example.cyberclass2077.views;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,6 +26,7 @@ import com.example.cyberclass2077.model.UserInfo;
 import com.example.cyberclass2077.stores.UserInfoStore;
 import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
+import com.wildma.pictureselector.PictureSelector;
 
 import java.util.Calendar;
 
@@ -37,6 +40,7 @@ public class UserDataSettingActivity extends AppCompatActivity {
     private EditText et_set_nick_name;
     private Spinner sp_set_gender;
     private LinearLayout linearlayout_set_image;
+    private ImageView im_user_photo;
 
     private int mYear;
     private int mMonth;
@@ -109,6 +113,7 @@ public class UserDataSettingActivity extends AppCompatActivity {
         et_set_nick_name = (EditText) findViewById(R.id.et_set_nick_name);
         sp_set_gender = (Spinner) findViewById(R.id.sp_set_gender);
         linearlayout_set_image = (LinearLayout) findViewById(R.id.linearlayout_set_image);
+        im_user_photo = (ImageView) findViewById(R.id.image_user_photo);//用户头像设置
 
         et_set_nick_name.setImeOptions(EditorInfo.IME_ACTION_DONE);
         et_set_nick_name.setSingleLine();
@@ -163,7 +168,36 @@ public class UserDataSettingActivity extends AppCompatActivity {
                 actionsCreator.updateUserInfo(userInfo);
             }
         });
+
+        linearlayout_set_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PictureSelector
+                        .create(UserDataSettingActivity.this, PictureSelector.SELECT_REQUEST_CODE)
+                        .selectPicture(true, 80, 80, 1, 1);
+            }
+        });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /*结果回调*/
+        if (requestCode == PictureSelector.SELECT_REQUEST_CODE) {
+            if (data != null) {
+                String picturePath = data.getStringExtra(PictureSelector.PICTURE_PATH);
+                im_user_photo.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
+                /*如果使用 Glide 加载图片，则需要禁止 Glide 从缓存中加载，因为裁剪后保存的图片地址是相同的*/
+                /*RequestOptions requestOptions = RequestOptions
+                        .circleCropTransform()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true);
+                Glide.with(this).load(picturePath).apply(requestOptions).into(mIvImage);*/
+            }
+        }
+    }
+
 
     void setUserInfo() {
         String userName = user.getUserName();
