@@ -15,6 +15,24 @@
         android:layout_height="40dp">
 
     </android.support.design.widget.TabLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/sort_principle"></Spinner>
+
+        <TextView
+            android:id="@+id/search_tag"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="选择标签"
+            android:gravity="center"/>
+
+    </LinearLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/page"
