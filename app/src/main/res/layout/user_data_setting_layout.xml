@@ -34,6 +34,7 @@
             app:layout_constraintTop_toTopOf="parent" />
         <!--保存按钮-->
         <TextView
+            android:id="@+id/txt_userInfo_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -48,21 +49,28 @@
     </android.support.constraint.ConstraintLayout>
 
     <!--头像编辑地方-->
-    <ImageButton
-        android:layout_width = "80dp"
-        android:layout_height = "80dp"
-        android:scaleType="fitXY"
-        android:background="@drawable/roundbuttonshape"
-        android:layout_gravity="center"
-        android:src="@drawable/user"
-        android:layout_marginTop="20sp"/>
-    <TextView
+    <LinearLayout
+        android:id="@+id/linearlayout_set_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="修改头像"
-        android:textSize="20sp"
-        android:layout_marginTop="5dp"/>
+        android:orientation="vertical">
+        <ImageButton
+            android:layout_width = "80dp"
+            android:layout_height = "80dp"
+            android:scaleType="fitXY"
+            android:background="@drawable/roundbuttonshape"
+            android:layout_gravity="center"
+            android:src="@drawable/user"
+            android:layout_marginTop="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="修改头像"
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"/>
+    </LinearLayout>
 
     <!--用户的登录用用户名，不显示给别人看，不具有可编辑性，采用textview-->
     <LinearLayout
@@ -77,6 +85,7 @@
             android:textSize="20sp"/>
 
         <TextView
+            android:id="@+id/txt_userInfo_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -108,6 +117,7 @@
             android:textSize="20sp"/>
 
         <EditText
+            android:id="@+id/et_set_nick_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -138,7 +148,19 @@
             android:text="性别"
             android:textSize="20sp"/>
 
-        <EditText
+
+        <Spinner
+            android:id="@+id/sp_set_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:entries="@array/tag_gender">
+        </Spinner>
+        <!--<EditText
+            android:id="@+id/et_set_gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -147,7 +169,7 @@
             android:layout_marginLeft="50dp"
             android:textColor="#9F9FA0"
             android:textColorHint="#9F9FA0"
-            android:hint="男"/>
+            android:hint="男"/>-->
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -167,10 +189,10 @@
             android:layout_width="80sp"
             android:layout_height="wrap_content"
             android:text="出生日期"
-            android:textSize="20dp"/>
+            android:textSize="18dp"/>
 
         <TextView
-            android:id="@+id/user_date_setting_borndate"
+            android:id="@+id/txt_set_borndate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -179,17 +201,8 @@
             android:layout_marginLeft="50dp"
             android:textColor="#9F9FA0"
             android:textColorHint="#9F9FA0"
-            android:text="2019 - 09 - 01"/>
+            android:text="2019-09-01"/>
 
-        <!--<DatePicker-->
-            <!--android:id="@+id/user_date_setting_datepickerdialog"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginRight="50dp"-->
-            <!--android:calendarViewShown="false"-->
-            <!--android:layout_marginLeft="50dp"-->
-            <!--android:background="@null">-->
-        <!--</DatePicker>-->
     </LinearLayout>
     <View
         android:layout_width="match_parent"

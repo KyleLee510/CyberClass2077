@@ -53,9 +53,9 @@ public class UserInfoStore extends Store {
     }
     //更新用户信息事件
     public class UpdateUserInfoEvent extends StoreChangeEvent{
-        boolean isUpdateUserInfoSuccessful=false;
+        public boolean isUpdateUserInfoSuccessful = false;
         public UpdateUserInfoEvent(boolean isUpdateUserInfoSuccessful){
-            this.isUpdateUserInfoSuccessful=isUpdateUserInfoSuccessful;
+            this.isUpdateUserInfoSuccessful = isUpdateUserInfoSuccessful;
         }
     }
     //获取用户信息事件
