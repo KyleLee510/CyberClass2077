@@ -1,7 +1,7 @@
 package com.example.cyberclass2077.model;
 
 public class User {
-    private String userId="";
+    private Integer userId;
     private String userName="";
     private String passWord="";
     private boolean loginState=false;
@@ -9,7 +9,7 @@ public class User {
     public User(){
     }
 
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
@@ -25,7 +25,7 @@ public class User {
         this.passWord=passWord;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
