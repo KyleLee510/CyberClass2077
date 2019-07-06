@@ -36,6 +36,7 @@ public class Fragment2 extends Fragment{
         pager.setAdapter(fragmentAdapter);
         tabLayout.setupWithViewPager(pager);//与ViewPage建立关系
 
+
         initData();
         fragmentAdapter.setList(mTitles);
         return view;
