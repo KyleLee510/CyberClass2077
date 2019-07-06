@@ -205,6 +205,11 @@ public class UserDataSettingActivity extends AppCompatActivity {
         linearlayout_set_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /**
+                 * create()方法参数一是上下文，在activity中传activity.this，在fragment中传fragment.this。参数二为请求码，用于结果回调onActivityResult中判断
+                 * selectPicture()方法参数分别为 是否裁剪、裁剪后图片的宽(单位px)、裁剪后图片的高、宽比例、高比例。都不传则默认为裁剪，宽200，高200，宽高比例为1：1。
+                 */
+
                 PictureSelector
                         .create(UserDataSettingActivity.this, PictureSelector.SELECT_REQUEST_CODE)
                         .selectPicture(true, 100, 100, 1, 1);
@@ -227,7 +232,6 @@ public class UserDataSettingActivity extends AppCompatActivity {
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true);
                 Glide.with(this).load(picturePath).apply(requestOptions).into(mIvImage);*/
-                Glide.with(this).load(picturePath).into(im_user_photo);
             }
         }
     }

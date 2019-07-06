@@ -3,10 +3,12 @@ package com.example.cyberclass2077.stores;
 import android.graphics.Bitmap;
 
 import com.example.cyberclass2077.actions.Action;
+import com.example.cyberclass2077.actions.GetPictureAction;
 import com.example.cyberclass2077.actions.GetUserInfoAction;
 import com.example.cyberclass2077.actions.UpdateUserInfoAction;
 import com.example.cyberclass2077.actions.UploadPictureAction;
 import com.example.cyberclass2077.connection.Connect;
+import com.example.cyberclass2077.connection.GetPicturePortraitConnect;
 import com.example.cyberclass2077.connection.GetUserInfoConnect;
 import com.example.cyberclass2077.connection.UpdateUserInfoConnect;
 import com.example.cyberclass2077.connection.UploadPicturePortraitConnect;
@@ -59,6 +61,16 @@ public class UserInfoStore extends Store {
                 );
                 break;
             }
+            case GetPictureAction.ACTION_GET_PICTURE_PORTRAIT:
+            {
+                connect=null;
+                connect=new GetPicturePortraitConnect();
+                ((GetPicturePortraitConnect)connect).sendGetPortraitRequest(
+                        (String)action.getData()
+                );
+                break;
+            }
+
 
 
 
@@ -86,5 +98,15 @@ public class UserInfoStore extends Store {
         public UploadPortraitEvent (boolean isSetPortraitSuccessful){
             this.isSetPortraitSuccessful=isSetPortraitSuccessful;
         }
+    }
+    //获取用户头像事件
+    public class GetPortraitEvent extends StoreChangeEvent{
+        public Bitmap portrait=null;
+        public boolean isGetPortraitSuccessful=false;
+        public GetPortraitEvent(Bitmap portrait,boolean isGetPortraitSuccessful){
+            this.portrait=portrait;
+            this.isGetPortraitSuccessful=isGetPortraitSuccessful;
+        }
+
     }
 }
