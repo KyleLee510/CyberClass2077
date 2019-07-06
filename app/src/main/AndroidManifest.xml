@@ -32,7 +32,7 @@
         <activity android:name=".views.Fragment3SettingActivity" />
         <activity android:name=".views.LoginActivity"/>
         <activity android:name=".views.MainActivity"/>
-        <activity android:name=".views.DetailComment"></activity>
+        <activity android:name=".views.Comment.DetailComment"></activity>
         <activity android:name=".start_atcivity"></activity>
         <activity android:name=".pictureselector.PictureSelectActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />

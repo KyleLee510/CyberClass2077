@@ -1,7 +1,6 @@
 package com.example.cyberclass2077.adapter;
 import android.content.Context;
 import android.content.Intent;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +12,7 @@ import android.widget.TextView;
 
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.bean.DynamicBean;
-import com.example.cyberclass2077.start_atcivity;
-import com.example.cyberclass2077.views.DetailComment;
+import com.example.cyberclass2077.views.Comment.DetailComment;
 
 import java.util.List;
 
