@@ -1,10 +1,12 @@
 package com.example.cyberclass2077.views;
 
+import android.Manifest;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.cyberclass2077.R;
+import com.example.cyberclass2077.pictureselector.PermissionUtils;
 
 public class LaunchActivity extends AppCompatActivity {
 
@@ -16,7 +18,6 @@ public class LaunchActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.launch_layout);
-
         new android.os.Handler().postDelayed(new Runnable() {
             public void run() {
                 Intent mainIntent = new Intent(LaunchActivity.this,MainActivity.class);

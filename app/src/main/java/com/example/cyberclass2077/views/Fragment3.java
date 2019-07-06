@@ -1,5 +1,6 @@
 package com.example.cyberclass2077.views;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -27,6 +28,8 @@ import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
 import com.example.cyberclass2077.model.UserInfo;
+import com.example.cyberclass2077.pictureselector.FileUtils;
+import com.example.cyberclass2077.pictureselector.PermissionUtils;
 import com.example.cyberclass2077.stores.UserInfoStore;
 import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
@@ -48,6 +51,7 @@ public class Fragment3 extends Fragment {
 
 
 
+
     //在这里声明其他引用变量
     private String[] lv_tag_content;//签到的等级tag
     private int check_in_day=0;//连续签到的天数
@@ -60,6 +64,8 @@ public class Fragment3 extends Fragment {
 
     private UserStore userStore;
     private User user;
+
+    private final int PERMISSION_CODE_FIRST = 0x14;//权限请求码
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -141,12 +147,14 @@ public class Fragment3 extends Fragment {
         to_contribution.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+
                 Intent intent = new Intent(getActivity(), Fragment3UploadActivity.class);
                 startActivity(intent);
                 //getActivity().finish();
                 //需要在finish和startActivity之后进行
                 //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
                 getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+
             }
         });
 
@@ -187,8 +195,6 @@ public class Fragment3 extends Fragment {
             txtUserName.setText("昵称");
             txtAccountnumber.setText(user.getUserName());
 
-
-            //若存在头像则设置
             String picturePath = "/storage/emulated/0/PictureSelector.temp.jpg";
             File photoFile = new File(picturePath);
             if (photoFile.exists()) {

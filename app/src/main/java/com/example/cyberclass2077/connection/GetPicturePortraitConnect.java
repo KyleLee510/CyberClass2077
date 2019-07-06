@@ -2,8 +2,8 @@ package com.example.cyberclass2077.connection;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Base64;
-
+//import android.util.Base64
+import java.util.Base64;
 import com.alibaba.fastjson.JSON;
 import com.example.cyberclass2077.config.AppConfig;
 import com.example.cyberclass2077.stores.UserInfoStore;
@@ -49,7 +49,8 @@ public class GetPicturePortraitConnect extends Connect<String> {
         Bitmap bitmap = null;
         try {
             byte[] bitmapArray;
-            bitmapArray = Base64.decode(string, Base64.DEFAULT);
+            //bitmapArray = Base64.decode(string, Base64.DEFAULT);
+            bitmapArray=Base64.getDecoder().decode(string);
             bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0,
                     bitmapArray.length);
         } catch (Exception e) {
