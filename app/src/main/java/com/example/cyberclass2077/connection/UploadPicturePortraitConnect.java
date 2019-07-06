@@ -1,8 +1,8 @@
 package com.example.cyberclass2077.connection;
 
 import android.graphics.Bitmap;
-import android.util.Base64;
-
+//import android.util.Base64;
+import java.util.Base64;
 import com.alibaba.fastjson.JSON;
 import com.example.cyberclass2077.config.AppConfig;
 import com.example.cyberclass2077.stores.UserInfoStore;
@@ -50,7 +50,8 @@ public class UploadPicturePortraitConnect extends Connect<Bitmap> {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
         byte[] data = baos.toByteArray();
-        String datastring = Base64.encodeToString(data, Base64.DEFAULT);
+        //String datastring = Base64.encodeToString(data, Base64.DEFAULT);
+        String datastring=Base64.getEncoder().encodeToString(data);
         return  datastring;
     }
 }
