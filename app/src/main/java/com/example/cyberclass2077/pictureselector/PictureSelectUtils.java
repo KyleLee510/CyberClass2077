@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
@@ -109,6 +110,11 @@ public class PictureSelectUtils {
                     } else {
                         picturePath = ImageUtils.getImagePathFromUri(activity, uri);
                     }
+                    /*if(picturePath != null)
+                        Log.d("相册:",picturePath);
+                    else {
+                        Log.d("相册:","空空");
+                    }*/
                     break;
                 case GET_BY_CAMERA:
                     uri = takePictureUri;
@@ -118,13 +124,20 @@ public class PictureSelectUtils {
                         picturePath = takePictureFile.getAbsolutePath();
                     }
                     activity.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(takePictureFile)));//发送广播通知图库更新
+                    /*if(picturePath != null)
+                        Log.d("相机:",picturePath);
+                    else {
+                        Log.d("相机:","空空");
+                    }*/
                     break;
                 case CROP:
                     dealCrop(activity);
                     File file = new File(cropPictureTempUri.getPath());
-                    if (file != null) {
+                    /*if (file != null) {
                         picturePath = file.getAbsolutePath();
                     }
+                    if(picturePath != null)
+                        Log.d("裁剪:",picturePath);*/
                     break;
             }
         }
@@ -172,6 +185,7 @@ public class PictureSelectUtils {
 
         /*解决小米miui系统调用系统裁剪图片功能camera.action.CROP后崩溃或重新打开app的问题*/
         StringBuffer buffer = new StringBuffer();
+
         String pathName = buffer.append("file:///").append(FileUtils.getRootPath()).append(File.separator).append(Constant.APP_NAME).append(".temp.jpg").toString();
         cropPictureTempUri = Uri.parse(pathName);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, cropPictureTempUri);//输出路径(裁剪后的保存路径)
@@ -196,5 +210,4 @@ public class PictureSelectUtils {
         }
         return bitmap;
     }
-
 }

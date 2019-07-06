@@ -64,7 +64,7 @@ public class Fragment3SettingActivity extends AppCompatActivity {
     }
 
     @Subscribe
-    void onLogoutEvent(UserStore.LogoutEvent event) {
+    public void onLogoutEvent(UserStore.LogoutEvent event) {
         if(event.isLogoutSuccessful) {
             Toast.makeText(this,
                     String.format("退出成功!",userStore.getUser().getUserName()),
@@ -91,7 +91,7 @@ public class Fragment3SettingActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "删除文件失败:" + delFile + "不存在！", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    file.delete();
+                    file.deleteOnExit();
                 }
             }
         });
