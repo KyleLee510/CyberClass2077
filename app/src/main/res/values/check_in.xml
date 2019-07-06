@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="check_in_tag">
+        <item>LV0</item>
+        <item>LV1</item>
+        <item>LV2</item>
+        <item>LV3</item>
+        <item>LV4</item>
+        <item>LV5</item>
+        <item>LV6</item>
+        <item>LV7</item>
+        <item>LV8</item>
+        <item>LV9</item>
+    </string-array>
+</resources>

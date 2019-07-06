@@ -8,6 +8,7 @@
 
     <color name="bg_color">#DBDBDB</color>
     <color name="circle_button_color">#B3C833</color>
+    <color name="bg_Gainsboro">#DCDCDC</color>	
     <color name="border">#CBCACA</color>
     <color name="contents_text">#ff000000</color>
     <color name="encode_view">#ffffffff</color>
