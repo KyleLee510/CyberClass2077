@@ -1,5 +1,6 @@
 package com.example.cyberclass2077.views;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.MediaStore;
@@ -15,6 +16,8 @@ import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
+import com.example.cyberclass2077.pictureselector.FileUtils;
+import com.example.cyberclass2077.pictureselector.PermissionUtils;
 import com.example.cyberclass2077.pictureselector.PictureSelector;
 import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
@@ -33,6 +36,8 @@ public class Fragment3SettingActivity extends AppCompatActivity {
     private ActionsCreator actionsCreator;
     private UserStore userStore;
     private User user;
+
+    private final int PERMISSION_CODE_FIRST = 0x14;//权限请求码
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,16 +94,19 @@ public class Fragment3SettingActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
-                String delFile = "/storage/emulated/0/PictureSelector.temp.jpg";
+                String delFile = "/storage/emulated/0/PictureSelector";
+                //String delFile = "/storage/emulated/0/PictureSelector.temp.jpg";
                 File file = new File(delFile);
-                if (!file.exists()) {
-                    Toast.makeText(getApplicationContext(), "删除文件失败:" + delFile + "不存在！", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    file.delete();
-                    //https://www.jianshu.com/p/1ffd18367cc4原因所在
-                    getContentResolver().delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, MediaStore.Images.Media.DATA + "=?", new String[]{delFile});
+                boolean checkPermissionFirst = PermissionUtils.checkPermissionFirst(Fragment3SettingActivity.this, PERMISSION_CODE_FIRST,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE});
+                if (checkPermissionFirst) {
+                    deleteFile(file);
+                }
+                else {
+                    Toast.makeText(Fragment3SettingActivity.this,
+                            String.format("请给予权限再操作"),
+                            Toast.LENGTH_SHORT
+                    ).show();
                 }
 
             }
@@ -146,6 +154,24 @@ public class Fragment3SettingActivity extends AppCompatActivity {
         else {
             //to_changePassword.setVisibility(View.INVISIBLE);
             //vLogout_ConsrtraintLayout.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void deleteFile(File file) {
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                File f = files[i];
+                deleteFile(f);
+            }
+            //file.delete();//如要保留文件夹，只删除文件，请注释这行,感觉删文件夹有点慢，好像顺便已删除文件夹了
+        } else if (file.exists()) {
+            String filePath = file.getAbsolutePath();
+            file.delete();
+            //https://www.jianshu.com/p/1ffd18367cc4原因所在
+            getContentResolver().delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    MediaStore.Images.Media.DATA + "=?",
+                    new String[]{filePath});
         }
     }
 
