@@ -4,7 +4,6 @@ import android.os.Environment;
 import java.io.File;
 
 /**
- * Author       wildma
  * Desc	        ${文件相关工具类}
  */
 public final class FileUtils {
