@@ -1,5 +1,7 @@
 package com.example.cyberclass2077.actions;
 
+import android.graphics.Bitmap;
+
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
 import com.example.cyberclass2077.model.UserInfo;
@@ -64,6 +66,13 @@ public class ActionsCreator {
         dispatcher.dispatch(new GetUserInfoAction(
                 GetUserInfoAction.ACTION_GET_USERINFO,
                 userName
+        ));
+    }
+    //上传用户头像请求
+    public void uploadPortrait(Bitmap bitmap){
+        dispatcher.dispatch(new UploadPictureAction(
+        UploadPictureAction.ACTION_SEND_PICTURE_PORTRAIT,
+        bitmap
         ));
     }
 

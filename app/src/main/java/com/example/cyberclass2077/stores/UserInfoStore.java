@@ -1,11 +1,15 @@
 package com.example.cyberclass2077.stores;
 
+import android.graphics.Bitmap;
+
 import com.example.cyberclass2077.actions.Action;
 import com.example.cyberclass2077.actions.GetUserInfoAction;
 import com.example.cyberclass2077.actions.UpdateUserInfoAction;
+import com.example.cyberclass2077.actions.UploadPictureAction;
 import com.example.cyberclass2077.connection.Connect;
 import com.example.cyberclass2077.connection.GetUserInfoConnect;
 import com.example.cyberclass2077.connection.UpdateUserInfoConnect;
+import com.example.cyberclass2077.connection.UploadPicturePortraitConnect;
 import com.example.cyberclass2077.model.User;
 import com.example.cyberclass2077.model.UserInfo;
 import com.squareup.otto.Subscribe;
@@ -46,6 +50,17 @@ public class UserInfoStore extends Store {
                 connect=new GetUserInfoConnect();
                 ((GetUserInfoConnect)connect).sendGetUserInfoRequest((String)action.getData());
                 break;
+            case UploadPictureAction
+                        .ACTION_SEND_PICTURE_PORTRAIT:{
+                connect=null;
+                connect=new UploadPicturePortraitConnect();
+                ((UploadPicturePortraitConnect)connect).sendUploadPicturePortraitRequest(
+                        (Bitmap)action.getData()
+                );
+                break;
+            }
+
+
 
                 default:
         }
@@ -60,9 +75,16 @@ public class UserInfoStore extends Store {
     }
     //获取用户信息事件
     public class GetUserInfoEvent extends StoreChangeEvent{
-        public boolean isGetUserInfoSuccessful=false;
+        public boolean isGetUserInfoSuccessful = false;
         public GetUserInfoEvent(boolean isGetUserInfoSuccessful){
             this.isGetUserInfoSuccessful=isGetUserInfoSuccessful;
+        }
+    }
+    //设置用户头像事件
+    public class UploadPortraitEvent extends StoreChangeEvent{
+        public boolean isSetPortraitSuccessful=false;
+        public UploadPortraitEvent (boolean isSetPortraitSuccessful){
+            this.isSetPortraitSuccessful=isSetPortraitSuccessful;
         }
     }
 }

@@ -2,6 +2,7 @@ package com.example.cyberclass2077.views;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,6 +26,7 @@ import com.example.cyberclass2077.model.UserInfo;
 import com.example.cyberclass2077.stores.UserInfoStore;
 import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
+import com.wildma.pictureselector.PictureSelector;
 
 import java.util.Calendar;
 
@@ -37,6 +40,7 @@ public class UserDataSettingActivity extends AppCompatActivity {
     private EditText et_set_nick_name;
     private Spinner sp_set_gender;
     private LinearLayout linearlayout_set_image;
+    private ImageView im_user_photo;
 
     private int mYear;
     private int mMonth;
@@ -84,8 +88,9 @@ public class UserDataSettingActivity extends AppCompatActivity {
         actionsCreator = ActionsCreator.get(dispatcher);
         //获取 用户 数据仓库单例
         userInfoStore = UserInfoStore.getInstance();
-        userInfo = userInfoStore.getUserInfo();
-        userInfo.setUserName(user.getUserName());
+
+        userInfo = userInfoStore.getUserInfo();//获取已存在的用户信息
+
         //在调度者里注册 用户 数据仓库，若已注册，不会重复注册
         dispatcher.register(userInfoStore);
     }
@@ -100,7 +105,9 @@ public class UserDataSettingActivity extends AppCompatActivity {
         }
     }
 
+
     void initWidget() {
+
         to_back = (ImageButton) findViewById(R.id.btn_dataSetting_back);
         txt_to_DatePickerDialog = (TextView)  findViewById(R.id.txt_set_borndate);
         cal = Calendar.getInstance();
@@ -109,9 +116,30 @@ public class UserDataSettingActivity extends AppCompatActivity {
         et_set_nick_name = (EditText) findViewById(R.id.et_set_nick_name);
         sp_set_gender = (Spinner) findViewById(R.id.sp_set_gender);
         linearlayout_set_image = (LinearLayout) findViewById(R.id.linearlayout_set_image);
+        im_user_photo = (ImageView) findViewById(R.id.image_user_photo);//用户头像设置
 
         et_set_nick_name.setImeOptions(EditorInfo.IME_ACTION_DONE);
         et_set_nick_name.setSingleLine();
+
+
+
+        //获取用户个人信息并显示：
+        userInfo = userInfoStore.getUserInfo();
+        et_set_nick_name.setHint(userInfo.getNickName());
+        String gender = userInfo.getGender();
+        if(gender.equals("保密")) {
+            sp_set_gender.setSelection(0);
+        }
+        else if(gender.equals("男")) {
+            sp_set_gender.setSelection(1);
+        }
+        else {
+            sp_set_gender.setSelection(2);
+        }
+
+        txt_to_DatePickerDialog.setText(userInfo.getBirthDate());
+
+
 
         txt_username.setText(user.getUserName());//设置显示当前用户的用户名
         //返回个人主页
@@ -155,7 +183,7 @@ public class UserDataSettingActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-
+        //保存个人设置
         txt_to_save_UserInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,7 +191,37 @@ public class UserDataSettingActivity extends AppCompatActivity {
                 actionsCreator.updateUserInfo(userInfo);
             }
         });
+
+        //头像设置
+        linearlayout_set_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PictureSelector
+                        .create(UserDataSettingActivity.this, PictureSelector.SELECT_REQUEST_CODE)
+                        .selectPicture(true, 80, 80, 1, 1);
+            }
+        });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /*结果回调*/
+        if (requestCode == PictureSelector.SELECT_REQUEST_CODE) {
+            if (data != null) {
+                String picturePath = data.getStringExtra(PictureSelector.PICTURE_PATH);
+                im_user_photo.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
+                /*如果使用 Glide 加载图片，则需要禁止 Glide 从缓存中加载，因为裁剪后保存的图片地址是相同的*/
+                /*RequestOptions requestOptions = RequestOptions
+                        .circleCropTransform()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true);
+                Glide.with(this).load(picturePath).apply(requestOptions).into(mIvImage);*/
+            }
+        }
+    }
+
 
     void setUserInfo() {
         String userName = user.getUserName();
