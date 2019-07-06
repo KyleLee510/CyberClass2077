@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
@@ -26,8 +27,9 @@ import com.example.cyberclass2077.model.UserInfo;
 import com.example.cyberclass2077.stores.UserInfoStore;
 import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
-import com.wildma.pictureselector.PictureSelector;
+import com.example.cyberclass2077.pictureselector.PictureSelector;
 
+import java.io.File;
 import java.util.Calendar;
 
 public class UserDataSettingActivity extends AppCompatActivity {
@@ -192,13 +194,20 @@ public class UserDataSettingActivity extends AppCompatActivity {
             }
         });
 
+        //若存在头像则设置
+        String picturePath = "/storage/emulated/0/PictureSelector.temp.jpg";
+        File photoFile = new File(picturePath);
+        if (photoFile.exists()) {
+            im_user_photo.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+        }
+
         //头像设置
         linearlayout_set_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PictureSelector
                         .create(UserDataSettingActivity.this, PictureSelector.SELECT_REQUEST_CODE)
-                        .selectPicture(true, 80, 80, 1, 1);
+                        .selectPicture(true, 100, 100, 1, 1);
             }
         });
     }
@@ -211,13 +220,14 @@ public class UserDataSettingActivity extends AppCompatActivity {
             if (data != null) {
                 String picturePath = data.getStringExtra(PictureSelector.PICTURE_PATH);
                 im_user_photo.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-
+                im_user_photo.setScaleType(ImageView.ScaleType.FIT_XY);
                 /*如果使用 Glide 加载图片，则需要禁止 Glide 从缓存中加载，因为裁剪后保存的图片地址是相同的*/
                 /*RequestOptions requestOptions = RequestOptions
                         .circleCropTransform()
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true);
                 Glide.with(this).load(picturePath).apply(requestOptions).into(mIvImage);*/
+                Glide.with(this).load(picturePath).into(im_user_photo);
             }
         }
     }
@@ -226,6 +236,9 @@ public class UserDataSettingActivity extends AppCompatActivity {
     void setUserInfo() {
         String userName = user.getUserName();
         String nickName = et_set_nick_name.getText().toString();
+        if(nickName.equals("")) {
+            nickName = "昵称";
+        }
         String gender = sp_set_gender.getSelectedItem().toString();
         String dateBorn = txt_to_DatePickerDialog.getText().toString();
         userInfo.setUserName(userName);

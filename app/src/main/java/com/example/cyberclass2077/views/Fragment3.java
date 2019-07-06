@@ -2,6 +2,11 @@ package com.example.cyberclass2077.views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -24,6 +29,8 @@ import com.example.cyberclass2077.model.UserInfo;
 import com.example.cyberclass2077.stores.UserInfoStore;
 import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
+
+import java.io.File;
 
 
 public class Fragment3 extends Fragment {
@@ -161,6 +168,13 @@ public class Fragment3 extends Fragment {
             txtAccountnumber.setVisibility(View.VISIBLE);
             txtUserName.setText("昵称");
             txtAccountnumber.setText(user.getUserName());
+
+            //若存在头像则设置
+            String picturePath = "/storage/emulated/0/PictureSelector.temp.jpg";
+            File photoFile = new File(picturePath);
+            if (photoFile.exists()) {
+                imagePhoto.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            }
             //点击头像
             imagePhoto.setOnClickListener(new View.OnClickListener() {
                 @Override

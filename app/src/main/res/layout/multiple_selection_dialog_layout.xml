@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/multiply_selection_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:padding="5dp"
+        >
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/multiply_selection_sure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="确定"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/multiply_selection_recycler_view"
+        android:background="@drawable/qmui_s_list_item_bg_with_border_none"
+        android:textColor="@color/qmui_config_color_blue"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_margin="5dp"
+        android:textSize="14sp"
+        />
+
+    <TextView
+        android:id="@+id/multiply_selection_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取消"
+        android:layout_below="@id/multiply_selection_recycler_view"
+        android:layout_toLeftOf="@id/multiply_selection_sure"
+        android:background="@drawable/qmui_s_list_item_bg_with_border_none"
+        android:textColor="@color/qmui_config_color_blue"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_margin="5dp"
+        android:textSize="14sp"
+        />
+</RelativeLayout>

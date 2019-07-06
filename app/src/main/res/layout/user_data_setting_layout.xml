@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical">
-        <ImageView
+        <com.example.cyberclass2077.controllers.CircleImageView
             android:id="@+id/image_user_photo"
             android:layout_width = "80dp"
             android:layout_height = "80dp"
@@ -127,7 +127,7 @@
             android:layout_marginLeft="50dp"
             android:textColor="#9F9FA0"
             android:textColorHint="#9F9FA0"
-            android:hint="nickname"/>
+            android:hint = "nickname"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"

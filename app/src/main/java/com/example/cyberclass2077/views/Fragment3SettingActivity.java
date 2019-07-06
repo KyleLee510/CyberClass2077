@@ -12,14 +12,18 @@ import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
+import com.example.cyberclass2077.pictureselector.PictureSelector;
 import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
+
+import java.io.File;
 
 public class Fragment3SettingActivity extends AppCompatActivity {
 
     private ImageButton backButton;
     private ConstraintLayout to_changePassword;
     private ConstraintLayout vLogout_ConsrtraintLayout;
+    private ConstraintLayout vClear_buffer;
 
     //在这里声明其他引用变量
     private Dispatcher dispatcher;
@@ -76,6 +80,21 @@ public class Fragment3SettingActivity extends AppCompatActivity {
     }
 
     void initWidget() {
+        vClear_buffer = (ConstraintLayout) findViewById(R.id.constraintLayout_clear_buffer);
+
+        vClear_buffer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String delFile = "/storage/emulated/0/PictureSelector.temp.jpg";
+                File file = new File(delFile);
+                if (!file.exists()) {
+                    Toast.makeText(getApplicationContext(), "删除文件失败:" + delFile + "不存在！", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    file.delete();
+                }
+            }
+        });
         //返回个人主页
         backButton = findViewById(R.id.setting_back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
