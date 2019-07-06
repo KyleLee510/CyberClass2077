@@ -1,9 +1,12 @@
 package com.example.cyberclass2077.views;
 
+import android.content.Context;
 import android.content.Intent;
+import android.provider.MediaStore;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -78,21 +81,26 @@ public class Fragment3SettingActivity extends AppCompatActivity {
             ).show();
         }
     }
-
+    //
     void initWidget() {
         vClear_buffer = (ConstraintLayout) findViewById(R.id.constraintLayout_clear_buffer);
 
         vClear_buffer.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+
                 String delFile = "/storage/emulated/0/PictureSelector.temp.jpg";
                 File file = new File(delFile);
                 if (!file.exists()) {
                     Toast.makeText(getApplicationContext(), "删除文件失败:" + delFile + "不存在！", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    file.deleteOnExit();
+                    file.delete();
+                    //https://www.jianshu.com/p/1ffd18367cc4原因所在
+                    getContentResolver().delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, MediaStore.Images.Media.DATA + "=?", new String[]{delFile});
                 }
+
             }
         });
         //返回个人主页
@@ -140,4 +148,5 @@ public class Fragment3SettingActivity extends AppCompatActivity {
             //vLogout_ConsrtraintLayout.setVisibility(View.INVISIBLE);
         }
     }
+
 }

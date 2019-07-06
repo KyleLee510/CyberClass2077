@@ -2,6 +2,7 @@ package com.example.cyberclass2077.views;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,7 +30,11 @@ import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
 import com.example.cyberclass2077.pictureselector.PictureSelector;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Calendar;
 
 public class UserDataSettingActivity extends AppCompatActivity {
@@ -47,6 +52,7 @@ public class UserDataSettingActivity extends AppCompatActivity {
     private int mYear;
     private int mMonth;
     private int mDay;
+    private String picturePath;
 
     //在这里声明其他引用变量
     private Dispatcher dispatcher;
@@ -96,12 +102,36 @@ public class UserDataSettingActivity extends AppCompatActivity {
         //在调度者里注册 用户 数据仓库，若已注册，不会重复注册
         dispatcher.register(userInfoStore);
     }
-
+    //用户信息更新
     @Subscribe
     public void onUpdateUserInfo(UserInfoStore.UpdateUserInfoEvent event) {
         if(event.isUpdateUserInfoSuccessful) {
             Toast.makeText(this,
                     String.format("您已更新"),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+    }
+    //用户头像上传
+    @Subscribe
+    public void onUploadPortrait(UserInfoStore.UploadPortraitEvent event) {
+        if(event.isSetPortraitSuccessful) {
+            Toast.makeText(this,
+                    String.format("上传图像成功"),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+    }
+    //用户头像下载
+    @Subscribe
+    public void onGetPortraitt(UserInfoStore.GetPortraitEvent event) {
+        //picturePath = "/storage/emulated/0/PictureSelector.temp.jpg";
+        Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
+        bitmap = event.portrait;
+        saveFile(bitmap,"/storage/emulated/0", "PictureSelector.temp.jpg");
+        if(event.isGetPortraitSuccessful) {
+            Toast.makeText(this,
+                    String.format("下载图像成功"),
                     Toast.LENGTH_SHORT
             ).show();
         }
@@ -163,6 +193,18 @@ public class UserDataSettingActivity extends AppCompatActivity {
         mMonth = cal.get(Calendar.MONTH) + 1;
         mDay = cal.get(Calendar.DAY_OF_MONTH);
 
+        //若存在头像则设置
+        picturePath = "/storage/emulated/0/PictureSelector.temp.jpg";
+        File photoFile = new File(picturePath);
+        if (photoFile.exists()) {
+            im_user_photo.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+        }
+        /*下载下载下载下载下载下载下载下载下载下载下载下载下载下载下载下载下载下载下载下载下载
+        else {
+            actionsCreator.getPortrait(user.getUserName());
+        }
+        */
+
         //日期选择界面
         final DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
@@ -190,16 +232,12 @@ public class UserDataSettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setUserInfo();
+                picturePath = "/storage/emulated/0/PictureSelector.temp.jpg";
                 actionsCreator.updateUserInfo(userInfo);
+                actionsCreator.uploadPortrait(BitmapFactory.decodeFile(picturePath));
             }
         });
 
-        //若存在头像则设置
-        String picturePath = "/storage/emulated/0/PictureSelector.temp.jpg";
-        File photoFile = new File(picturePath);
-        if (photoFile.exists()) {
-            im_user_photo.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-        }
 
         //头像设置
         linearlayout_set_image.setOnClickListener(new View.OnClickListener() {
@@ -236,7 +274,6 @@ public class UserDataSettingActivity extends AppCompatActivity {
         }
     }
 
-
     void setUserInfo() {
         String userName = user.getUserName();
         String nickName = et_set_nick_name.getText().toString();
@@ -249,5 +286,24 @@ public class UserDataSettingActivity extends AppCompatActivity {
         userInfo.setNickName(nickName);
         userInfo.setGender(gender);
         userInfo.setBirthDate(dateBorn);
+    }
+
+    private File saveFile(Bitmap bm,String path, String fileName){
+        File dirFile = new File(path);
+        if(!dirFile.exists()){
+            dirFile.mkdir();
+        }
+        File myCaptureFile = new File(path , fileName);
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+            bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+            bos.flush();
+            bos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return myCaptureFile;
     }
 }

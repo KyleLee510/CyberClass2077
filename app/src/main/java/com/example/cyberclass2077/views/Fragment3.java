@@ -70,32 +70,6 @@ public class Fragment3 extends Fragment {
         initWidget(view);   //初始化控件
         userLogin();   //用户是否登录的界面设置
 
-        //跳转到设置界面的监听器
-        to_setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Fragment3SettingActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-                //需要在finish和startActivity之后进行
-                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
-            }
-        });
-
-        //跳转到贡献界面的监听器
-        to_contribution.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(getActivity(), Fragment3UploadActivity.class);
-                startActivity(intent);
-                //getActivity().finish();
-                //需要在finish和startActivity之后进行
-                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
-            }
-        });
-
         // Inflate the layout for this fragment
         return view;
     }
@@ -149,6 +123,33 @@ public class Fragment3 extends Fragment {
         imagePhoto = (ImageView) view.findViewById(R.id.user_layout_user_image); //用户头像
         show_lv = (TextView)view.findViewById(R.id.user_layout_show_lv);//展示等级称号
         lv_tag_content = getResources().getStringArray(R.array.check_in_tag);//等级称号的字符串数组
+
+        //跳转到设置界面的监听器
+        to_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Fragment3SettingActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+                //需要在finish和startActivity之后进行
+                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
+                getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+            }
+        });
+
+        //跳转到贡献界面的监听器
+        to_contribution.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getActivity(), Fragment3UploadActivity.class);
+                startActivity(intent);
+                //getActivity().finish();
+                //需要在finish和startActivity之后进行
+                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
+                getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+            }
+        });
+
     }
 
     void userLogin() {
@@ -186,12 +187,14 @@ public class Fragment3 extends Fragment {
             txtUserName.setText("昵称");
             txtAccountnumber.setText(user.getUserName());
 
+
             //若存在头像则设置
             String picturePath = "/storage/emulated/0/PictureSelector.temp.jpg";
             File photoFile = new File(picturePath);
             if (photoFile.exists()) {
                 imagePhoto.setImageBitmap(BitmapFactory.decodeFile(picturePath));
             }
+
             //点击头像
             imagePhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
