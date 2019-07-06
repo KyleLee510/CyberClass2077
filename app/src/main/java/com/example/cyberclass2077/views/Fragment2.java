@@ -17,8 +17,6 @@ import java.util.List;
 
 public class Fragment2 extends Fragment{
 
-
-    private ViewPager pager;
     private CourseFragmentAdapter fragmentAdapter;
     private TabLayout tabLayout;
     private List<String> mTitles;
@@ -27,6 +25,7 @@ public class Fragment2 extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.social_layout, container, false);
+        ViewPager pager;
 
         pager = view.findViewById(R.id.comment_top_page);
         tabLayout = view.findViewById(R.id.comment_top_tab_layout);
@@ -35,6 +34,7 @@ public class Fragment2 extends Fragment{
 
         pager.setAdapter(fragmentAdapter);
         tabLayout.setupWithViewPager(pager);//与ViewPage建立关系
+
 
 
         initData();
