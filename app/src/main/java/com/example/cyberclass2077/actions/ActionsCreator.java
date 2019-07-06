@@ -75,6 +75,16 @@ public class ActionsCreator {
         bitmap
         ));
     }
+    //获取用户头像请求
+    public void getPortrait(String userName){
+        dispatcher.dispatch(
+                new GetPictureAction(
+                        GetPictureAction.ACTION_GET_PICTURE_PORTRAIT,
+                        userName
+                )
+        );
+
+    }
 
 
 }
