@@ -13,6 +13,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Layout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,10 +44,15 @@ public class Fragment3 extends Fragment {
     TextView txtUserName;
     TextView txtAccountnumber;
     ImageView imagePhoto;
+    TextView show_lv;
 
 
 
     //在这里声明其他引用变量
+    private String[] lv_tag_content;//签到的等级tag
+    private int check_in_day=0;//连续签到的天数
+    boolean is_check_in=false;//今日签到状态
+
     private Dispatcher dispatcher;
     private ActionsCreator actionsCreator;
     private UserInfoStore userInfoStore;
@@ -63,32 +69,6 @@ public class Fragment3 extends Fragment {
 
         initWidget(view);   //初始化控件
         userLogin();   //用户是否登录的界面设置
-
-        //跳转到设置界面的监听器
-        to_setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Fragment3SettingActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-                //需要在finish和startActivity之后进行
-                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
-            }
-        });
-
-        //跳转到贡献界面的监听器
-        to_contribution.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(getActivity(), Fragment3UploadActivity.class);
-                startActivity(intent);
-                //getActivity().finish();
-                //需要在finish和startActivity之后进行
-                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
-            }
-        });
 
         // Inflate the layout for this fragment
         return view;
@@ -141,12 +121,43 @@ public class Fragment3 extends Fragment {
         txtUserName = (TextView) view.findViewById(R.id.user_layout_username); //显示用户名即昵称
         txtAccountnumber = (TextView) view.findViewById(R.id.user_layout_account_number); //显示账号
         imagePhoto = (ImageView) view.findViewById(R.id.user_layout_user_image); //用户头像
+        show_lv = (TextView)view.findViewById(R.id.user_layout_show_lv);//展示等级称号
+        lv_tag_content = getResources().getStringArray(R.array.check_in_tag);//等级称号的字符串数组
+
+        //跳转到设置界面的监听器
+        to_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Fragment3SettingActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+                //需要在finish和startActivity之后进行
+                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
+                getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+            }
+        });
+
+        //跳转到贡献界面的监听器
+        to_contribution.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getActivity(), Fragment3UploadActivity.class);
+                startActivity(intent);
+                //getActivity().finish();
+                //需要在finish和startActivity之后进行
+                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
+                getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+            }
+        });
+
     }
 
     void userLogin() {
         if (!user.isLoginState()) {
             //未登录状态的控件显示
-            btnCheckin.setVisibility(View.GONE);
+            btnCheckin.setVisibility(View.INVISIBLE);
+            show_lv.setVisibility(View.INVISIBLE);
+
             txtAccountnumber.setVisibility(View.GONE);
             txtUserName.setText("登录/注册");
             to_login.setOnClickListener(new View.OnClickListener() {
@@ -165,9 +176,17 @@ public class Fragment3 extends Fragment {
         else {
             actionsCreator.getUserInfo(user.getUserName());
             btnCheckin.setVisibility(View.VISIBLE);
+            get_check_in_day();//获取用户签到天数
+            get_check_in_stats();//获取是否签到信息
+            update_user_lv();//更新用户等级
+            update_check_in_stats();//更新签到按钮显示
+
+
+            show_lv.setVisibility(View.VISIBLE);
             txtAccountnumber.setVisibility(View.VISIBLE);
             txtUserName.setText("昵称");
             txtAccountnumber.setText(user.getUserName());
+
 
             //若存在头像则设置
             String picturePath = "/storage/emulated/0/PictureSelector.temp.jpg";
@@ -175,6 +194,7 @@ public class Fragment3 extends Fragment {
             if (photoFile.exists()) {
                 imagePhoto.setImageBitmap(BitmapFactory.decodeFile(picturePath));
             }
+
             //点击头像
             imagePhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -187,7 +207,75 @@ public class Fragment3 extends Fragment {
                     getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
                 }
             });
+
+
+            //点击签到按钮
+            btnCheckin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(!is_check_in) {//如果当前为没签到
+                        //向服务器发送更新的签到状态
+                        is_check_in=true;
+                        check_in_day++;
+                        Toast toast=Toast.makeText(getActivity(),"签到成功",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                        update_user_lv();//更新用户等级
+                        update_check_in_stats();
+                        send_check_in_day();
+                        send_check_in_stats();
+                    }
+                    else{
+                        Toast toast=Toast.makeText(getActivity(),"已签到",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
+                }
+            });
+
+
+
         }
     }
 
+    void update_user_lv(){
+
+        if((check_in_day/3)>=0&&(check_in_day/3)<=(lv_tag_content.length-1))
+        {
+            show_lv.setText(lv_tag_content[(check_in_day/3)]);
+        }
+        else if((check_in_day/3)>(lv_tag_content.length-1))
+        {
+            show_lv.setText(lv_tag_content[(lv_tag_content.length-1)]);
+        }
+        else {
+            show_lv.setText(lv_tag_content[0]);
+        }
+    }
+
+    void update_check_in_stats(){
+        if(is_check_in)
+        {
+            btnCheckin.setText("已签到");
+        }
+        else {
+            btnCheckin.setText("签到");
+        }
+    }
+    void get_check_in_stats(){
+        //获取今日签到状态-----------易雄宇提供
+
+    }
+    void get_check_in_day(){
+        //获取连续签到天数函数-----------易雄宇提供
+
+    }
+    void send_check_in_stats(){
+        //发送今日签到状态-----------客户端提供
+
+    }
+    void send_check_in_day(){
+        //发送连续签到天数函数-----------客户端提供
+
+    }
 }
