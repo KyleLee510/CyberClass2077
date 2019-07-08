@@ -5,7 +5,9 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -65,22 +67,31 @@ public class ImageUtils {
     }
 
     //将Bitmap转为JPEG保存至本地
-    public static File saveFileToJPEG(Bitmap bm, String path, String fileName){
-        File dirFile = new File(path);
-        if(!dirFile.exists()){
-            dirFile.mkdir();
+    public static void saveBitmap(Bitmap bitmap,String path) {
+        String savePath;
+        File filePic;
+        if (Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            savePath = path;
+        } else {
+            Log.d("xxx", "saveBitmap: 1return");
+            return;
         }
-        File myCaptureFile = new File(path , fileName);
         try {
-            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
-            bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
-            bos.flush();
-            bos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            filePic = new File(savePath + ".jpg");
+            if (!filePic.exists()) {
+                filePic.getParentFile().mkdirs();
+                filePic.createNewFile();
+            }
+            FileOutputStream fos = new FileOutputStream(filePic);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
         } catch (IOException e) {
             e.printStackTrace();
+            Log.d("xxx", "saveBitmap: 2return");
+            return;
         }
-        return myCaptureFile;
+        Log.d("xxx", "saveBitmap: " + filePic.getAbsolutePath());
     }
 }
