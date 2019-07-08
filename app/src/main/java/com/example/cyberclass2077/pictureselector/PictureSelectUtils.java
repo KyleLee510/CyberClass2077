@@ -173,7 +173,10 @@ public class PictureSelectUtils {
 
         /*解决小米miui系统调用系统裁剪图片功能camera.action.CROP后崩溃或重新打开app的问题*/
         StringBuffer buffer = new StringBuffer();
-        String pathName = buffer.append("file:///").append(FileUtils.getRootPath()).append(File.separator).append(Constant.APP_NAME).append(".temp.jpg").toString();
+        String pathName = buffer.append("file:///").
+                append(FileUtils.getRootPath()).
+                append(File.separator).append(Constant.APP_NAME).
+                append(".temp.jpg").toString();
         cropPictureTempUri = Uri.parse(pathName);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, cropPictureTempUri);//输出路径(裁剪后的保存路径)
         // 输出格式
