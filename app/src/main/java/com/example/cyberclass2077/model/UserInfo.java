@@ -10,6 +10,7 @@ public class UserInfo {
     private Integer followerNum;
     private String lastCheckinDate;
     private boolean isTodayCheckin=false;
+    private Integer checkinTotalDays=0;
 
     public UserInfo(){}
 
@@ -42,6 +43,13 @@ public class UserInfo {
 
     public boolean isTodayCheckin() {
         return isTodayCheckin;
+    }
+    public Integer getCheckinTotalDays() {
+        return checkinTotalDays;
+    }
+
+    public void setCheckinTotalDays(Integer checkinTotalDays) {
+        this.checkinTotalDays = checkinTotalDays;
     }
 
     public void setLastCheckinDate(String lastCheckinDate) {
@@ -88,6 +96,7 @@ public class UserInfo {
             this.birthDate=userInfo.getBirthDate();
             this.followeeNum=userInfo.getFolloweeNum();
             this.followerNum=userInfo.getFollowerNum();
+
         }
     }
 }
