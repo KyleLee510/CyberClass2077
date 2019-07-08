@@ -134,6 +134,7 @@ public class UserDataSettingActivity extends AppCompatActivity {
                     String.format("下载图像成功"),
                     Toast.LENGTH_SHORT
             ).show();
+            im_user_photo.setImageBitmap(bitmap);
         }
     }
 
@@ -199,11 +200,10 @@ public class UserDataSettingActivity extends AppCompatActivity {
         if (photoFile.exists()) {
             im_user_photo.setImageBitmap(BitmapFactory.decodeFile(picturePath));
         }
-        /*下载下载下载下载下载下载下载下载下载下载下载下载下载下载下载下载下载下载下载下载下载
         else {
             actionsCreator.getPortrait(user.getUserName());
         }
-        */
+
 
         //日期选择界面
         final DatePickerDialog datePickerDialog = new DatePickerDialog(this,
@@ -250,7 +250,7 @@ public class UserDataSettingActivity extends AppCompatActivity {
 
                 PictureSelector
                         .create(UserDataSettingActivity.this, PictureSelector.SELECT_REQUEST_CODE)
-                        .selectPicture(true, 100, 100, 1, 1);
+                        .selectPicture(true, 500, 500, 1, 1);
             }
         });
     }

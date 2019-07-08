@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.cyberclass2077.views.DetailComment;
+import com.example.cyberclass2077.views.Comment.DetailComment;
 import com.example.cyberclass2077.views.MainActivity;
 
 public class start_atcivity extends AppCompatActivity {

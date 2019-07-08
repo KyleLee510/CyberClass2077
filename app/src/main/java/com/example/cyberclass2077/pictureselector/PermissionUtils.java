@@ -32,7 +32,7 @@ public class PermissionUtils {
                 permissions.add(per);
             }
         }
-        if( !permissions.isEmpty() ) {
+        if(!permissions.isEmpty() ) {
             ActivityCompat.requestPermissions((Activity) context,permissions.toArray( new String[permissions.size()] ), requestCode);
             return  false;
         }else{
@@ -57,8 +57,7 @@ public class PermissionUtils {
             }
         }
         if(!permissions.isEmpty()) {
-            ActivityCompat.requestPermissions((Activity) context,permissions.toArray( new String[permissions.size()] ), requestCode);
-
+            ActivityCompat.requestPermissions((Activity) context,permissions.toArray(new String[permissions.size()] ), requestCode);
             /*跳转到应用详情，让用户去打开权限*/
             Intent localIntent = new Intent();
             localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -75,6 +74,11 @@ public class PermissionUtils {
         }else{
             return  true;
         }
+    }
+
+    public static boolean checkAllPermission(Context context) {
+
+        return true;
     }
 }
 

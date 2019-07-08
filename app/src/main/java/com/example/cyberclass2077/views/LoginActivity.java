@@ -1,6 +1,8 @@
 package com.example.cyberclass2077.views;
 
+import android.Manifest;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,9 +16,12 @@ import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
+import com.example.cyberclass2077.pictureselector.PermissionUtils;
 import com.example.cyberclass2077.stores.Store;
 import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
+
+import java.io.File;
 
 public class LoginActivity extends AppCompatActivity {
     //在这里声明控件的引用变量
@@ -32,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private Dispatcher dispatcher;
     private ActionsCreator actionsCreator;
     private UserStore userStore;
-
+    private final int PERMISSION_CODE_FIRST = 0x14;//权限请求码
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +82,17 @@ public class LoginActivity extends AppCompatActivity {
                 //点击事件方法
                 String userName=vUserNameEditor.getText().toString();
                 String passWord=vPassWordEditor.getText().toString();
-                actionsCreator.login(userName,passWord);
-
-
+                boolean checkPermissionFirst = PermissionUtils.checkPermissionFirst(LoginActivity.this, PERMISSION_CODE_FIRST,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA});
+                if (checkPermissionFirst) {
+                    actionsCreator.login(userName,passWord);
+                }
+                else {
+                    Toast.makeText(LoginActivity.this,
+                            String.format("请给予权限再登录"),
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
             }
         });
 

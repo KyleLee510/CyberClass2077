@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.support.v4.app.Fragment;
 
 import com.example.cyberclass2077.R;
+import com.example.cyberclass2077.views.Dynamic.Fragment2;
 
 public class MainActivity extends AppCompatActivity {
 //
