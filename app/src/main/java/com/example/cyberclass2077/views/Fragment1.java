@@ -1,5 +1,6 @@
 package com.example.cyberclass2077.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -12,6 +13,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.cyberclass2077.R;
@@ -195,5 +197,4 @@ public class Fragment1 extends Fragment {
             });
         }
     }
-
 }
