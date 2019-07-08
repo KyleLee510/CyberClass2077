@@ -105,6 +105,7 @@ public class Fragment3 extends Fragment {
         super.onDestroy();
         //dispatcher.unregister(userStore);
     }
+
     @Override
     public void onResume() {
         super.onResume();
