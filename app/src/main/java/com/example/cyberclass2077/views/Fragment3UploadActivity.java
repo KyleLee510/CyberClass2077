@@ -1,20 +1,48 @@
 package com.example.cyberclass2077.views;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cyberclass2077.R;
+import com.example.cyberclass2077.actions.ActionsCreator;
+import com.example.cyberclass2077.dispatcher.Dispatcher;
+import com.example.cyberclass2077.model.User;
+import com.example.cyberclass2077.model.UserInfo;
+import com.example.cyberclass2077.stores.FileInfoStore;
+import com.example.cyberclass2077.stores.UserInfoStore;
+import com.example.cyberclass2077.stores.UserStore;
+import com.squareup.otto.Subscribe;
+
+import java.io.File;
 
 public class Fragment3UploadActivity extends AppCompatActivity {
 
     private ImageButton backButton;
     private TextView txt_upload_btn;
+
+    private Dispatcher dispatcher;
+    private ActionsCreator actionsCreator;
+    private UserInfoStore userInfoStore;
+    private UserInfo userInfo;
+
+    private UserStore userStore;
+    private User user;
+    private FileInfoStore fileInfoStore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -45,6 +73,27 @@ public class Fragment3UploadActivity extends AppCompatActivity {
 
     }
 
+    @Subscribe
+    void UploadVideo(FileInfoStore.UploadVideoEvent event) {
+        if(event.isUploadVideoSuccessful) {
+            Toast.makeText(this,
+                    String.format("上传成功"),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+    }
+
+    private void initDependencies() {
+        userStore = UserStore.getInstance(); //使用Store来进行传值判定
+        fileInfoStore = FileInfoStore.getInstance();
+        user = userStore.getUser();
+        //获取调度者单例
+        dispatcher = Dispatcher.get();
+        //获取动作创建者单例
+        actionsCreator = ActionsCreator.get(dispatcher);
+        //获取 用户 数据仓库单例
+    }
+
     //选择视频
     private void selectVideo() {
 
@@ -69,6 +118,37 @@ public class Fragment3UploadActivity extends AppCompatActivity {
             }
             startActivityForResult(Intent.createChooser(intent, "选择要导入的视频"), 2);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(2, resultCode, data);
+        if (resultCode == RESULT_OK && null != data && requestCode == 2) {
+            {
+                Uri uri = data.getData();
+
+                String path = uri.getPath();
+                Log.d("path", "path==" + path);
+                File file = new File(path);
+                file.getAbsolutePath();
+                Log.d("VVVVVVVV", file.getAbsolutePath());
+                actionsCreator.uploadVideo("sex",file);
+                /*
+                MediaMetadataRetriever mmr = new MediaMetadataRetriever();//实例化MediaMetadataRetriever对象
+                mmr.setDataSource(file.getAbsolutePath());
+                Bitmap bitmap = mmr.getFrameAtTime();//获得视频第一帧的Bitmap对象
+                String duration = mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_DURATION);//时长(毫秒)
+                Log.d("ddd", "duration==" + duration);
+                int int_duration = Integer.parseInt(duration);
+                if (int_duration > 11000) {
+                    Toast.makeText(getApplicationContext(), "视频时长已超过10秒，请重新选择", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                */
+
+            }
+        }
 
     }
+
 }

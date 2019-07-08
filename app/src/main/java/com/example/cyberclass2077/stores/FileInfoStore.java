@@ -49,7 +49,7 @@ public class FileInfoStore  extends  Store{
 
     //上传视频事件
     public class UploadVideoEvent extends StoreChangeEvent{
-        boolean isUploadVideoSuccessful=false;
+        public boolean isUploadVideoSuccessful=false;
         public UploadVideoEvent(boolean isUploadVideoSuccessful){
             this.isUploadVideoSuccessful=isUploadVideoSuccessful;
         }
