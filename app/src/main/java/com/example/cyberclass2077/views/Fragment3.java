@@ -28,7 +28,9 @@ import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
 import com.example.cyberclass2077.model.UserInfo;
+import com.example.cyberclass2077.pictureselector.Constant;
 import com.example.cyberclass2077.pictureselector.FileUtils;
+import com.example.cyberclass2077.pictureselector.ImageUtils;
 import com.example.cyberclass2077.pictureselector.PermissionUtils;
 import com.example.cyberclass2077.stores.UserInfoStore;
 import com.example.cyberclass2077.stores.UserStore;
@@ -102,6 +104,20 @@ public class Fragment3 extends Fragment {
         if(event.isGetUserInfoSuccessful) {
             userInfo = userInfoStore.getUserInfo();
             txtUserName.setText(userInfo.getNickName());
+        }
+    }
+
+    //用户头像下载
+    @Subscribe
+    public void onGetPortraitt(UserInfoStore.GetPortraitEvent event) {
+        Bitmap bitmap = event.portrait;
+        ImageUtils.saveFileToJPEG(bitmap, Constant.USERPHOTO_PATH, user.getUserName());
+        if(event.isGetPortraitSuccessful) {
+            Toast.makeText(getActivity(),
+                    String.format("下载图像成功"),
+                    Toast.LENGTH_SHORT
+            ).show();
+            imagePhoto.setImageBitmap(bitmap);
         }
     }
 
@@ -195,10 +211,15 @@ public class Fragment3 extends Fragment {
             txtUserName.setText("昵称");
             txtAccountnumber.setText(user.getUserName());
 
-            String picturePath = "/storage/emulated/0/PictureSelector.temp.jpg";
+            //若本地有缓冲则设置头像
+            String picturePath = Constant.USERPHOTO_PATH + "/"+ user.getUserName();
             File photoFile = new File(picturePath);
             if (photoFile.exists()) {
                 imagePhoto.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            }
+            //没有则去设置
+            else {
+                actionsCreator.getPortrait(user.getUserName());
             }
 
             //点击头像

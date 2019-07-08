@@ -1,9 +1,11 @@
 package com.example.cyberclass2077.views;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +27,9 @@ import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
 import com.example.cyberclass2077.model.UserInfo;
+import com.example.cyberclass2077.pictureselector.Constant;
+import com.example.cyberclass2077.pictureselector.FileUtils;
+import com.example.cyberclass2077.pictureselector.ImageUtils;
 import com.example.cyberclass2077.stores.UserInfoStore;
 import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
@@ -36,6 +41,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
+
+import static android.os.Environment.DIRECTORY_PICTURES;
 
 public class UserDataSettingActivity extends AppCompatActivity {
 
@@ -96,9 +103,7 @@ public class UserDataSettingActivity extends AppCompatActivity {
         actionsCreator = ActionsCreator.get(dispatcher);
         //获取 用户 数据仓库单例
         userInfoStore = UserInfoStore.getInstance();
-
         userInfo = userInfoStore.getUserInfo();//获取已存在的用户信息
-
         //在调度者里注册 用户 数据仓库，若已注册，不会重复注册
         dispatcher.register(userInfoStore);
     }
@@ -122,21 +127,6 @@ public class UserDataSettingActivity extends AppCompatActivity {
             ).show();
         }
     }
-    //用户头像下载
-    @Subscribe
-    public void onGetPortraitt(UserInfoStore.GetPortraitEvent event) {
-        //picturePath = "/storage/emulated/0/PictureSelector.temp.jpg";
-        Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
-        bitmap = event.portrait;
-        saveFile(bitmap,"/storage/emulated/0", "PictureSelector.temp.jpg");
-        if(event.isGetPortraitSuccessful) {
-            Toast.makeText(this,
-                    String.format("下载图像成功"),
-                    Toast.LENGTH_SHORT
-            ).show();
-            im_user_photo.setImageBitmap(bitmap);
-        }
-    }
 
 
     void initWidget() {
@@ -153,8 +143,6 @@ public class UserDataSettingActivity extends AppCompatActivity {
 
         et_set_nick_name.setImeOptions(EditorInfo.IME_ACTION_DONE);
         et_set_nick_name.setSingleLine();
-
-
 
         //获取用户个人信息并显示：
         userInfo = userInfoStore.getUserInfo();
@@ -195,13 +183,10 @@ public class UserDataSettingActivity extends AppCompatActivity {
         mDay = cal.get(Calendar.DAY_OF_MONTH);
 
         //若存在头像则设置
-        picturePath = "/storage/emulated/0/PictureSelector.temp.jpg";
+        picturePath = Constant.USERPHOTO_PATH + "/"+ user.getUserName();
         File photoFile = new File(picturePath);
         if (photoFile.exists()) {
             im_user_photo.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-        }
-        else {
-            actionsCreator.getPortrait(user.getUserName());
         }
 
 
@@ -232,7 +217,6 @@ public class UserDataSettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setUserInfo();
-                picturePath = "/storage/emulated/0/PictureSelector.temp.jpg";
                 actionsCreator.updateUserInfo(userInfo);
                 actionsCreator.uploadPortrait(BitmapFactory.decodeFile(picturePath));
             }
@@ -247,7 +231,6 @@ public class UserDataSettingActivity extends AppCompatActivity {
                  * create()方法参数一是上下文，在activity中传activity.this，在fragment中传fragment.this。参数二为请求码，用于结果回调onActivityResult中判断
                  * selectPicture()方法参数分别为 是否裁剪、裁剪后图片的宽(单位px)、裁剪后图片的高、宽比例、高比例。都不传则默认为裁剪，宽200，高200，宽高比例为1：1。
                  */
-
                 PictureSelector
                         .create(UserDataSettingActivity.this, PictureSelector.SELECT_REQUEST_CODE)
                         .selectPicture(true, 500, 500, 1, 1);
@@ -286,24 +269,6 @@ public class UserDataSettingActivity extends AppCompatActivity {
         userInfo.setNickName(nickName);
         userInfo.setGender(gender);
         userInfo.setBirthDate(dateBorn);
-    }
-
-    private File saveFile(Bitmap bm,String path, String fileName){
-        File dirFile = new File(path);
-        if(!dirFile.exists()){
-            dirFile.mkdir();
-        }
-        File myCaptureFile = new File(path , fileName);
-        try {
-            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
-            bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
-            bos.flush();
-            bos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return myCaptureFile;
+        ImageUtils.saveFileToJPEG(BitmapFactory.decodeFile(Constant.TEMP_PICTUREPATH), Constant.USERPHOTO_PATH, user.getUserName());//缓冲用户头像至本地
     }
 }

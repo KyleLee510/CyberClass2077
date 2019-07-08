@@ -2,6 +2,7 @@ package com.example.cyberclass2077.views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ import android.widget.Toast;
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
+import com.example.cyberclass2077.pictureselector.Constant;
+import com.example.cyberclass2077.pictureselector.ImageUtils;
 import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
 
