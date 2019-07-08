@@ -42,4 +42,8 @@ dependencies {
 
     //lee
     //implementation 'com.github.wildma:PictureSelector:1.1.3'
+
+    //杨威 2019-7-8
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }
