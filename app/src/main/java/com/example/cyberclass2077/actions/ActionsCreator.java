@@ -7,6 +7,10 @@ import com.example.cyberclass2077.model.User;
 import com.example.cyberclass2077.model.UserInfo;
 import com.example.cyberclass2077.stores.UserStore;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 public class ActionsCreator {
     private static ActionsCreator instance;
     final Dispatcher dispatcher;
@@ -84,6 +88,18 @@ public class ActionsCreator {
                 )
         );
 
+    }
+    //上传视频请求
+    public void uploadVideo(String videoTitle, File videoFile){
+        Map map=new HashMap();
+        map.put("title",videoTitle);
+        map.put("file",videoFile);
+        dispatcher.dispatch(
+                new UploadVideoAction(
+                        UploadVideoAction.ACTION_UPLOAD_VIDEO,
+                        map
+                )
+        );
     }
 
 
