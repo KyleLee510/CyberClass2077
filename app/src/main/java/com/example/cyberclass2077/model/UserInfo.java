@@ -9,6 +9,8 @@ public class UserInfo {
     private String birthDate;
     private Integer followeeNum;
     private Integer followerNum;
+    private String lastCheckinDate;
+    private boolean isTodayCheckin=false;
 
     public UserInfo(){}
 
@@ -39,6 +41,22 @@ public class UserInfo {
     public Integer getFollowerNum() {
         return followerNum;
     }
+    public String getLastCheckinDate() {
+        return lastCheckinDate;
+    }
+
+    public boolean isTodayCheckin() {
+        return isTodayCheckin;
+    }
+
+    public void setLastCheckinDate(String lastCheckinDate) {
+        this.lastCheckinDate = lastCheckinDate;
+    }
+
+    public void setTodayCheckin(boolean todayCheckin) {
+        isTodayCheckin = todayCheckin;
+    }
+
 
     public void setUserName(String userName) {
         this.userName = userName;
