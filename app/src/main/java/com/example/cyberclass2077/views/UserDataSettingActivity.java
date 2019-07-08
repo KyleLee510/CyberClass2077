@@ -183,10 +183,13 @@ public class UserDataSettingActivity extends AppCompatActivity {
         mDay = cal.get(Calendar.DAY_OF_MONTH);
 
         //若存在头像则设置
-        picturePath = Constant.USERPHOTO_PATH + "/"+ user.getUserName();
+        picturePath = Constant.USERPHOTO_PATH + "/" +user.getUserName() + ".jpg";
         File photoFile = new File(picturePath);
         if (photoFile.exists()) {
             im_user_photo.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+        }
+        else {
+            Log.d("失败了", photoFile.toString());
         }
 
 
@@ -269,6 +272,6 @@ public class UserDataSettingActivity extends AppCompatActivity {
         userInfo.setNickName(nickName);
         userInfo.setGender(gender);
         userInfo.setBirthDate(dateBorn);
-        ImageUtils.saveFileToJPEG(BitmapFactory.decodeFile(Constant.TEMP_PICTUREPATH), Constant.USERPHOTO_PATH, user.getUserName());//缓冲用户头像至本地
+        ImageUtils.saveBitmap(BitmapFactory.decodeFile(Constant.TEMP_PICTUREPATH), Constant.USERPHOTO_PATH + "/" + user.getUserName());//缓冲用户头像至本地
     }
 }

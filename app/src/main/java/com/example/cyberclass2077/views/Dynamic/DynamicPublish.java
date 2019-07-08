@@ -52,8 +52,9 @@ public class DynamicPublish extends AppCompatActivity implements View.OnClickLis
         btn_publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //该函数负责存储用户要使用的图像，第一个参数从临时保存的地方提取图片信息，第二个参数是设置的保存路径，第三个参数设置文件名
-                ImageUtils.saveFileToJPEG(BitmapFactory.decodeFile(Constant.TEMP_PICTUREPATH), Constant.USERPHOTO_PATH, "test");//缓冲用户头像至本地
+                //该函数负责存储用户要使用的图像，第一个参数从临时保存的地方提取图片信息，第二个参数是设置的保存路径
+                ImageUtils.saveBitmap(BitmapFactory.decodeFile(Constant.TEMP_PICTUREPATH), Constant.USERPHOTO_PATH + "/" + "你想保存的名字");//缓冲用户头像至本地
+                //当你想读取的时候使用    ImageView.setImageBitmap(Constant.USERPHOTO_PATH + "/" + "你定义的名字" + "jpg")
             }
         });
 

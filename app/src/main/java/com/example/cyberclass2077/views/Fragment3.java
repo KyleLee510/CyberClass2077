@@ -10,6 +10,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -37,10 +38,16 @@ import com.example.cyberclass2077.stores.UserInfoStore;
 import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import static com.example.cyberclass2077.pictureselector.ImageUtils.saveBitmap;
 
 
 public class Fragment3 extends Fragment {
@@ -124,7 +131,7 @@ public class Fragment3 extends Fragment {
     @Subscribe
     public void onGetPortraitt(UserInfoStore.GetPortraitEvent event) {
         Bitmap bitmap = event.portrait;
-        ImageUtils.saveFileToJPEG(bitmap, Constant.USERPHOTO_PATH, user.getUserName());
+        ImageUtils.saveBitmap(bitmap, Constant.USERPHOTO_PATH + "/" + user.getUserName());
         if(event.isGetPortraitSuccessful) {
             Toast.makeText(getActivity(),
                     String.format("下载图像成功"),
@@ -233,7 +240,7 @@ public class Fragment3 extends Fragment {
             txtAccountnumber.setText(user.getUserName());
 
             //若本地有缓冲则设置头像
-            String picturePath = Constant.USERPHOTO_PATH + "/"+ user.getUserName();
+            String picturePath = Constant.USERPHOTO_PATH + "/" + user.getUserName() + ".jpg";
             File photoFile = new File(picturePath);
             if (photoFile.exists()) {
                 imagePhoto.setImageBitmap(BitmapFactory.decodeFile(picturePath));
@@ -257,11 +264,13 @@ public class Fragment3 extends Fragment {
             });
 
             //未签到的情况下可用
-            if(!is_check_in) {
                 //点击签到按钮
                 btn_Checkin.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(is_check_in) {
+                           return;
+                        }
                         Log.d("姓名",userInfo.getUserName());
                         userInfo.setLastCheckinDate(getToadyDate()); //将今日签到日期传回服务端
                         userInfo.setCheckinTotalDays(check_in_day +1);
@@ -270,12 +279,9 @@ public class Fragment3 extends Fragment {
 
                         btn_Checkin.setText("已签到"); //更新用户已签到
                         is_check_in = true;
-                        update_user_lv();//更新用户等级
+                        //update_user_lv();//更新用户等级
                     }
                 });
-            }
-
-
         }
     }
 
