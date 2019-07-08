@@ -51,6 +51,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <EditText
+        android:id="@+id/txt_dynamic_publish_content"
         android:layout_width="match_parent"
         android:layout_height="216dp"
         android:background="@null"
