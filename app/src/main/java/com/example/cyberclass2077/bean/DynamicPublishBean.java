@@ -5,9 +5,10 @@ import android.graphics.Bitmap;
 import java.util.Date;
 
 public class DynamicPublishBean {
-    public String userName;
-    public String content;
-    public Date date;
+    private String userName;
+    private String content;
+    private String date;
+    private Integer commentNum;
 //    public Bitmap bitmap;
 
     public void setUserName(String userName){this.userName=userName;}
@@ -16,9 +17,17 @@ public class DynamicPublishBean {
     public void setContent(String content){this.content=content;}
     public String getContent(){return content;}
 
-    public void setDate(Date date){this.date=date;}
-    public Date getDate(){return date;}
+    public void setDate(String date){this.date=date;}
+    public String getDate(){return date;}
 
-//    public void setBitmap(Bitmap bitmap){this.bitmap=bitmap;}
+    public void setCommentNum(int commentNum) {
+        this.commentNum = commentNum;
+    }
+
+    public Integer getCommentNum() {
+        return commentNum;
+    }
+
+    //    public void setBitmap(Bitmap bitmap){this.bitmap=bitmap;}
 //    public Bitmap getBitmap(){return bitmap;}
 }
