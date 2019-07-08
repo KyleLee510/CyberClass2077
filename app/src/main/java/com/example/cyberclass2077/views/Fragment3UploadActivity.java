@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
+import com.example.cyberclass2077.model.FileInfo;
 import com.example.cyberclass2077.model.User;
 import com.example.cyberclass2077.model.UserInfo;
 import com.example.cyberclass2077.stores.FileInfoStore;
@@ -39,9 +40,11 @@ public class Fragment3UploadActivity extends AppCompatActivity {
     private UserInfoStore userInfoStore;
     private UserInfo userInfo;
 
-    private UserStore userStore;
-    private User user;
+    private UserInfoStore userStore;
+    private UserInfo user;
     private FileInfoStore fileInfoStore;
+    private FileInfo fileInfo;
+    private File sfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +66,21 @@ public class Fragment3UploadActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
             }
         });
+        initDependencies();
         txt_upload_btn = findViewById(R.id.txt_upload_btn);
         txt_upload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectVideo();
+                //selectVideo();
+                String s = "/storage/emulated/0/DCIM/ScreenRecorder/Screenrecorder-2019-03-30-11-10-22-652.mp4";
+                File sfile = new File(s);
+                if(sfile.exists()) {
+                    Log.d("进来了", "hao");
+                    actionsCreator.uploadVideo("黄片", sfile);
+                }
+                else {
+
+                }
             }
         });
 
@@ -84,14 +97,13 @@ public class Fragment3UploadActivity extends AppCompatActivity {
     }
 
     private void initDependencies() {
-        userStore = UserStore.getInstance(); //使用Store来进行传值判定
         fileInfoStore = FileInfoStore.getInstance();
-        user = userStore.getUser();
         //获取调度者单例
         dispatcher = Dispatcher.get();
         //获取动作创建者单例
         actionsCreator = ActionsCreator.get(dispatcher);
         //获取 用户 数据仓库单例
+        dispatcher.register(fileInfoStore);
     }
 
     //选择视频
@@ -127,12 +139,11 @@ public class Fragment3UploadActivity extends AppCompatActivity {
             {
                 Uri uri = data.getData();
 
-                String path = uri.getPath();
+                String path = getRealPathFromURI(uri);
                 Log.d("path", "path==" + path);
                 File file = new File(path);
-                file.getAbsolutePath();
                 Log.d("VVVVVVVV", file.getAbsolutePath());
-                actionsCreator.uploadVideo("sex",file);
+                sfile = file;
                 /*
                 MediaMetadataRetriever mmr = new MediaMetadataRetriever();//实例化MediaMetadataRetriever对象
                 mmr.setDataSource(file.getAbsolutePath());
@@ -149,6 +160,18 @@ public class Fragment3UploadActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    public String getRealPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
     }
 
 }

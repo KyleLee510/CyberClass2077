@@ -29,6 +29,7 @@ public class UploadVideoConnect extends Connect<File> {
                 .addFormDataPart("fileTitle",fileTitle)
                 .addFormDataPart("videoStr",videoString)
                 .build();
+        System.out.println("发生了请求");
         postMulitiData(
                 AppConfig.FILE_UPLOAD_VIDEO,
                 requestBody
