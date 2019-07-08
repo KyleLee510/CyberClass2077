@@ -96,7 +96,9 @@ public class UserInfo {
             this.birthDate=userInfo.getBirthDate();
             this.followeeNum=userInfo.getFolloweeNum();
             this.followerNum=userInfo.getFollowerNum();
-
+            this.isTodayCheckin=userInfo.isTodayCheckin();
+            this.lastCheckinDate=userInfo.getLastCheckinDate();
+            this.checkinTotalDays = userInfo.getCheckinTotalDays();
         }
     }
 }
