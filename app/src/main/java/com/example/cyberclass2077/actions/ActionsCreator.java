@@ -85,6 +85,7 @@ public class ActionsCreator {
         );
 
     }
+//    public void sendDyamic(Dynamic dynamic, Bitmap bitmap)
 
 
 }

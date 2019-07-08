@@ -33,5 +33,4 @@ public class DynamicBean {
 
     public String getStrTime(){return str_time;}
     public void setStrTime(String str_time){this.str_time=str_time;}
-
 }
