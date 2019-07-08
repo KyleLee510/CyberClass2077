@@ -36,6 +36,9 @@ public class DynamicPublish extends AppCompatActivity implements View.OnClickLis
             }
         });
 
+
+
+
         //图片选择
         imageView_choose = findViewById(R.id.imageView_choose);
         imageView_choose.setOnClickListener(new View.OnClickListener() {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -9,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <VideoView
+            android:id="@+id/course_video"
             android:layout_width="368dp"
             android:layout_height="207dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -24,16 +26,15 @@
             android:id="@+id/course_uploader_image"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/user"
             android:scaleType="fitXY"
-            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/user"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            >
-        </com.example.cyberclass2077.controllers.CircleImageView>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"></com.example.cyberclass2077.controllers.CircleImageView>
 
         <TextView
+            android:id="@+id/course_video_title"
             android:layout_width="220dp"
             android:layout_height="35dp"
             android:text="视频标题"
@@ -44,6 +45,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
+            android:id="@+id/course_nick_name"
             android:layout_width="220dp"
             android:layout_height="32dp"
             android:text="上传者昵称"
@@ -54,15 +56,25 @@
             app:layout_constraintVertical_bias="1.0" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/course_remark"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:background="@color/qmui_config_color_50_blue"
             android:text="视频标签"
             android:textSize="20sp"
-            android:background="@color/qmui_config_color_50_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageButton
+            android:id="@+id/course_favorite"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/star"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/course_remark"
+            app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>
