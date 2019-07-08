@@ -26,8 +26,8 @@ public class UploadVideoConnect extends Connect<File> {
         RequestBody requestBody = new MultipartBuilder()
                 .type(MultipartBuilder.FORM)
                 .addFormDataPart("username",userName)
-                .addFormDataPart("fileTitle",fileTitle)
-                .addFormDataPart("videoStr",videoString)
+                .addFormDataPart("filetitle",fileTitle)
+                .addFormDataPart("videostr",videoString)
                 .build();
         System.out.println("发生了请求");
         postMulitiData(
