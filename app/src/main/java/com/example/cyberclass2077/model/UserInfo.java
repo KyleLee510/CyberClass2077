@@ -5,12 +5,12 @@ public class UserInfo {
     private String userName;
     private String nickName;
     private String gender;
-    private String portrait;
     private String birthDate;
     private Integer followeeNum;
     private Integer followerNum;
     private String lastCheckinDate;
     private boolean isTodayCheckin=false;
+    private Integer checkinTotalDays=0;
 
     public UserInfo(){}
 
@@ -24,10 +24,6 @@ public class UserInfo {
 
     public String getGender() {
         return gender;
-    }
-
-    public String getPortrait() {
-        return portrait;
     }
 
     public String getBirthDate() {
@@ -47,6 +43,13 @@ public class UserInfo {
 
     public boolean isTodayCheckin() {
         return isTodayCheckin;
+    }
+    public Integer getCheckinTotalDays() {
+        return checkinTotalDays;
+    }
+
+    public void setCheckinTotalDays(Integer checkinTotalDays) {
+        this.checkinTotalDays = checkinTotalDays;
     }
 
     public void setLastCheckinDate(String lastCheckinDate) {
@@ -74,9 +77,6 @@ public class UserInfo {
         this.birthDate = birthDate;
     }
 
-    public void setPortrait(String portrait) {
-        this.portrait = portrait;
-    }
 
     public void setFolloweeNum(Integer followeeNum) {
         this.followeeNum = followeeNum;
@@ -94,9 +94,11 @@ public class UserInfo {
             this.nickName=userInfo.getNickName();
             this.gender=userInfo.getGender();
             this.birthDate=userInfo.getBirthDate();
-            this.portrait=userInfo.getPortrait();
             this.followeeNum=userInfo.getFolloweeNum();
             this.followerNum=userInfo.getFollowerNum();
+            this.isTodayCheckin=userInfo.isTodayCheckin();
+            this.lastCheckinDate=userInfo.getLastCheckinDate();
+            this.checkinTotalDays = userInfo.getCheckinTotalDays();
         }
     }
 }

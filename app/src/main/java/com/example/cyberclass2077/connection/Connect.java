@@ -9,6 +9,7 @@ import com.example.cyberclass2077.views.LoginActivity;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -34,7 +35,6 @@ public class Connect <T>{
         FormEncodingBuilder builder = new FormEncodingBuilder();
         String dataStr=JSON.toJSONString(data);
         builder.add(type,dataStr);
-
 
         return builder;
     }
