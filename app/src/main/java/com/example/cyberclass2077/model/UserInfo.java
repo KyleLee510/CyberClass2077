@@ -5,7 +5,6 @@ public class UserInfo {
     private String userName;
     private String nickName;
     private String gender;
-    private String portrait;
     private String birthDate;
     private Integer followeeNum;
     private Integer followerNum;
@@ -24,10 +23,6 @@ public class UserInfo {
 
     public String getGender() {
         return gender;
-    }
-
-    public String getPortrait() {
-        return portrait;
     }
 
     public String getBirthDate() {
@@ -74,9 +69,6 @@ public class UserInfo {
         this.birthDate = birthDate;
     }
 
-    public void setPortrait(String portrait) {
-        this.portrait = portrait;
-    }
 
     public void setFolloweeNum(Integer followeeNum) {
         this.followeeNum = followeeNum;
@@ -94,7 +86,6 @@ public class UserInfo {
             this.nickName=userInfo.getNickName();
             this.gender=userInfo.getGender();
             this.birthDate=userInfo.getBirthDate();
-            this.portrait=userInfo.getPortrait();
             this.followeeNum=userInfo.getFolloweeNum();
             this.followerNum=userInfo.getFollowerNum();
         }
