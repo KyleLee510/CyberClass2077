@@ -43,9 +43,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import static com.example.cyberclass2077.pictureselector.ImageUtils.saveBitmap;
 
@@ -105,6 +107,7 @@ public class Fragment3 extends Fragment {
         super.onDestroy();
         //dispatcher.unregister(userStore);
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -119,11 +122,14 @@ public class Fragment3 extends Fragment {
     //得到用户信息
     @Subscribe
     public void onGetUserInfo(UserInfoStore.GetUserInfoEvent event) {
+
+        Log.e("zifuchuan","进入is_check_in前");
         if(event.isGetUserInfoSuccessful) {
             userInfo = userInfoStore.getUserInfo();
             txtUserName.setText(userInfo.getNickName());
             check_in_day = userInfo.getCheckinTotalDays(); //获取总签到天数
-            isIs_check_in(); //进行调用检测
+            is_check_in(); //进行调用检测
+            update_user_lv();
         }
     }
 
@@ -177,6 +183,10 @@ public class Fragment3 extends Fragment {
         imagePhoto = (ImageView) view.findViewById(R.id.user_layout_user_image); //用户头像
         txt_show_lv = (TextView)view.findViewById(R.id.user_layout_show_lv);//展示等级称号
         lv_tag_content = getResources().getStringArray(R.array.check_in_tag);//等级称号的字符串数组
+
+
+        cal = Calendar.getInstance();//初始化时间
+
 
         //跳转到设置界面的监听器
         to_setting.setOnClickListener(new View.OnClickListener() {
@@ -264,24 +274,24 @@ public class Fragment3 extends Fragment {
             });
 
             //未签到的情况下可用
-                //点击签到按钮
-                btn_Checkin.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(is_check_in) {
-                           return;
-                        }
-                        Log.d("姓名",userInfo.getUserName());
-                        userInfo.setLastCheckinDate(getToadyDate()); //将今日签到日期传回服务端
-                        userInfo.setCheckinTotalDays(check_in_day +1);
-
-                        actionsCreator.updateUserInfo(userInfo); //签到更新
-
-                        btn_Checkin.setText("已签到"); //更新用户已签到
-                        is_check_in = true;
-                        //update_user_lv();//更新用户等级
+            //点击签到按钮
+            btn_Checkin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(is_check_in) {
+                        return;
                     }
-                });
+                    Log.d("姓名",userInfo.getUserName());
+                    userInfo.setLastCheckinDate(getToadyDate()); //将今日签到日期传回服务端
+                    userInfo.setCheckinTotalDays(check_in_day +1);
+
+                    actionsCreator.updateUserInfo(userInfo); //签到更新
+
+                    btn_Checkin.setText("已签到"); //更新用户已签到
+                    is_check_in = true;
+                    update_user_lv();//更新用户等级
+                }
+            });
         }
     }
 
@@ -301,15 +311,14 @@ public class Fragment3 extends Fragment {
     }
 
 
-    public boolean isIs_check_in() {
+    public boolean is_check_in() {
         String lastCheckinDate = "";
         if(userInfo.getLastCheckinDate() != null) {
-            lastCheckinDate = userInfo.getLastCheckinDate();
+            lastCheckinDate = userInfo.getLastCheckinDate();//2019-01-07
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date dt1 = sdf.parse(lastCheckinDate, null);
-            Date dt2 = sdf.parse(getToadyDate(), null);
-            long day = (dt1.getTime() - dt2.getTime()) /(24*60*60*1000); //通过计算时间差值来判断今日是否签到
-            if(day == 0) {
+            Date dt1 = sdf.parse(lastCheckinDate,new ParsePosition(0));
+            Date dt2 = sdf.parse(getToadyDate(),new ParsePosition(0));
+            if(dt2.compareTo(dt1) == 0) {
                 btn_Checkin.setText("已签到");
                 is_check_in = true;
             }
@@ -320,6 +329,11 @@ public class Fragment3 extends Fragment {
         }
         return is_check_in;
     }
+
+
+
+
+
 
     String getToadyDate() {
         mYear = cal.get(Calendar.YEAR);

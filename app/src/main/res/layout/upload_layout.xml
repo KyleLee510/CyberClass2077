@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:background="@color/qmui_config_color_gray_1"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -56,10 +57,11 @@
         android:layout_marginTop="10dp">
 
         <ImageView
+            android:id="@+id/publish_content"
             android:layout_width="268dp"
             android:layout_height="201dp"
-            android:scaleType="fitXY"
             android:background="@color/bg_color"
+            android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

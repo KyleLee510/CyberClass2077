@@ -2,9 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/qmui_config_color_gray_1"
     android:layout_height="match_parent"
 
-    tools:context=".views.Fragment1">
+    tools:context=".views.Course.Fragment1">
 
 
     <!-- TODO: Update blank fragment layout -->
