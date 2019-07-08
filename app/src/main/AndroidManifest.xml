@@ -30,6 +30,7 @@
         <activity android:name=".views.SignupActivity" />
         <activity android:name=".views.UserDataSettingActivity" />
         <activity android:name=".views.Fragment3SettingActivity" />
+        <activity android:name=".views.Dynamic.DynamicPublish" />
         <activity android:name=".views.LoginActivity"/>
         <activity android:name=".views.MainActivity"/>
         <activity android:name=".views.Comment.DetailComment"></activity>

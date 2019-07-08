@@ -10,10 +10,12 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Layout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +38,16 @@ import com.example.cyberclass2077.stores.UserInfoStore;
 import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import static com.example.cyberclass2077.pictureselector.ImageUtils.saveBitmap;
 
 
 public class Fragment3 extends Fragment {
@@ -44,20 +55,27 @@ public class Fragment3 extends Fragment {
     ConstraintLayout to_setting;
     ConstraintLayout to_contribution;
     ConstraintLayout to_login;
-    Boolean isLogin = false; //默认false未登录状态
-    Button btnCheckin;
+
+    Button btn_Checkin;
     TextView txtUserName;
     TextView txtAccountnumber;
     ImageView imagePhoto;
-    TextView show_lv;
+    TextView txt_show_lv;
+
+    private int mYear;
+    private int mMonth;
+    private int mDay;
+    private Calendar cal;//显示当前日期
 
 
 
 
     //在这里声明其他引用变量
     private String[] lv_tag_content;//签到的等级tag
-    private int check_in_day=0;//连续签到的天数
+    private int check_in_day = 0;//连续签到的天数
     boolean is_check_in=false;//今日签到状态
+    String lastCheckin_date = "";//上次签到日期
+
 
     private Dispatcher dispatcher;
     private ActionsCreator actionsCreator;
@@ -98,12 +116,14 @@ public class Fragment3 extends Fragment {
         super.onPause();
         userInfoStore.unregister(this);
     }
-
+    //得到用户信息
     @Subscribe
     public void onGetUserInfo(UserInfoStore.GetUserInfoEvent event) {
         if(event.isGetUserInfoSuccessful) {
             userInfo = userInfoStore.getUserInfo();
             txtUserName.setText(userInfo.getNickName());
+            check_in_day = userInfo.getCheckinTotalDays(); //获取总签到天数
+            isIs_check_in(); //进行调用检测
         }
     }
 
@@ -111,7 +131,7 @@ public class Fragment3 extends Fragment {
     @Subscribe
     public void onGetPortraitt(UserInfoStore.GetPortraitEvent event) {
         Bitmap bitmap = event.portrait;
-        ImageUtils.saveFileToJPEG(bitmap, Constant.USERPHOTO_PATH, user.getUserName());
+        ImageUtils.saveBitmap(bitmap, Constant.USERPHOTO_PATH + "/" + user.getUserName());
         if(event.isGetPortraitSuccessful) {
             Toast.makeText(getActivity(),
                     String.format("下载图像成功"),
@@ -120,6 +140,18 @@ public class Fragment3 extends Fragment {
             imagePhoto.setImageBitmap(bitmap);
         }
     }
+
+    //用户信息更新
+    @Subscribe
+    public void onUpdateUserInfo(UserInfoStore.UpdateUserInfoEvent event) {
+        if(event.isUpdateUserInfoSuccessful) {
+            Toast.makeText(getActivity(),
+                    String.format("已更新签到信息"),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+    }
+
 
     private void initDependencies() {
         userStore = UserStore.getInstance(); //使用Store来进行传值判定
@@ -139,11 +171,11 @@ public class Fragment3 extends Fragment {
         to_setting = (ConstraintLayout) view.findViewById(R.id.to_setting); //跳转设置的控件
         to_contribution = (ConstraintLayout) view.findViewById(R.id.to_contribution);//跳转到贡献的控件
         to_login = (ConstraintLayout) view.findViewById(R.id.to_login); //跳转至用户登录的控件
-        btnCheckin = (Button) view.findViewById(R.id.btn_user_layout_Check_in); //用来完成用户签到
+        btn_Checkin = (Button) view.findViewById(R.id.btn_user_layout_Check_in); //用来完成用户签到
         txtUserName = (TextView) view.findViewById(R.id.user_layout_username); //显示用户名即昵称
         txtAccountnumber = (TextView) view.findViewById(R.id.user_layout_account_number); //显示账号
         imagePhoto = (ImageView) view.findViewById(R.id.user_layout_user_image); //用户头像
-        show_lv = (TextView)view.findViewById(R.id.user_layout_show_lv);//展示等级称号
+        txt_show_lv = (TextView)view.findViewById(R.id.user_layout_show_lv);//展示等级称号
         lv_tag_content = getResources().getStringArray(R.array.check_in_tag);//等级称号的字符串数组
 
         //跳转到设置界面的监听器
@@ -179,8 +211,8 @@ public class Fragment3 extends Fragment {
     void userLogin() {
         if (!user.isLoginState()) {
             //未登录状态的控件显示
-            btnCheckin.setVisibility(View.INVISIBLE);
-            show_lv.setVisibility(View.INVISIBLE);
+            btn_Checkin.setVisibility(View.INVISIBLE);
+            txt_show_lv.setVisibility(View.INVISIBLE);
 
             txtAccountnumber.setVisibility(View.GONE);
             txtUserName.setText("登录/注册");
@@ -199,20 +231,16 @@ public class Fragment3 extends Fragment {
         }
         else {
             actionsCreator.getUserInfo(user.getUserName());
-            btnCheckin.setVisibility(View.VISIBLE);
-            get_check_in_day();//获取用户签到天数
-            get_check_in_stats();//获取是否签到信息
-            update_user_lv();//更新用户等级
-            update_check_in_stats();//更新签到按钮显示
+            btn_Checkin.setVisibility(View.VISIBLE);
 
 
-            show_lv.setVisibility(View.VISIBLE);
+            txt_show_lv.setVisibility(View.VISIBLE);
             txtAccountnumber.setVisibility(View.VISIBLE);
             txtUserName.setText("昵称");
             txtAccountnumber.setText(user.getUserName());
 
             //若本地有缓冲则设置头像
-            String picturePath = Constant.USERPHOTO_PATH + "/"+ user.getUserName();
+            String picturePath = Constant.USERPHOTO_PATH + "/" + user.getUserName() + ".jpg";
             File photoFile = new File(picturePath);
             if (photoFile.exists()) {
                 imagePhoto.setImageBitmap(BitmapFactory.decodeFile(picturePath));
@@ -235,33 +263,25 @@ public class Fragment3 extends Fragment {
                 }
             });
 
+            //未签到的情况下可用
+                //点击签到按钮
+                btn_Checkin.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(is_check_in) {
+                           return;
+                        }
+                        Log.d("姓名",userInfo.getUserName());
+                        userInfo.setLastCheckinDate(getToadyDate()); //将今日签到日期传回服务端
+                        userInfo.setCheckinTotalDays(check_in_day +1);
 
-            //点击签到按钮
-            btnCheckin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(!is_check_in) {//如果当前为没签到
-                        //向服务器发送更新的签到状态
-                        is_check_in=true;
-                        check_in_day++;
-                        Toast toast=Toast.makeText(getActivity(),"签到成功",Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
-                        update_user_lv();//更新用户等级
-                        update_check_in_stats();
-                        send_check_in_day();
-                        send_check_in_stats();
+                        actionsCreator.updateUserInfo(userInfo); //签到更新
+
+                        btn_Checkin.setText("已签到"); //更新用户已签到
+                        is_check_in = true;
+                        //update_user_lv();//更新用户等级
                     }
-                    else{
-                        Toast toast=Toast.makeText(getActivity(),"已签到",Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
-                    }
-                }
-            });
-
-
-
+                });
         }
     }
 
@@ -269,40 +289,57 @@ public class Fragment3 extends Fragment {
 
         if((check_in_day/3)>=0&&(check_in_day/3)<=(lv_tag_content.length-1))
         {
-            show_lv.setText(lv_tag_content[(check_in_day/3)]);
+            txt_show_lv.setText(lv_tag_content[(check_in_day/3)]);
         }
         else if((check_in_day/3)>(lv_tag_content.length-1))
         {
-            show_lv.setText(lv_tag_content[(lv_tag_content.length-1)]);
+            txt_show_lv.setText(lv_tag_content[(lv_tag_content.length-1)]);
         }
         else {
-            show_lv.setText(lv_tag_content[0]);
+            txt_show_lv.setText(lv_tag_content[0]);
         }
     }
 
-    void update_check_in_stats(){
-        if(is_check_in)
-        {
-            btnCheckin.setText("已签到");
+
+    public boolean isIs_check_in() {
+        String lastCheckinDate = "";
+        if(userInfo.getLastCheckinDate() != null) {
+            lastCheckinDate = userInfo.getLastCheckinDate();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dt1 = sdf.parse(lastCheckinDate, null);
+            Date dt2 = sdf.parse(getToadyDate(), null);
+            long day = (dt1.getTime() - dt2.getTime()) /(24*60*60*1000); //通过计算时间差值来判断今日是否签到
+            if(day == 0) {
+                btn_Checkin.setText("已签到");
+                is_check_in = true;
+            }
+            else {
+                btn_Checkin.setText("未签到");
+                is_check_in = false;
+            }
+        }
+        return is_check_in;
+    }
+
+    String getToadyDate() {
+        mYear = cal.get(Calendar.YEAR);
+        String sYear = "" + mYear;
+        mMonth = cal.get(Calendar.MONTH) + 1;
+        String sMonth = checkLessTen(mMonth);
+        mDay = cal.get(Calendar.DAY_OF_MONTH);
+        String sDay = checkLessTen(mDay);
+        String sToday = sYear + "-" + sMonth + "-" + sDay;
+        return sToday;
+    }
+
+    String checkLessTen(int num) {
+        String sNum = "";
+        if(num < 10) {
+            sNum = "0" + num;
         }
         else {
-            btnCheckin.setText("签到");
+            sNum = "" + num;
         }
-    }
-    void get_check_in_stats(){
-        //获取今日签到状态-----------易雄宇提供
-
-    }
-    void get_check_in_day(){
-        //获取连续签到天数函数-----------易雄宇提供
-
-    }
-    void send_check_in_stats(){
-        //发送今日签到状态-----------客户端提供
-
-    }
-    void send_check_in_day(){
-        //发送连续签到天数函数-----------客户端提供
-
+        return sNum;
     }
 }

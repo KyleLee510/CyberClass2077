@@ -5,6 +5,7 @@ public class UserInfo {
     private String userName;
     private String nickName;
     private String gender;
+    private String portrait;
     private String birthDate;
     private Integer followeeNum;
     private Integer followerNum;

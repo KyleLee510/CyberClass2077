@@ -18,6 +18,7 @@
         </android.support.v7.widget.SearchView>
 
         <ImageButton
+            android:id="@+id/id_btn_publish"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/pencil"
@@ -39,6 +40,5 @@
         android:id="@+id/comment_top_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </android.support.v4.view.ViewPager>
 </LinearLayout>
