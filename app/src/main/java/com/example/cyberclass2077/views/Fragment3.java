@@ -57,6 +57,7 @@ public class Fragment3 extends Fragment {
     ConstraintLayout to_setting;
     ConstraintLayout to_contribution;
     ConstraintLayout to_login;
+    ConstraintLayout to_download;
 
     Button btn_Checkin;
     TextView txtUserName;
@@ -177,14 +178,13 @@ public class Fragment3 extends Fragment {
         to_setting = (ConstraintLayout) view.findViewById(R.id.to_setting); //跳转设置的控件
         to_contribution = (ConstraintLayout) view.findViewById(R.id.to_contribution);//跳转到贡献的控件
         to_login = (ConstraintLayout) view.findViewById(R.id.to_login); //跳转至用户登录的控件
+        to_download = (ConstraintLayout) view.findViewById(R.id.to_download); // 跳转至用户下载界面的控件
         btn_Checkin = (Button) view.findViewById(R.id.btn_user_layout_Check_in); //用来完成用户签到
         txtUserName = (TextView) view.findViewById(R.id.user_layout_username); //显示用户名即昵称
         txtAccountnumber = (TextView) view.findViewById(R.id.user_layout_account_number); //显示账号
         imagePhoto = (ImageView) view.findViewById(R.id.user_layout_user_image); //用户头像
         txt_show_lv = (TextView)view.findViewById(R.id.user_layout_show_lv);//展示等级称号
         lv_tag_content = getResources().getStringArray(R.array.check_in_tag);//等级称号的字符串数组
-
-
         cal = Calendar.getInstance();//初始化时间
 
 
@@ -194,7 +194,7 @@ public class Fragment3 extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Fragment3SettingActivity.class);
                 startActivity(intent);
-                getActivity().finish();
+                //getActivity().finish();
                 //需要在finish和startActivity之后进行
                 //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
                 getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
@@ -205,14 +205,20 @@ public class Fragment3 extends Fragment {
         to_contribution.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
                 Intent intent = new Intent(getActivity(), Fragment3UploadActivity.class);
                 startActivity(intent);
-                //getActivity().finish();
-                //需要在finish和startActivity之后进行
-                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
                 getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
 
+            }
+        });
+
+        //跳转到下载界面的监听器
+        to_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Fragment3DownloadActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
             }
         });
 
