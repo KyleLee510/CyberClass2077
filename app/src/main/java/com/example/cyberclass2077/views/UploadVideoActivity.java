@@ -121,7 +121,7 @@ public class UploadVideoActivity extends AppCompatActivity {
                 String s_video_title = et_set_title.getText().toString();//获取视频标题
                 String s_courseClass = sp_set_courseTag.getSelectedItem().toString(); //获取视频标签
                 //ImageUtils.saveBitmap(BitmapFactory.decodeFile(Constant.TEMP_PICTUREPATH), Constant.USERPHOTO_PATH + "/" + user.getUserName());//缓冲用户选择视频封面至本地
-                actionsCreator.uploadVideo(s_video_title, sfile);
+                actionsCreator.uploadVideo(s_video_title, sfile, s_courseClass, BitmapFactory.decodeFile(Constant.TEMP_PICTUREPATH));
             }
         });
     }
@@ -167,6 +167,7 @@ public class UploadVideoActivity extends AppCompatActivity {
                 MediaMetadataRetriever mmr = new MediaMetadataRetriever();//实例化MediaMetadataRetriever对象
                 mmr.setDataSource(file.getAbsolutePath());
                 Bitmap bitmap = mmr.getFrameAtTime();//获得视频第一帧的Bitmap对象
+                ImageUtils.saveBitmap(bitmap, Constant.TEMP_PICTUREPATH);//将封面缓冲至本地
                 img_chooseVideo.setImageBitmap(bitmap);
                 img_chooseVideo.setScaleType(ImageView.ScaleType.FIT_XY);
                 /*

@@ -38,7 +38,7 @@ public class DynamicPublish extends AppCompatActivity{
 
     private ImageView ibtn;
     private ImageView imageView_choose;
-    private Button btn_publish;
+    private TextView btn_publish;
 
     private Dispatcher dispatcher;
     private ActionsCreator actionsCreator;
