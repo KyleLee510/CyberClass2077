@@ -4,11 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -20,33 +17,35 @@ import com.example.cyberclass2077.bean.CourseBean;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.support.constraint.Constraints.TAG;
+public class CourseFragmentAll extends Fragment {
 
-public class CourseFragmentAll extends Fragment{
+    private SwipeRefreshLayout swipeRefreshLayout;
 
-    private SearchView searchView;
-    List<CourseBean> courseBeanList=new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.course_list, container, false);
-        final ListView listView=(ListView)view.findViewById(R.id.id_course_list);
-
+        ListView listView = (ListView) view.findViewById(R.id.id_course_list);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_course_layout);
+        List<CourseBean> courseBeanList=new ArrayList<>();
         for(int i=0;i<10;i++)
         {
             CourseBean courseBean=new CourseBean();
             courseBeanList.add(courseBean);
         }
-
-
-
         listView.setAdapter(new CourseAdapter(getActivity(),courseBeanList));
+
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light, android.R.color.holo_orange_light);
+        /*
+        //给swipeRefreshLayout绑定刷新监听
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //设置2秒的时间来执行以下事件
+            }
+        });
+        */
         return view;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
-        super.onCreateOptionsMenu(menu, inflater);
     }
 }

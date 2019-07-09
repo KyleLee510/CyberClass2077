@@ -68,15 +68,16 @@ public class CourseVideoActivity extends Activity {
      *
      * @return
      */
+
 //    VideoPath为本地视频时，输入Environment.getExternalStorageDirectory()的后续地址
 //    （getExternalStorageDirectory()在小米8中为/storage/emulated/0，即输入/tencent/TIMfile_recv/20190310_174858.mp4），
 //
 
     @NonNull
     private String getLocalPath() {
-
         return new File(Environment.getExternalStorageDirectory(), getIntent().getStringExtra("VideoPath")).getPath();
     }
+
 
     private void requestSDpermission() {
         if (ContextCompat.checkSelfPermission(CourseVideoActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)

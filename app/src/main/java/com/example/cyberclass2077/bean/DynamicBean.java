@@ -4,8 +4,8 @@ import com.example.cyberclass2077.views.Dynamic.DynamicPublish;
 
 public class DynamicBean {
     private Integer img_head;
-    private String str_user_name;
-    private String str_describe;
+    private String str_user_name; //用户名
+    private String str_describe;   //
     private Integer img_dis;
     private Integer int_amount_favorite;
     private String str_first_comemnt;

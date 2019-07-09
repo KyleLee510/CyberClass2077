@@ -9,6 +9,7 @@
         android:layout_width="wrap_content"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
+        <!--用户头像-->
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/id_group_img"
             android:layout_width="48dp"
@@ -16,7 +17,7 @@
             app:civ_border_width="1dp"
             app:civ_border_color="@android:color/white"
             android:src="@mipmap/ic_launcher"/>
-
+        <!--用户昵称-->
         <TextView
             android:id="@+id/id_group_name"
             android:layout_width="wrap_content"
@@ -26,15 +27,15 @@
             android:layout_marginLeft="10dp"
             android:text="name"/>
     </LinearLayout>
+    <!--文本内容-->
     <TextView
         android:id="@+id/id_describe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="left"
         android:textSize="35px"
-        android:layout_marginLeft="10dp"
-        android:text="水光潋滟晴方好，山色空蒙雨亦奇。\n
-欲把西湖比西子，淡妆浓抹总相宜。"/>
+        android:layout_marginLeft="10dp" />
+    <!--用户发表图片-->
     <ImageView
         android:id="@+id/id_list_img"
         android:src="@drawable/lizi"
@@ -45,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
+        <!--点赞-->
         <ImageView
             android:id="@+id/id_favorite"
             android:layout_width="50dp"

@@ -2,15 +2,17 @@ package com.example.cyberclass2077.bean;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class DynamicPublishBean {
-    private Integer dynamicId;
-    private String userName;
-    private String content;
-    private String date;
-    private Integer commentNum;
-//    public Bitmap bitmap;
+public class DynamicPublishBean implements Serializable {
+    private Integer dynamicId; //动态ID
+    private String userName; //用户名
+    private String content; //文本内容
+    private String date;    //日期
+    private Integer commentNum; //评论数
+    private Integer likeNum;    //点赞数
+
 
     public void setUserName(String userName){this.userName=userName;}
     public String getUserName(){return userName;}
@@ -38,4 +40,11 @@ public class DynamicPublishBean {
         this.dynamicId = dynamicId;
     }
 
+    public Integer getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(Integer likeNum) {
+        this.likeNum = likeNum;
+    }
 }

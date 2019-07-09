@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.adapter.CourseAdapter;
 import com.example.cyberclass2077.bean.CourseBean;
+import com.example.cyberclass2077.controllers.ToNextActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +42,9 @@ public class Fragment3DownloadActivity extends AppCompatActivity {
         img_to_backUserlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Fragment3DownloadActivity.this, MainActivity.class);
-                intent.putExtra("fragment",2);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+                ToNextActivity.to_NextActivityFinish(Fragment3DownloadActivity.this,
+                        MainActivity.class,
+                        ToNextActivity.FRAGMENT3);
             }
         });
     }

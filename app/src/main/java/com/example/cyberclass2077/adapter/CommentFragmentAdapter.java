@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.cyberclass2077.views.Dynamic.DynamicAllFragment;
 import com.example.cyberclass2077.views.Dynamic.DynamicAttentionFragment;
+import com.example.cyberclass2077.views.Dynamic.DynamicMyFragment;
 import com.example.cyberclass2077.views.TabFragment;
 
 import java.util.ArrayList;
@@ -21,8 +22,11 @@ public class CommentFragmentAdapter extends FragmentPagerAdapter {
         super(fm);
         this.fragmentList.add(new DynamicAllFragment());
         this.fragmentList.add(new DynamicAttentionFragment());
+        this.fragmentList.add(new DynamicMyFragment());
         mTitles.add("广场");
         mTitles.add("关注");
+        mTitles.add("我");
+
     }
 
     @Override

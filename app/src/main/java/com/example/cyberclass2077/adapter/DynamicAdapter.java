@@ -1,6 +1,7 @@
 package com.example.cyberclass2077.adapter;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,20 +14,24 @@ import android.widget.TextView;
 
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.bean.DynamicBean;
+import com.example.cyberclass2077.bean.DynamicPublishBean;
 import com.example.cyberclass2077.views.Comment.DetailComment;
+import com.example.cyberclass2077.views.Dynamic.DynamicPublish;
 
 import java.util.List;
 
 public class DynamicAdapter extends BaseAdapter {
 
     private Context context;
-    private List<DynamicBean> listDynamicBean;
+    private List<DynamicPublishBean> listDynamicBean;
+    private List<Bitmap> listportrait;
     private LayoutInflater inflater;
-    public DynamicAdapter(Context context,List<DynamicBean> listDynamicBean)
+    public DynamicAdapter(Context context, List<DynamicPublishBean> listDynamicBean, List<Bitmap> listportrait)
     {
-        this.context=context;
-        this.listDynamicBean=listDynamicBean;
-        this.inflater=LayoutInflater.from(context);
+        this.context = context;
+        this.listDynamicBean = listDynamicBean;
+        this.listportrait = listportrait;
+        this.inflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -47,24 +52,24 @@ public class DynamicAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolderGroup viewHolderGroup;
-        if(inflater==null)
+        if(inflater == null)
         {
-            inflater=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+            inflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         }
-        if(convertView==null)
+        if(convertView == null)
         {
-            convertView=inflater.inflate(R.layout.dynamiclayout,null);
-            viewHolderGroup=new ViewHolderGroup();
-            viewHolderGroup.img_head=convertView.findViewById(R.id.id_group_img);
-            viewHolderGroup.str_user_name=convertView.findViewById(R.id.id_group_name);
-            viewHolderGroup.str_describe=convertView.findViewById(R.id.id_describe);
-            viewHolderGroup.img_dis=convertView.findViewById(R.id.id_list_img);
-            viewHolderGroup.int_amount_favorite=convertView.findViewById(R.id.id_amount_favorite);
-            viewHolderGroup.str_first_comemnt=convertView.findViewById(R.id.id_first_comment);
-            viewHolderGroup.int_amout_comment=convertView.findViewById(R.id.id_amount_comment);
-            viewHolderGroup.str_time=convertView.findViewById(R.id.id_time_publish);
-            viewHolderGroup.img_favorite=convertView.findViewById(R.id.id_favorite);
-            viewHolderGroup.img_chat=convertView.findViewById(R.id.id_chat);
+            convertView = inflater.inflate(R.layout.dynamiclayout,null);
+            viewHolderGroup = new ViewHolderGroup();
+            viewHolderGroup.img_head = convertView.findViewById(R.id.id_group_img);
+            viewHolderGroup.str_user_name = convertView.findViewById(R.id.id_group_name);
+            viewHolderGroup.str_describe = convertView.findViewById(R.id.id_describe);
+            viewHolderGroup.img_dis = convertView.findViewById(R.id.id_list_img);
+            viewHolderGroup.int_amount_favorite = convertView.findViewById(R.id.id_amount_favorite);
+            viewHolderGroup.str_first_comemnt = convertView.findViewById(R.id.id_first_comment);
+            viewHolderGroup.int_amout_comment = convertView.findViewById(R.id.id_amount_comment);
+            viewHolderGroup.str_time = convertView.findViewById(R.id.id_time_publish);
+            viewHolderGroup.img_favorite = convertView.findViewById(R.id.id_favorite);
+            viewHolderGroup.img_chat = convertView.findViewById(R.id.id_chat);
             convertView.setTag(viewHolderGroup);
         }else
         {
@@ -87,7 +92,7 @@ public class DynamicAdapter extends BaseAdapter {
                 context.startActivity(intent1);
             }
         });
-
+        /*
         //关注
         viewHolderGroup.img_favorite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,16 +100,11 @@ public class DynamicAdapter extends BaseAdapter {
                 if(listDynamicBean.get(position).getIsLike()){
                     listDynamicBean.get(position).setIsLike(false);
                     viewHolderGroup.img_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
-                     Integer int_temp=listDynamicBean.get(position).getInt_amount_favorite()-1;
-                     listDynamicBean.get(position).setInt_amount_favorite(int_temp);
-                    viewHolderGroup.int_amount_favorite.setText(int_temp.toString()+"👍");
+//                   listDynamicBean.get(position).setInt_amount_favorite();
 
                 }else {
                     listDynamicBean.get(position).setIsLike(true);
                     viewHolderGroup.img_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
-                    Integer int_temp=listDynamicBean.get(position).getInt_amount_favorite()+1;
-                    listDynamicBean.get(position).setInt_amount_favorite(int_temp);
-                    viewHolderGroup.int_amount_favorite.setText(int_temp.toString()+"👍");
                 }
             }
         });
@@ -120,12 +120,7 @@ public class DynamicAdapter extends BaseAdapter {
         Integer int_amount_favorite=listDynamicBean.get(position).getInt_amount_favorite();
         String str_amount_favorite=int_amount_favorite.toString();
         viewHolderGroup.int_amount_favorite.setText(str_amount_favorite+"👍");
-
-        //展示评论和时间
-        viewHolderGroup.str_time.setText(listDynamicBean.get(position).getStr_time());
-        viewHolderGroup.int_amout_comment.setText(listDynamicBean.get(position).getInt_amount_comment().toString()+"评论");
-
-
+        */
         return convertView;
     }
     class ViewHolderGroup {
