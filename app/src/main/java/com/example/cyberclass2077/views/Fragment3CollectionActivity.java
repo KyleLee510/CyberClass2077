@@ -10,11 +10,12 @@ import android.widget.ListView;
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.adapter.CourseAdapter;
 import com.example.cyberclass2077.bean.CourseBean;
+import com.example.cyberclass2077.controllers.ToNextActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fragement3CollectionActivity extends AppCompatActivity {
+public class Fragment3CollectionActivity extends AppCompatActivity {
 
     private ImageButton img_to_backUserlayout;
     private ListView listView_collection;
@@ -34,18 +35,16 @@ public class Fragement3CollectionActivity extends AppCompatActivity {
             courseBeanList.add(courseBean);
         }
 
-        listView_collection.setAdapter(new CourseAdapter(Fragement3CollectionActivity.this, courseBeanList));
+        listView_collection.setAdapter(new CourseAdapter(Fragment3CollectionActivity.this, courseBeanList));
 
         //跳转到用户个人主页
         img_to_backUserlayout = findViewById(R.id.img_collection_back_button);
         img_to_backUserlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Fragement3CollectionActivity.this, MainActivity.class);
-                intent.putExtra("fragment",2);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+                ToNextActivity.to_NextActivityFinish(Fragment3CollectionActivity.this,
+                        MainActivity.class,
+                        ToNextActivity.FRAGMENT3);
             }
         });
     }

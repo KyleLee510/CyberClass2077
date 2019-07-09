@@ -1,23 +1,12 @@
 package com.example.cyberclass2077.views;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.BitmapShader;
-import android.graphics.Shader;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.text.Layout;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,26 +22,16 @@ import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
 import com.example.cyberclass2077.model.UserInfo;
 import com.example.cyberclass2077.pictureselector.Constant;
-import com.example.cyberclass2077.pictureselector.FileUtils;
 import com.example.cyberclass2077.pictureselector.ImageUtils;
-import com.example.cyberclass2077.pictureselector.PermissionUtils;
 import com.example.cyberclass2077.stores.UserInfoStore;
 import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
-
-import static com.example.cyberclass2077.controllers.ToNextActivity.to_NextActivity;
-import static com.example.cyberclass2077.pictureselector.ImageUtils.saveBitmap;
 
 
 public class Fragment3 extends Fragment {
@@ -219,7 +198,7 @@ public class Fragment3 extends Fragment {
         to_collection.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(getActivity(), Fragement3CollectionActivity.class);
+                Intent intent = new Intent(getActivity(), Fragment3CollectionActivity.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
 
