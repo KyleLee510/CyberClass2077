@@ -21,7 +21,7 @@
     </android.support.constraint.ConstraintLayout>
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="120dp">
 
         <com.example.cyberclass2077.controllers.CircleImageView
             android:id="@+id/course_uploader_image"
@@ -31,13 +31,12 @@
             android:src="@drawable/user"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"></com.example.cyberclass2077.controllers.CircleImageView>
+            app:layout_constraintTop_toTopOf="parent"></com.example.cyberclass2077.controllers.CircleImageView>
 
         <TextView
             android:id="@+id/course_video_title"
-            android:layout_width="220dp"
-            android:layout_height="35dp"
+            android:layout_width="195dp"
+            android:layout_height="69dp"
             android:text="视频标题"
             android:textSize="28sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -47,8 +46,8 @@
 
         <TextView
             android:id="@+id/course_nick_name"
-            android:layout_width="220dp"
-            android:layout_height="32dp"
+            android:layout_width="199dp"
+            android:layout_height="46dp"
             android:text="上传者昵称"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -58,24 +57,43 @@
 
         <TextView
             android:id="@+id/course_remark"
-            android:layout_width="50dp"
-            android:layout_height="60dp"
+            android:layout_width="118dp"
+            android:layout_height="47dp"
             android:background="@color/qmui_config_color_50_blue"
             android:text="视频标签"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/course_video_title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
+        <!--收藏button-->
         <ImageButton
             android:id="@+id/course_favorite"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:scaleType="fitXY"
-            android:src="@drawable/star"
+            android:background="@drawable/star"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/course_remark"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/course_download" />
+
+        <!--下载button-->
+        <ImageButton
+        android:id="@+id/course_download"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:scaleType="fitXY"
+        android:background="@drawable/download"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
     </android.support.constraint.ConstraintLayout>
+
+    <!--分割线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#83738F"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp">
+    </View>
 
 </LinearLayout>
