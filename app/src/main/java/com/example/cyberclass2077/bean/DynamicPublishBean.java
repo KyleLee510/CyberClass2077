@@ -2,9 +2,10 @@ package com.example.cyberclass2077.bean;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class DynamicPublishBean {
+public class DynamicPublishBean implements Serializable {
     private Integer dynamicId;
     private String userName;
     private String content;

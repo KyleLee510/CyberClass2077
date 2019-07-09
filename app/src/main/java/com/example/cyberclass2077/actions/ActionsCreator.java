@@ -116,5 +116,12 @@ public class ActionsCreator {
         );
 
     }
+    //获取动态列表的请求。参数type是指请求种类的参数
+    //广场对应 "square"
+    //我的对应 "my"
+    //收藏对应 "like"
+    public void getDynamics(String type){
+
+    }
 
 }
