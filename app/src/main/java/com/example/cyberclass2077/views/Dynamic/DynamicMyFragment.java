@@ -31,7 +31,7 @@ public class DynamicMyFragment extends Fragment {
         }
 
 
-        listView.setAdapter(new DynamicAdapter(getActivity(),dynamicBeanList));
+//        listView.setAdapter(new DynamicAdapter(getActivity(),dynamicBeanList));
         return view;
     }
 }

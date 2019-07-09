@@ -30,6 +30,7 @@ public class DynamicStore  extends Store{
         dynamics.add(dynamic);
         return  true;
     }
+
     @Override
     @Subscribe
     public void onAction(Action action){
@@ -43,7 +44,7 @@ public class DynamicStore  extends Store{
                         .ACTION_GET_DYNAMICS:
                 connect=null;
                 connect=new GetDynamicsConnect();
-                ((GetDynamicsConnect)connect).sendGetDynamicsRequest((String)action.getType());
+                ((GetDynamicsConnect)connect).sendGetDynamicsRequest((String)action.getData());
                 break;
                 default:
 

@@ -218,7 +218,6 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
             commentBeanList.get(groupPosition).getReplyList().clear();
             commentBeanList.get(groupPosition).getReplyList().addAll(replyBeanList);
         }else {
-
             commentBeanList.get(groupPosition).setReplyList(replyBeanList);
         }
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.adapter.DynamicAdapter;
 import com.example.cyberclass2077.bean.DynamicBean;
 import com.example.cyberclass2077.bean.DynamicPublishBean;
+import com.example.cyberclass2077.controllers.ToNextActivity;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
 import com.example.cyberclass2077.model.UserInfo;
@@ -47,9 +49,11 @@ public class DynamicAllFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.dynamic_all_layout, container, false);
         initDependencies();
-
+        Log.e("asdf","onGetDynamics1");
         listView = (ListView)view.findViewById(R.id.id_dynamic_all_layout);
-        actionsCreator.getDynamics("square");
+        if(ToNextActivity.ISLOGIN) {
+            actionsCreator.getDynamics("square");
+        }
         return view;
     }
 
@@ -66,8 +70,10 @@ public class DynamicAllFragment extends Fragment {
 
     @Subscribe
     public void onGetDynamics(DynamicStore.GetDynamicsEvent event) {
+        String.format("ssssss");
         for(int i = 0;i < event.dynamicList.size();i++) {
             dynamicPublishBeanList.add(event.dynamicList.get(i));
+            Log.e("asdf","onGetDynamics");
             portraitList.add(event.portraitList.get(i));
         }
         listView.setAdapter(new DynamicAdapter(getActivity(), dynamicPublishBeanList, portraitList));
