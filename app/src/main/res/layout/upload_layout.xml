@@ -61,7 +61,7 @@
             android:id="@+id/img_choose_video"
             android:layout_width="268dp"
             android:layout_height="201dp"
-            android:background="@color/bg_color"
+            android:background="@drawable/video_fill"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

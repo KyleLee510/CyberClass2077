@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".views.UploadVideoActivity"></activity>
+        <activity android:name=".views.Fragment3DownloadActivity"></activity>
+        <activity android:name=".views.UploadVideoActivity" />
         <activity android:name=".views.Fragment3UploadActivity" />
         <activity android:name=".views.LaunchActivity">
             <intent-filter>

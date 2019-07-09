@@ -14,11 +14,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
+import com.example.cyberclass2077.adapter.CourseAdapter;
+import com.example.cyberclass2077.bean.CourseBean;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.FileInfo;
 import com.example.cyberclass2077.model.User;
@@ -29,17 +32,34 @@ import com.example.cyberclass2077.stores.UserStore;
 import com.squareup.otto.Subscribe;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Fragment3UploadActivity extends AppCompatActivity {
 
     private ImageButton backButton;
     private TextView txt_upload_btn;
+    private ListView listView_upload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment3_uploadlist_layout);
+        initWidget();
+
+    }
+    void initWidget() {
+
+        listView_upload=(ListView)findViewById(R.id.id_contribution_list);
+        List<CourseBean> courseBeanList=new ArrayList<>();
+        for(int i=0;i<10;i++)
+        {
+            CourseBean courseBean=new CourseBean();
+            courseBeanList.add(courseBean);
+        }
+        listView_upload.setAdapter(new CourseAdapter(Fragment3UploadActivity.this,courseBeanList));
+
 
         //跳转到用户个人主页
         backButton = findViewById(R.id.upload_back_button);
@@ -67,11 +87,8 @@ public class Fragment3UploadActivity extends AppCompatActivity {
                 //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
                 overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
 
-                //selectVideo();
-                String s = "/storage/emulated/0/DCIM/ScreenRecorder/Screenrecorder-2019-03-30-11-10-22-652.mp4";
             }
         });
-
     }
 
 }
