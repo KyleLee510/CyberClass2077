@@ -47,7 +47,7 @@ public class SendDynamicConnect extends Connect<DynamicPublishBean>{
             return;
         boolean isSendDynamicSuccessful=(boolean)sendResultMap.get("isSendDynamicSuccessful");
         Integer dynamicId=(Integer)sendResultMap.get("dynamicId");
-        store.addDynamic(dynamic);
+        //store.addDynamic(dynamic);
         store.setStoreChangeEvent(
                 store.new SendDynamicEvent(
                         isSendDynamicSuccessful

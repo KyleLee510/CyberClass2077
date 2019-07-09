@@ -49,24 +49,7 @@ public class Fragment2 extends Fragment{
             }
         });
         return view;
-//
-//
-//
-//        initData();
-//        fragmentAdapter.setList(mTitles);
-//        return view;
-//        ListView listView=(ListView)view.findViewById(R.id.);
-//
-//        List<DynamicBean> dynamicBeanList=new ArrayList<>();
-//        for(int i=0;i<10;i++)
-//        {
-//            DynamicBean dynamicBean=new DynamicBean();
-//            dynamicBeanList.add(dynamicBean);
-//        }
-//
-//
-//        listView.setAdapter(new DynamicAdapter(getActivity(),dynamicBeanList));
-//        return view;
+
 
     }
 
