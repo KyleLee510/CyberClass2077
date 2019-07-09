@@ -23,6 +23,7 @@
 
         <!--下载界面标题-->
         <TextView
+            android:id="@+id/fragment3_followee_titile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
