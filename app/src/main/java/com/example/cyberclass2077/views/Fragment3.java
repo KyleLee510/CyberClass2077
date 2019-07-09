@@ -274,25 +274,25 @@ public class Fragment3 extends Fragment {
             });
 
             //未签到的情况下可用
-                //点击签到按钮
-                btn_Checkin.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(is_check_in) {
-                           return;
-                        }
-                        Log.d("姓名",userInfo.getUserName());
-                        userInfo.setLastCheckinDate(getToadyDate()); //将今日签到日期传回服务端
-                        userInfo.setCheckinTotalDays(check_in_day +1);
-
-                        actionsCreator.updateUserInfo(userInfo); //签到更新
-
-                        btn_Checkin.setText("已签到"); //更新用户已签到
-                        is_check_in = true;
-                        update_user_lv();//更新用户等级
+            //点击签到按钮
+            btn_Checkin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(is_check_in) {
+                        return;
                     }
-                });
-        }
+                    Log.d("姓名",userInfo.getUserName());
+                    userInfo.setLastCheckinDate(getToadyDate()); //将今日签到日期传回服务端
+                    userInfo.setCheckinTotalDays(check_in_day +1);
+
+                    actionsCreator.updateUserInfo(userInfo); //签到更新
+
+                    btn_Checkin.setText("已签到"); //更新用户已签到
+    is_check_in = true;
+    update_user_lv();//更新用户等级
+}
+            });
+                    }
     }
 
     void update_user_lv(){

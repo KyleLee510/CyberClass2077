@@ -38,7 +38,7 @@ public   class MutiChoiceAdapter extends RecyclerView.Adapter<MutiChoiceAdapter.
     {
         this.context = context ;
         sparseArray = new SparseArray<>();
-        tag_content = context.getResources().getStringArray(R.array.tag);//绑定tag_content
+        tag_content = context.getResources().getStringArray(R.array.courseTag);//绑定tag_content
     }
     public  class  MyViewHolder extends RecyclerView.ViewHolder
     {

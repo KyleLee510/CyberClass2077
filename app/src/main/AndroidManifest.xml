@@ -5,11 +5,10 @@
 
     <dist:module dist:instant="true" />
 
-
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -18,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".views.Fragment3UploadActivity"></activity>
+        <activity android:name=".views.UploadVideoActivity"></activity>
+        <activity android:name=".views.Fragment3UploadActivity" />
         <activity android:name=".views.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,21 +27,23 @@
             </intent-filter>
         </activity>
         <activity android:name=".views.ChangePasswordActivity" />
-
-        <activity android:name=".views.CourseVideoActivity"
-            android:screenOrientation="landscape"></activity>
-
+        <activity
+            android:name=".views.CourseVideoActivity"
+            android:screenOrientation="landscape" />
         <activity android:name=".views.SignupActivity" />
         <activity android:name=".views.UserDataSettingActivity" />
         <activity android:name=".views.Fragment3SettingActivity" />
         <activity android:name=".views.Dynamic.DynamicPublish" />
-        <activity android:name=".views.LoginActivity"/>
-        <activity android:name=".views.MainActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".views.Comment.DetailComment"></activity>
-        <activity android:name=".start_atcivity"></activity>
-        <activity android:name=".pictureselector.PictureSelectActivity"
+        <activity android:name=".views.LoginActivity" />
+        <activity
+            android:name=".views.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".views.Comment.DetailComment" />
+        <activity android:name=".start_atcivity" />
+        <activity
+            android:name=".pictureselector.PictureSelectActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"
@@ -49,7 +51,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
     </application>
 
