@@ -121,6 +121,12 @@ public class ActionsCreator {
     //我的对应 "my"
     //收藏对应 "like"
     public void getDynamics(String type){
+        dispatcher.dispatch(
+                new GetDynamicsAction(
+                        GetDynamicsAction.ACTION_GET_DYNAMICS,
+                        type
+                )
+        );
 
     }
 
