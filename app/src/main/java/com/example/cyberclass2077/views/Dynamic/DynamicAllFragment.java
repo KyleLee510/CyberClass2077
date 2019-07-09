@@ -58,19 +58,22 @@ public class DynamicAllFragment extends Fragment {
     }
 
     private void initDependencies() {
+        System.out.println("Already init");
         //获取调度者单例
         dispatcher = Dispatcher.get();
         //获取动作创建者单例
         actionsCreator = ActionsCreator.get(dispatcher);
         //获取 用户 数据仓库单例
         dynamicStore = DynamicStore.getInstance();
+        dynamicStore.register(this);
         //在调度者里注册 用户 数据仓库，若已注册，不会重复注册
         dispatcher.register(dynamicStore);
     }
 
     @Subscribe
     public void onGetDynamics(DynamicStore.GetDynamicsEvent event) {
-        String.format("ssssss");
+        System.out.println("Already In");
+        System .out.println(event.dynamicList.size());
         for(int i = 0;i < event.dynamicList.size();i++) {
             dynamicPublishBeanList.add(event.dynamicList.get(i));
             Log.e("asdf","onGetDynamics");

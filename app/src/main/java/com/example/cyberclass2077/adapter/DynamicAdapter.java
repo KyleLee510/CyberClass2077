@@ -92,35 +92,38 @@ public class DynamicAdapter extends BaseAdapter {
                 context.startActivity(intent1);
             }
         });
-        /*
+
+        viewHolderGroup.str_user_name.setText(listDynamicBean.get(position).getUserName());
+        viewHolderGroup.img_head.setImageBitmap(listportrait.get(position));
+
         //关注
-        viewHolderGroup.img_favorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(listDynamicBean.get(position).getIsLike()){
-                    listDynamicBean.get(position).setIsLike(false);
-                    viewHolderGroup.img_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
-//                   listDynamicBean.get(position).setInt_amount_favorite();
+//        viewHolderGroup.img_favorite.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(listDynamicBean.get(position).getIsLike()){
+//                    listDynamicBean.get(position).setIsLike(false);
+//                    viewHolderGroup.img_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
+////                   listDynamicBean.get(position).setInt_amount_favorite();
+//
+//                }else {
+//                    listDynamicBean.get(position).setIsLike(true);
+//                    viewHolderGroup.img_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
+//                }
+//            }
+//        });
+//        if(listDynamicBean.get(position).getIsLike())
+//        {
+//            viewHolderGroup.img_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
+//        }
+//        else
+//        {
+//            viewHolderGroup.img_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
+//        }
 
-                }else {
-                    listDynamicBean.get(position).setIsLike(true);
-                    viewHolderGroup.img_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
-                }
-            }
-        });
-        if(listDynamicBean.get(position).getIsLike())
-        {
-            viewHolderGroup.img_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
-        }
-        else
-        {
-            viewHolderGroup.img_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
-        }
+//        Integer int_amount_favorite=listDynamicBean.get(position).getInt_amount_favorite();
+//        String str_amount_favorite=int_amount_favorite.toString();
+//        viewHolderGroup.int_amount_favorite.setText(str_amount_favorite+"👍");
 
-        Integer int_amount_favorite=listDynamicBean.get(position).getInt_amount_favorite();
-        String str_amount_favorite=int_amount_favorite.toString();
-        viewHolderGroup.int_amount_favorite.setText(str_amount_favorite+"👍");
-        */
         return convertView;
     }
     class ViewHolderGroup {
