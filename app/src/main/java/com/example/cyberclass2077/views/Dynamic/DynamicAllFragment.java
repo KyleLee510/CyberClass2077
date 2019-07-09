@@ -32,7 +32,6 @@ public class DynamicAllFragment extends Fragment {
             dynamicBeanList.add(dynamicBean);
         }
 
-
         listView.setAdapter(new DynamicAdapter(getActivity(),dynamicBeanList));
         return view;
     }

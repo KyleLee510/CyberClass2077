@@ -15,7 +15,7 @@ public class FileInfoStore  extends  Store{
     private static FileInfoStore instance;
     private Connect connect;
     private List<FileInfo> fileInfos;
-    public FileInfoStore(){
+    private FileInfoStore(){
         super();
     }
     public static FileInfoStore getInstance() {

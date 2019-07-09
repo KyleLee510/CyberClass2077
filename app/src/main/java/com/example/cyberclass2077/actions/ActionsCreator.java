@@ -2,6 +2,7 @@ package com.example.cyberclass2077.actions;
 
 import android.graphics.Bitmap;
 
+import com.example.cyberclass2077.bean.DynamicPublishBean;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
 import com.example.cyberclass2077.model.UserInfo;
@@ -101,6 +102,17 @@ public class ActionsCreator {
                 )
         );
     }
+    public void sendDynamic(DynamicPublishBean dynamic,Bitmap bitmap){
+        Map map=new HashMap();
+        map.put("dynamic",dynamic);
+        map.put("bitmap",bitmap);
+        dispatcher.dispatch(
+                new SendDynamicAction(
+                        SendDynamicAction.ACTION_SEND_DYNAMIC,
+                        map
+                )
+        );
 
+    }
 
 }

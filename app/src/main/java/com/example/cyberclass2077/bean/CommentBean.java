@@ -49,7 +49,6 @@ public class CommentBean {
         public List<CommentDetailBean> getList() {
             return list;
         }
-
     }
 
 }
