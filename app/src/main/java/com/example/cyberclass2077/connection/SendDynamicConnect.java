@@ -15,7 +15,7 @@ import java.util.Base64;
 import java.util.Map;
 
 public class SendDynamicConnect extends Connect<DynamicPublishBean>{
-    private DynamicPublishBean dynamic;
+    private volatile DynamicPublishBean dynamic;
     public SendDynamicConnect(){}
     public void sendDynamicRequest(Map map){
         dynamic=(DynamicPublishBean) map.get("dynamic");
@@ -47,7 +47,7 @@ public class SendDynamicConnect extends Connect<DynamicPublishBean>{
             return;
         boolean isSendDynamicSuccessful=(boolean)sendResultMap.get("isSendDynamicSuccessful");
         Integer dynamicId=(Integer)sendResultMap.get("dynamicId");
-        store.addDynamic(dynamic);
+        //store.addDynamic(dynamic);
         store.setStoreChangeEvent(
                 store.new SendDynamicEvent(
                         isSendDynamicSuccessful

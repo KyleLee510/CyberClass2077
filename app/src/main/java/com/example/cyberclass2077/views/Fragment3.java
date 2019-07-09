@@ -88,7 +88,6 @@ public class Fragment3 extends Fragment {
     private UserStore userStore;
     private User user;
 
-    private final int PERMISSION_CODE_FIRST = 0x14;//权限请求码
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
