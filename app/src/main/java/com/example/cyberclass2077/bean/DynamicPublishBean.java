@@ -10,6 +10,7 @@ public class DynamicPublishBean {
     private String content;
     private String date;
     private Integer commentNum;
+    private Integer likeNum;
 //    public Bitmap bitmap;
 
     public void setUserName(String userName){this.userName=userName;}
@@ -38,4 +39,11 @@ public class DynamicPublishBean {
         this.dynamicId = dynamicId;
     }
 
+    public Integer getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(Integer likeNum) {
+        this.likeNum = likeNum;
+    }
 }
