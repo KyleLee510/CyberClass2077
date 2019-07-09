@@ -42,6 +42,7 @@ public class Fragment3 extends Fragment {
     ConstraintLayout to_download;
     ConstraintLayout to_collection;
     ConstraintLayout to_followee;
+    ConstraintLayout to_fan;
 
     Button btn_Checkin;
     TextView txtUserName;
@@ -165,6 +166,7 @@ public class Fragment3 extends Fragment {
         to_download = (ConstraintLayout) view.findViewById(R.id.to_download); // 跳转至用户下载界面的控件
         to_collection = (ConstraintLayout) view.findViewById(R.id.to_collection);//跳转到收藏界面的控件
         to_followee = (ConstraintLayout) view.findViewById(R.id.to_attention);//跳转到关注界面的控件
+        to_fan = (ConstraintLayout)view.findViewById(R.id.to_follower);//跳转到粉丝界面的控件
         btn_Checkin = (Button) view.findViewById(R.id.btn_user_layout_Check_in); //用来完成用户签到
         txtUserName = (TextView) view.findViewById(R.id.user_layout_username); //显示用户名即昵称
         txtAccountnumber = (TextView) view.findViewById(R.id.user_layout_account_number); //显示账号
@@ -200,12 +202,29 @@ public class Fragment3 extends Fragment {
         to_collection.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(getActivity(), Fragment3CollectionActivity.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
-
+                if(user.isLoginState()) {   //登录才可以使用
+                    ToNextActivity.to_NextActivity(getActivity(), Fragment3CollectionActivity.class);
+                }
+                else {      //请登录
+                    ToNextActivity.to_NextActivity(getActivity(), LoginActivity.class);
+                }
             }
         });
+
+        //跳转到粉丝界面的监听器
+        to_fan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(user.isLoginState()) {   //登录才可以使用
+                    ToNextActivity.to_NextActivity(getActivity(), Fragment3FanActivity.class);//跳转到粉丝界面
+                }
+                else {      //请登录
+                    ToNextActivity.to_NextActivity(getActivity(), LoginActivity.class);
+                }
+            }
+        });
+
+
 
         //跳转到下载界面的监听器
         to_download.setOnClickListener(new View.OnClickListener() {
