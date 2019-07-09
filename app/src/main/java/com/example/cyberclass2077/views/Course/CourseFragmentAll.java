@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CourseFragmentAll extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -25,8 +26,8 @@ public class CourseFragmentAll extends Fragment {
         List<CourseBean> courseBeanList=new ArrayList<>();
         for(int i=0;i<10;i++)
         {
-              CourseBean courseBean=new CourseBean();
-              courseBeanList.add(courseBean);
+            CourseBean courseBean=new CourseBean();
+            courseBeanList.add(courseBean);
         }
         listView.setAdapter(new CourseAdapter(getActivity(),courseBeanList));
         return view;

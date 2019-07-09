@@ -22,7 +22,7 @@ public class CommentFragmentAdapter extends FragmentPagerAdapter {
         this.fragmentList.add(new DynamicAllFragment());
         this.fragmentList.add(new DynamicAttentionFragment());
         mTitles.add("广场");
-        mTitles.add("收藏");
+        mTitles.add("关注");
     }
 
     @Override

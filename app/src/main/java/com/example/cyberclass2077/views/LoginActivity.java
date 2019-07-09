@@ -86,7 +86,8 @@ public class LoginActivity extends AppCompatActivity {
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA});
                 if (checkPermissionFirst) {
                     actionsCreator.login(userName,passWord);
-                }
+
+            }
                 else {
                     Toast.makeText(LoginActivity.this,
                             String.format("请给予权限再登录"),

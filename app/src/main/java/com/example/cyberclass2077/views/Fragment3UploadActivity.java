@@ -90,5 +90,4 @@ public class Fragment3UploadActivity extends AppCompatActivity {
             }
         });
     }
-
 }
