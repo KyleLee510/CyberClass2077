@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.bean.DynamicPublishBean;
+import com.example.cyberclass2077.controllers.ToNextActivity;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
 import com.example.cyberclass2077.model.UserInfo;
@@ -28,6 +29,7 @@ import com.example.cyberclass2077.pictureselector.PictureSelector;
 import com.example.cyberclass2077.stores.DynamicStore;
 import com.example.cyberclass2077.stores.UserInfoStore;
 import com.example.cyberclass2077.stores.UserStore;
+import com.example.cyberclass2077.views.MainActivity;
 import com.example.cyberclass2077.views.UserDataSettingActivity;
 import com.squareup.otto.Subscribe;
 
@@ -116,7 +118,7 @@ public class DynamicPublish extends AppCompatActivity{
         ibtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                ToNextActivity.to_NextActivityFinish(DynamicPublish.this, MainActivity.class, ToNextActivity.FRAGMENT2);
             }
         });
 

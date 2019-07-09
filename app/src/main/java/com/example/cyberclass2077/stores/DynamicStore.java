@@ -60,7 +60,7 @@ public class DynamicStore  extends Store{
         public boolean isGetDynamicsSuccessful=false;
         public List<DynamicPublishBean> dynamicList;
        // public List<Bitmap>dynamicPicList;
-        public List<Bitmap>portraitList;
+        public List<Bitmap> portraitList;
         public GetDynamicsEvent(
                 boolean isGetDynamicsSuccessful,
                 List<DynamicPublishBean> dynamicList,
