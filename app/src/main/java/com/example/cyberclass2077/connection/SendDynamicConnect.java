@@ -15,7 +15,7 @@ import java.util.Base64;
 import java.util.Map;
 
 public class SendDynamicConnect extends Connect<DynamicPublishBean>{
-    private DynamicPublishBean dynamic;
+    private volatile DynamicPublishBean dynamic;
     public SendDynamicConnect(){}
     public void sendDynamicRequest(Map map){
         dynamic=(DynamicPublishBean) map.get("dynamic");
