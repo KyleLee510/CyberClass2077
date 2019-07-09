@@ -95,11 +95,16 @@ public class DynamicAdapter extends BaseAdapter {
                 if(listDynamicBean.get(position).getIsLike()){
                     listDynamicBean.get(position).setIsLike(false);
                     viewHolderGroup.img_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
-//                    listDynamicBean.get(position).setInt_amount_favorite();
+                     Integer int_temp=listDynamicBean.get(position).getInt_amount_favorite()-1;
+                     listDynamicBean.get(position).setInt_amount_favorite(int_temp);
+                    viewHolderGroup.int_amount_favorite.setText(int_temp.toString()+"👍");
 
                 }else {
                     listDynamicBean.get(position).setIsLike(true);
                     viewHolderGroup.img_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
+                    Integer int_temp=listDynamicBean.get(position).getInt_amount_favorite()+1;
+                    listDynamicBean.get(position).setInt_amount_favorite(int_temp);
+                    viewHolderGroup.int_amount_favorite.setText(int_temp.toString()+"👍");
                 }
             }
         });
@@ -115,6 +120,11 @@ public class DynamicAdapter extends BaseAdapter {
         Integer int_amount_favorite=listDynamicBean.get(position).getInt_amount_favorite();
         String str_amount_favorite=int_amount_favorite.toString();
         viewHolderGroup.int_amount_favorite.setText(str_amount_favorite+"👍");
+
+        //展示评论和时间
+        viewHolderGroup.str_time.setText(listDynamicBean.get(position).getStr_time());
+        viewHolderGroup.int_amout_comment.setText(listDynamicBean.get(position).getInt_amount_comment().toString()+"评论");
+
 
         return convertView;
     }

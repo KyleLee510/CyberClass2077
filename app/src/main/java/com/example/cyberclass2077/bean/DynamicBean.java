@@ -9,7 +9,7 @@ public class DynamicBean {
     private Integer img_dis;
     private Integer int_amount_favorite;
     private String str_first_comemnt;
-    private Integer int_amout_comment;
+    private Integer int_amount_comment;
     private String str_time;
     private boolean isLike;
 
@@ -17,6 +17,8 @@ public class DynamicBean {
     public  DynamicBean(){
         int_amount_favorite=20;
         isLike=false;
+        str_time="2019-7-9 10:21";
+        int_amount_comment=10;
     }
     public Integer getImg_head() {
         return img_head;
@@ -74,10 +76,10 @@ public class DynamicBean {
         this.isLike = isLike;
     }
 
-    public Integer getInt_amout_comment() {
-        return int_amout_comment;
+    public Integer getInt_amount_comment() {
+        return int_amount_comment;
     }
-    public void setInt_amout_comment(Integer int_amout_comment) {
-        this.int_amout_comment = int_amout_comment;
+    public void setInt_amount_comment(Integer int_amount_comment) {
+        this.int_amount_comment = int_amount_comment;
     }
 }
