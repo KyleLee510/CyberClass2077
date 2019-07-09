@@ -168,7 +168,9 @@ public class UserDataSettingActivity extends AppCompatActivity {
         to_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToNextActivity.to_NextActivityFinish(UserDataSettingActivity.this, MainActivity.class, ToNextActivity.FRAGMENT3);
+                ToNextActivity.to_NextActivityFinish(UserDataSettingActivity.this,
+                        MainActivity.class,
+                        ToNextActivity.FRAGMENT3);
             }
         });
 

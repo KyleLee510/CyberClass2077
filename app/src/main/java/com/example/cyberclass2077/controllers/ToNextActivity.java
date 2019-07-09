@@ -11,6 +11,7 @@ public class ToNextActivity {
     public static int FRAGMENT1 = 0;
     public static int FRAGMENT2 = 1;
     public static int FRAGMENT3 = 2;
+    public static boolean ISLOGIN = false;
 
     public static void to_NextActivity(Activity now, Class next) {
         Intent intent = new Intent(now, next);

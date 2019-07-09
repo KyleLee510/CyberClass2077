@@ -253,6 +253,7 @@ public class Fragment3 extends Fragment {
             });
         }
         else {
+            ToNextActivity.ISLOGIN = true;
             actionsCreator.getUserInfo(user.getUserName());
             btn_Checkin.setVisibility(View.VISIBLE);
 

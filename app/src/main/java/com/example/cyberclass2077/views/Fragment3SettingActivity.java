@@ -140,6 +140,7 @@ public class Fragment3SettingActivity extends AppCompatActivity {
             vLogout_ConsrtraintLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ToNextActivity.ISLOGIN = false;
                     actionsCreator.logout(user.getUserName());
                 }
             });

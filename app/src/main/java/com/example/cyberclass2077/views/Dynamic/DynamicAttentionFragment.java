@@ -31,7 +31,7 @@ public class DynamicAttentionFragment extends Fragment {
             DynamicBean dynamicBean=new DynamicBean();
             dynamicBeanList.add(dynamicBean);
         }
-        listView.setAdapter(new DynamicAdapter(getActivity(),dynamicBeanList));
+        //listView.setAdapter(new DynamicAdapter(getActivity(),dynamicBeanList));
         return view;
     }
 }
