@@ -41,6 +41,7 @@ public class Fragment3 extends Fragment {
     ConstraintLayout to_login;
     ConstraintLayout to_download;
     ConstraintLayout to_collection;
+    ConstraintLayout to_followee;
 
     Button btn_Checkin;
     TextView txtUserName;
@@ -163,6 +164,7 @@ public class Fragment3 extends Fragment {
         to_login = (ConstraintLayout) view.findViewById(R.id.to_login); //跳转至用户登录的控件
         to_download = (ConstraintLayout) view.findViewById(R.id.to_download); // 跳转至用户下载界面的控件
         to_collection = (ConstraintLayout) view.findViewById(R.id.to_collection);//跳转到收藏界面的控件
+        to_followee = (ConstraintLayout) view.findViewById(R.id.to_attention);//跳转到关注界面的控件
         btn_Checkin = (Button) view.findViewById(R.id.btn_user_layout_Check_in); //用来完成用户签到
         txtUserName = (TextView) view.findViewById(R.id.user_layout_username); //显示用户名即昵称
         txtAccountnumber = (TextView) view.findViewById(R.id.user_layout_account_number); //显示账号
@@ -217,6 +219,21 @@ public class Fragment3 extends Fragment {
                 }
             }
         });
+
+
+        //跳转到关注界面的监听器
+        to_followee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(user.isLoginState()) {
+                    ToNextActivity.to_NextActivity(getActivity(), Fragment3FolloweeActivity.class);
+                }
+                else {
+                    ToNextActivity.to_NextActivity(getActivity(), LoginActivity.class);
+                }
+            }
+        });
+
 
     }
 
