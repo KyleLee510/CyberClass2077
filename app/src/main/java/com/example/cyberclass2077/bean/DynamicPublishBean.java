@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import java.util.Date;
 
 public class DynamicPublishBean {
+    private Integer dynamicId;
     private String userName;
     private String content;
     private String date;
@@ -20,7 +21,7 @@ public class DynamicPublishBean {
     public void setDate(String date){this.date=date;}
     public String getDate(){return date;}
 
-    public void setCommentNum(int commentNum) {
+    public void setCommentNum(Integer commentNum) {
         this.commentNum = commentNum;
     }
 
@@ -28,6 +29,13 @@ public class DynamicPublishBean {
         return commentNum;
     }
 
-    //    public void setBitmap(Bitmap bitmap){this.bitmap=bitmap;}
-//    public Bitmap getBitmap(){return bitmap;}
+
+    public Integer getDynamicId() {
+        return dynamicId;
+    }
+
+    public void setDynamicId(Integer dynamicId) {
+        this.dynamicId = dynamicId;
+    }
+
 }
