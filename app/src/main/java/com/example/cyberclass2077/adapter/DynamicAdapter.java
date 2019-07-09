@@ -1,6 +1,7 @@
 package com.example.cyberclass2077.adapter;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,8 +45,8 @@ public class DynamicAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolderGroup viewHolderGroup;
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final ViewHolderGroup viewHolderGroup;
         if(inflater==null)
         {
             inflater=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
@@ -86,7 +87,34 @@ public class DynamicAdapter extends BaseAdapter {
                 context.startActivity(intent1);
             }
         });
-//        viewHolderGroup.str_first_comemnt
+
+        //关注
+        viewHolderGroup.img_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listDynamicBean.get(position).getIsLike()){
+                    listDynamicBean.get(position).setIsLike(false);
+                    viewHolderGroup.img_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
+//                    listDynamicBean.get(position).setInt_amount_favorite();
+
+                }else {
+                    listDynamicBean.get(position).setIsLike(true);
+                    viewHolderGroup.img_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
+                }
+            }
+        });
+        if(listDynamicBean.get(position).getIsLike())
+        {
+            viewHolderGroup.img_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
+        }
+        else
+        {
+            viewHolderGroup.img_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
+        }
+
+        Integer int_amount_favorite=listDynamicBean.get(position).getInt_amount_favorite();
+        String str_amount_favorite=int_amount_favorite.toString();
+        viewHolderGroup.int_amount_favorite.setText(str_amount_favorite+"👍");
 
         return convertView;
     }

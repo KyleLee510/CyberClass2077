@@ -12,5 +12,6 @@ public class AppConfig {
     public final static String SETTINGS_UPLOAD_PICTURE_PORTRAIT=BASE_URL_PATH.concat("/set_portrait_picture");
     public final static String SETTINGS_GET_PICTURE_PORTRAIT=BASE_URL_PATH.concat("/get_portrait_picture");
     public final static String FILE_UPLOAD_VIDEO=BASE_URL_PATH.concat("/upload_video");
+    public final static String DYNAMIC_SEND=BASE_URL_PATH.concat("/send_dynamic");
 
 }

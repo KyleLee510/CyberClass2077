@@ -294,11 +294,11 @@ public class Fragment3 extends Fragment {
                     actionsCreator.updateUserInfo(userInfo); //签到更新
 
                     btn_Checkin.setText("已签到"); //更新用户已签到
-                    is_check_in = true;
-                    update_user_lv();//更新用户等级
-                }
+    is_check_in = true;
+    update_user_lv();//更新用户等级
+}
             });
-        }
+                    }
     }
 
     void update_user_lv(){
