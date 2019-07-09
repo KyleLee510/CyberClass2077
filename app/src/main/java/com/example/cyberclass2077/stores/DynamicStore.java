@@ -1,6 +1,7 @@
 package com.example.cyberclass2077.stores;
 
 import android.graphics.Bitmap;
+import android.widget.SearchView;
 
 import com.example.cyberclass2077.actions.Action;
 import com.example.cyberclass2077.actions.GetDynamicsAction;
@@ -44,6 +45,7 @@ public class DynamicStore  extends Store{
                         .ACTION_GET_DYNAMICS:
                 connect=null;
                 connect=new GetDynamicsConnect();
+                System.out.println("Already send");
                 ((GetDynamicsConnect)connect).sendGetDynamicsRequest((String)action.getData());
                 break;
                 default:

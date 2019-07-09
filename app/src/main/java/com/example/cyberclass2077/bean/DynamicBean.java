@@ -3,12 +3,12 @@ package com.example.cyberclass2077.bean;
 import com.example.cyberclass2077.views.Dynamic.DynamicPublish;
 
 public class DynamicBean {
-    private Integer img_head;
+    private Integer img_head;  //头像
     private String str_user_name; //用户名
-    private String str_describe;   //
-    private Integer img_dis;
-    private Integer int_amount_favorite;
-    private String str_first_comemnt;
+    private String str_describe;   //描述内容
+    private Integer img_dis;  //图片
+    private Integer int_amount_favorite;  //喜欢的总数
+    private String str_first_comemnt;  //第一条评论
     private Integer int_amount_comment;
     private String str_time;
     private boolean isLike;
