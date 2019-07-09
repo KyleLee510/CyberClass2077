@@ -14,29 +14,103 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cyberclass2077.R;
+import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.bean.DynamicPublishBean;
+import com.example.cyberclass2077.dispatcher.Dispatcher;
+import com.example.cyberclass2077.model.User;
+import com.example.cyberclass2077.model.UserInfo;
 import com.example.cyberclass2077.pictureselector.Constant;
 import com.example.cyberclass2077.pictureselector.ImageUtils;
 import com.example.cyberclass2077.pictureselector.PictureSelector;
+import com.example.cyberclass2077.stores.DynamicStore;
+import com.example.cyberclass2077.stores.UserInfoStore;
 import com.example.cyberclass2077.stores.UserStore;
 import com.example.cyberclass2077.views.UserDataSettingActivity;
+import com.squareup.otto.Subscribe;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DynamicPublish extends AppCompatActivity implements View.OnClickListener{
+public class DynamicPublish extends AppCompatActivity{
 
     private ImageView ibtn;
     private ImageView imageView_choose;
-    private Button btn_publish;
+    private TextView btn_publish;
+
+    private Dispatcher dispatcher;
+    private ActionsCreator actionsCreator;
+    private UserInfoStore userInfoStore;
+    private UserInfo userInfo;
+
+    private UserStore userStore;
+    private User user;
+    private DynamicStore dynamicStore;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dynamic_pulish);
+        initDependencies();
+        initWidget();
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        dynamicStore.register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        dynamicStore.unregister(this);
+    }
+
+    @Subscribe
+    public void onSendDynamic(DynamicStore.SendDynamicEvent event) {
+        if(event.isSendDynamicSuccessful) {
+            Toast.makeText(DynamicPublish.this,
+                    String.format("发表动态成功"),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+    }
+
+    private void initDependencies() {
+        userStore = UserStore.getInstance(); //使用Store来进行传值判定
+        user = userStore.getUser();
+        //获取调度者单例
+        dispatcher = Dispatcher.get();
+        //获取动作创建者单例
+        actionsCreator = ActionsCreator.get(dispatcher);
+        //获取 用户 数据仓库单例
+        dynamicStore = DynamicStore.getInstance();
+        //在调度者里注册 用户 数据仓库，若已注册，不会重复注册
+        dispatcher.register(dynamicStore);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /*结果回调*/
+        if (requestCode == PictureSelector.SELECT_REQUEST_CODE) {
+            if (data != null) {
+                String picturePath = data.getStringExtra(PictureSelector.PICTURE_PATH);
+                imageView_choose.setImageBitmap(BitmapFactory.decodeFile(picturePath)); //图片加载
+                imageView_choose.setScaleType(ImageView.ScaleType.FIT_XY);
+            }
+        }
+    }
+
+    void initWidget() {
         //返回
         ibtn = findViewById(R.id.dyname_publish_back_button);
         ibtn.setOnClickListener(new View.OnClickListener() {
@@ -45,9 +119,6 @@ public class DynamicPublish extends AppCompatActivity implements View.OnClickLis
                 finish();
             }
         });
-
-
-
 
         //图片选择
         imageView_choose = findViewById(R.id.imageView_choose);
@@ -66,7 +137,7 @@ public class DynamicPublish extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
                 //该函数负责存储用户要使用的图像，第一个参数从临时保存的地方提取图片信息，第二个参数是设置的保存路径
-                ImageUtils.saveBitmap(BitmapFactory.decodeFile(Constant.TEMP_PICTUREPATH), Constant.USERPHOTO_PATH + "/" + "dynamic");//缓冲用户头像至本地
+                //ImageUtils.saveBitmap(BitmapFactory.decodeFile(Constant.TEMP_PICTUREPATH), Constant.USERPHOTO_PATH + "/" + "dynamic");//缓冲用户头像至本地
                 //当你想读取的时候使用    ImageView.setImageBitmap(Constant.USERPHOTO_PATH + "/" + "你定义的名字" + "jpg")
 
                 //填充DynamicPublishBean
@@ -80,49 +151,9 @@ public class DynamicPublish extends AppCompatActivity implements View.OnClickLis
                 String time=simpleDateFormat.format(date);
                 dynamicPublishBean.setDate(time);
 
-                //获取bitmap图片
-                ImageView imageView=findViewById(R.id.imageView_choose);
-                Drawable drawable=imageView.getDrawable();
-                Bitmap bitmap=getBitmap(drawable);
-
+                actionsCreator.sendDynamic(dynamicPublishBean, BitmapFactory.decodeFile(Constant.TEMP_PICTUREPATH)); //发布动态
 
             }
         });
-
-
-
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        /*结果回调*/
-        if (requestCode == PictureSelector.SELECT_REQUEST_CODE) {
-            if (data != null) {
-                String picturePath = data.getStringExtra(PictureSelector.PICTURE_PATH);
-                imageView_choose.setImageBitmap(BitmapFactory.decodeFile(picturePath)); //图片加载
-                imageView_choose.setScaleType(ImageView.ScaleType.FIT_XY);
-            }
-        }
-    }
-
-    private Bitmap getBitmap(Drawable drawable) {
-        Bitmap bitmap = Bitmap.createBitmap(
-                drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight(),
-                drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-                        : Bitmap.Config.RGB_565);
-        Canvas canvas = new Canvas(bitmap);
-        //canvas.setBitmap(bitmap);
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-        drawable.draw(canvas);
-        return bitmap;
-    }
-
-
-    @Override
-    public void onClick(View v) {
-
     }
 }
