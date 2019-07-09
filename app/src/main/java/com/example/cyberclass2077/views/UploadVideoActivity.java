@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
+import com.example.cyberclass2077.controllers.ToNextActivity;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.FileInfo;
 import com.example.cyberclass2077.model.UserInfo;
@@ -90,10 +91,7 @@ public class UploadVideoActivity extends AppCompatActivity {
         img_toBcak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UploadVideoActivity.this, Fragment3UploadActivity.class);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+                ToNextActivity.to_NextActivityFinish(UploadVideoActivity.this, Fragment3UploadActivity.class);
             }
         });
         img_chooseVideo = (ImageView) findViewById(R.id.img_choose_video);

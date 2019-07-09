@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
+import com.example.cyberclass2077.controllers.ToNextActivity;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
 import com.example.cyberclass2077.pictureselector.FileUtils;
@@ -116,13 +117,9 @@ public class Fragment3SettingActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(Fragment3SettingActivity.this, MainActivity.class);
-                intent.putExtra("fragment",2);
-                startActivity(intent);
-                finish();
-                //需要在finish和startActivity之后进行
-                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+                ToNextActivity.to_NextActivityFinish(Fragment3SettingActivity.this,
+                        MainActivity.class,
+                        ToNextActivity.FRAGMENT3);
             }
         });
         //登录状态修改密码和退出登录才是可用的
@@ -135,12 +132,8 @@ public class Fragment3SettingActivity extends AppCompatActivity {
             to_changePassword.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Fragment3SettingActivity.this, ChangePasswordActivity.class);
-                    startActivity(intent);
-                    finish();
-                    //需要在finish和startActivity之后进行
-                    //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                    overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+                    ToNextActivity.to_NextActivityFinish(Fragment3SettingActivity.this,
+                            ChangePasswordActivity.class);
                 }
             });
             //退出控件
@@ -150,10 +143,6 @@ public class Fragment3SettingActivity extends AppCompatActivity {
                     actionsCreator.logout(user.getUserName());
                 }
             });
-        }
-        else {
-            //to_changePassword.setVisibility(View.INVISIBLE);
-            //vLogout_ConsrtraintLayout.setVisibility(View.INVISIBLE);
         }
     }
 

@@ -22,6 +22,7 @@ import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.adapter.CourseAdapter;
 import com.example.cyberclass2077.bean.CourseBean;
+import com.example.cyberclass2077.controllers.ToNextActivity;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.FileInfo;
 import com.example.cyberclass2077.model.User;
@@ -66,26 +67,16 @@ public class Fragment3UploadActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Fragment3UploadActivity.this, MainActivity.class);
-                intent.putExtra("fragment",2);
-                startActivity(intent);
-                finish();
-                //需要在finish和startActivity之后进行
-                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+                ToNextActivity.to_NextActivityFinish(Fragment3UploadActivity.this,
+                        MainActivity.class,
+                        ToNextActivity.FRAGMENT3);
             }
         });
         txt_upload_btn = findViewById(R.id.txt_upload_btn);
         txt_upload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(Fragment3UploadActivity.this, UploadVideoActivity.class);
-                startActivity(intent);
-                finish();
-                //需要在finish和startActivity之后进行
-                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+                ToNextActivity.to_NextActivityFinish(Fragment3UploadActivity.this, UploadVideoActivity.class);
 
             }
         });

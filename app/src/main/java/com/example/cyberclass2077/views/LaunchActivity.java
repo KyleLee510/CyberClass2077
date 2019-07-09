@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.cyberclass2077.R;
+import com.example.cyberclass2077.controllers.ToNextActivity;
 import com.example.cyberclass2077.pictureselector.PermissionUtils;
 
 public class LaunchActivity extends AppCompatActivity {
@@ -20,9 +21,7 @@ public class LaunchActivity extends AppCompatActivity {
         setContentView(R.layout.launch_layout);
         new android.os.Handler().postDelayed(new Runnable() {
             public void run() {
-                Intent mainIntent = new Intent(LaunchActivity.this,MainActivity.class);
-                LaunchActivity.this.startActivity(mainIntent);
-                LaunchActivity.this.finish();
+                ToNextActivity.to_NextActivityFinish(LaunchActivity.this, MainActivity.class, ToNextActivity.FRAGMENT1);
             }
         }, LAUNCH_DISPLAY_LENGHT);
     }

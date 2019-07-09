@@ -1,6 +1,7 @@
 package com.example.cyberclass2077.views;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
+import com.example.cyberclass2077.controllers.ToNextActivity;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
 import com.example.cyberclass2077.model.UserInfo;
@@ -49,6 +51,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import static com.example.cyberclass2077.controllers.ToNextActivity.to_NextActivity;
 import static com.example.cyberclass2077.pictureselector.ImageUtils.saveBitmap;
 
 
@@ -191,12 +194,7 @@ public class Fragment3 extends Fragment {
         to_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Fragment3SettingActivity.class);
-                startActivity(intent);
-                //getActivity().finish();
-                //需要在finish和startActivity之后进行
-                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+                ToNextActivity.to_NextActivity(getActivity(), Fragment3SettingActivity.class);
             }
         });
 
@@ -204,10 +202,12 @@ public class Fragment3 extends Fragment {
         to_contribution.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(getActivity(), Fragment3UploadActivity.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
-
+                if(user.isLoginState()) {   //登录才可以使用
+                    ToNextActivity.to_NextActivity(getActivity(), Fragment3UploadActivity.class);
+                }
+                else {      //请登录
+                    ToNextActivity.to_NextActivity(getActivity(), LoginActivity.class);
+                }
             }
         });
 
@@ -215,9 +215,12 @@ public class Fragment3 extends Fragment {
         to_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Fragment3DownloadActivity.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+                if(user.isLoginState()) {
+                    ToNextActivity.to_NextActivity(getActivity(), Fragment3DownloadActivity.class);
+                }
+                else {
+                    ToNextActivity.to_NextActivity(getActivity(), LoginActivity.class);
+                }
             }
         });
 
@@ -234,13 +237,7 @@ public class Fragment3 extends Fragment {
             to_login.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
-                    //getActivity().finish();
-                    //需要在finish和startActivity之后进行
-                    //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                    getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
-
+                    ToNextActivity.to_NextActivity(getActivity(), LoginActivity.class);
                 }
             });
         }
@@ -269,12 +266,7 @@ public class Fragment3 extends Fragment {
             imagePhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), UserDataSettingActivity.class);
-                    startActivity(intent);
-                    //getActivity().finish();
-                    //需要在finish和startActivity之后进行
-                    //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                    getActivity().overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+                    ToNextActivity.to_NextActivity(getActivity(), UserDataSettingActivity.class);
                 }
             });
 
@@ -293,11 +285,11 @@ public class Fragment3 extends Fragment {
                     actionsCreator.updateUserInfo(userInfo); //签到更新
 
                     btn_Checkin.setText("已签到"); //更新用户已签到
-    is_check_in = true;
-    update_user_lv();//更新用户等级
-}
+                    is_check_in = true;
+                    update_user_lv();//更新用户等级
+                }
             });
-                    }
+        }
     }
 
     void update_user_lv(){
@@ -334,10 +326,6 @@ public class Fragment3 extends Fragment {
         }
         return is_check_in;
     }
-
-
-
-
 
 
     String getToadyDate() {

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
+import com.example.cyberclass2077.controllers.ToNextActivity;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
 import com.example.cyberclass2077.pictureselector.PermissionUtils;
@@ -100,21 +101,14 @@ public class LoginActivity extends AppCompatActivity {
         vSignupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //跳转至注册页面
-                //点击事件方法
-                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
-                startActivity(intent);
-                finish();
-                //需要在finish和startActivity之后进行
-                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+                ToNextActivity.to_NextActivityFinish(LoginActivity.this, SignupActivity.class);
             }
         });
 
         vCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jumpActivity();
+                ToNextActivity.to_NextActivityFinish(LoginActivity.this,MainActivity.class, ToNextActivity.FRAGMENT3);
             }
         } );
 
@@ -139,14 +133,14 @@ public class LoginActivity extends AppCompatActivity {
                     String.format("登录成功! %n欢迎您，%s!",userStore.getUser().getUserName()),
                     Toast.LENGTH_SHORT
             ).show();
-            jumpActivity();
+            ToNextActivity.to_NextActivityFinish(LoginActivity.this,MainActivity.class, ToNextActivity.FRAGMENT3);
         }
         else if(event.isLoginSuccessful==true&&event.isAlreadyLogin==true){
             Toast.makeText(this,
                     String.format("用户%s已登录%n现已重新登录！",userStore.getUser().getUserName()),
                     Toast.LENGTH_SHORT
             ).show();
-            jumpActivity();
+            ToNextActivity.to_NextActivityFinish(LoginActivity.this,MainActivity.class, ToNextActivity.FRAGMENT3);
         }
         else if(event.isLoginSuccessful==false&&event.isAlreadyLogin==false){
             Toast.makeText(this,
@@ -156,14 +150,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void jumpActivity() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.putExtra("fragment",2);
-        startActivity(intent);
-        finish();
-        //需要在finish和startActivity之后进行
-        //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-        overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
-    }
+
 
 }
