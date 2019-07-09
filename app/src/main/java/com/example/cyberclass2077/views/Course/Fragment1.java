@@ -40,7 +40,6 @@ public class Fragment1 extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         dialogFragment2 =  new MutiChoiceDialog();
     }
 
@@ -60,7 +59,6 @@ public class Fragment1 extends Fragment {
         tabLayout.setupWithViewPager(pager);//与ViewPage建立关系
 
 
-
         //勾选标签
         selected_tag=(TextView)view.findViewById(R.id.search_tag);
         selected_tag.setOnClickListener(new View.OnClickListener(){
@@ -72,7 +70,6 @@ public class Fragment1 extends Fragment {
             }
 
         });
-
         return view;
     }
 

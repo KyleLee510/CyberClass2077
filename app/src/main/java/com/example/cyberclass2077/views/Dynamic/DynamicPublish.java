@@ -153,7 +153,6 @@ public class DynamicPublish extends AppCompatActivity{
 
                 actionsCreator.sendDynamic(dynamicPublishBean, BitmapFactory.decodeFile(Constant.TEMP_PICTUREPATH)); //发布动态
 
-
             }
         });
     }
