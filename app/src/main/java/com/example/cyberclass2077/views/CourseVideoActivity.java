@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -51,8 +52,14 @@ public class CourseVideoActivity extends Activity {
      * 初始化本地或网络播放路径
      */
     private void initVideoPath() {
-        mVvVideoView.setVideoPath(getLocalPath());
-//        mVvVideoView.setVideoURI(Uri.parse("http://192.168.0.108:8080/video/vivo.mp4"));
+        if(getIntent().getBooleanExtra("islocal",true))//islocal为true播放本地视频，为false从服务器获取
+        {
+            mVvVideoView.setVideoPath(getLocalPath());
+        }
+        else
+        {
+            mVvVideoView.setVideoURI(Uri.parse(getIntent().getStringExtra("VideoPath")));
+        }
     }
     //提示：网络测试的话Tomcat下webapps下面放vivo.mp4
 
@@ -61,6 +68,10 @@ public class CourseVideoActivity extends Activity {
      *
      * @return
      */
+//    VideoPath为本地视频时，输入Environment.getExternalStorageDirectory()的后续地址
+//    （getExternalStorageDirectory()在小米8中为/storage/emulated/0，即输入/tencent/TIMfile_recv/20190310_174858.mp4），
+//
+
     @NonNull
     private String getLocalPath() {
 

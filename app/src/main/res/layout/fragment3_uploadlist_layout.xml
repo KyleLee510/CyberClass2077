@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:background="@color/qmui_config_color_gray_1"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <!--顶部栏，包含（返回按钮，贡献标题，添加新的上传按钮）-->
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -45,6 +46,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </android.support.constraint.ConstraintLayout>
+
+    <ListView
+        android:id="@+id/id_contribution_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
