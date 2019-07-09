@@ -91,10 +91,12 @@ public class ActionsCreator {
 
     }
     //上传视频请求
-    public void uploadVideo(String videoTitle, File videoFile){
+    public void uploadVideo(String videoTitle, File videoFile,String tag,Bitmap bitmap){
         Map map=new HashMap();
         map.put("title",videoTitle);
         map.put("file",videoFile);
+        map.put("tag",tag);
+        map.put("bitmap",bitmap);
         dispatcher.dispatch(
                 new UploadVideoAction(
                         UploadVideoAction.ACTION_UPLOAD_VIDEO,

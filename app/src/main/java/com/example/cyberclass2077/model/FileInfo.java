@@ -12,6 +12,7 @@ public class FileInfo {
     String examineResult;
     Integer likeNum;
     String fileTitle;
+    String tag;
 
     public String getUploadUserName() {
         return uploadUserName;
@@ -21,7 +22,7 @@ public class FileInfo {
         return fileId;
     }
 
-    public Integer getCommmentNum() {
+    public Integer getCommentNum() {
         return commentNum;
     }
 
@@ -57,12 +58,21 @@ public class FileInfo {
         return fileTitle;
     }
 
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+
     public void setUploadUserName(String uploadUserName) {
         this.uploadUserName = uploadUserName;
     }
 
-    public void setCommmentNum(Integer commmentNum) {
-        this.commentNum = commmentNum;
+    public void setCommentNum(Integer commentNum) {
+        this.commentNum = commentNum;
     }
 
     public void setExamineAdminName(String examineAdminName) {
