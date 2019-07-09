@@ -95,8 +95,12 @@ public class DynamicAdapter extends BaseAdapter {
 
         viewHolderGroup.str_user_name.setText(listDynamicBean.get(position).getUserName());
         viewHolderGroup.img_head.setImageBitmap(listportrait.get(position));
+        viewHolderGroup.str_time.setText(listDynamicBean.get(position).getDate());
+        viewHolderGroup.int_amount_favorite.setText(listDynamicBean.get(position).getLikeNum().toString()+"👍");
+        viewHolderGroup.int_amout_comment.setText(listDynamicBean.get(position).getCommentNum().toString()+"评论");
+        viewHolderGroup.str_describe.setText(listDynamicBean.get(position).getContent());
 
-        //关注
+//        关注
 //        viewHolderGroup.img_favorite.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -119,7 +123,7 @@ public class DynamicAdapter extends BaseAdapter {
 //        {
 //            viewHolderGroup.img_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
 //        }
-
+//
 //        Integer int_amount_favorite=listDynamicBean.get(position).getInt_amount_favorite();
 //        String str_amount_favorite=int_amount_favorite.toString();
 //        viewHolderGroup.int_amount_favorite.setText(str_amount_favorite+"👍");
