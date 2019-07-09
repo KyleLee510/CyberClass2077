@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="tag">
-        <item>标签1</item>
-        <item>标签2</item>
-        <item>标签3</item>
-        <item>标签4</item>
-        <item>标签5</item>
-        <item>标签6</item>
+    <string-array name="courseTag">
+        <item name = "literary">文学</item>
+        <item name = "language">语言</item>
+        <item name = "physics">物理</item>
+        <item name = "program">编程</item>
+        <item name = "music">音乐</item>
+        <item name = "math">数学</item>
     </string-array>
     <string-array name="tag_gender">
         <item name = "default">保密</item>

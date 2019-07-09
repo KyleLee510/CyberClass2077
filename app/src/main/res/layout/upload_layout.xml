@@ -38,6 +38,7 @@
 
         <!--确认按钮-->
         <TextView
+            android:id="@+id/txt_confirm_uploadVideo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -50,14 +51,14 @@
 
     </android.support.constraint.ConstraintLayout>
 
-        <!--封面图片-->
+    <!--封面图片-->
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginTop="10dp">
 
         <ImageView
-            android:id="@+id/publish_content"
+            android:id="@+id/img_choose_video"
             android:layout_width="268dp"
             android:layout_height="201dp"
             android:background="@color/bg_color"
@@ -69,6 +70,7 @@
             app:layout_constraintVertical_bias="0.282" />
 
         <Button
+            android:id="@+id/btn_change_cover"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -95,6 +97,7 @@
             android:textSize="20dp"/>
 
         <EditText
+            android:id="@+id/et_set_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -119,11 +122,12 @@
             android:textSize="20dp"/>
 
         <Spinner
+            android:id="@+id/sp_set_courseTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="50dp"
             android:layout_marginLeft="40dp"
-            android:entries="@array/tag">
+            android:entries="@array/courseTag">
 
         </Spinner>
     </LinearLayout>
