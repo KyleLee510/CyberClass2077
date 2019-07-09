@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -53,12 +54,15 @@ public class CourseAdapter extends BaseAdapter {
         {
             convertView=inflater.inflate(R.layout.course_list_layout,null);
             viewHolderGroup=new ViewHolderGroup();
-            viewHolderGroup.videoView=convertView.findViewById(R.id.course_video);
+            viewHolderGroup.image_to_videoView=convertView.findViewById(R.id.to_course_video);
             viewHolderGroup.course_uploader=convertView.findViewById(R.id.course_uploader_image);
             viewHolderGroup.txt_video_title=convertView.findViewById(R.id.course_video_title);
             viewHolderGroup.txt_nick_name=convertView.findViewById(R.id.course_nick_name);
             viewHolderGroup.txt_remark=convertView.findViewById(R.id.course_remark);
             viewHolderGroup.ibtn_favorite=convertView.findViewById(R.id.course_favorite);
+            viewHolderGroup.itbn_download=convertView.findViewById(R.id.course_download);
+
+
         }else
         {
             viewHolderGroup=(ViewHolderGroup)convertView.getTag();
@@ -67,11 +71,12 @@ public class CourseAdapter extends BaseAdapter {
     }
 
     class ViewHolderGroup{
-        VideoView videoView;
+        ImageView image_to_videoView;
         CircleImageView course_uploader;
         TextView txt_video_title;
         TextView txt_nick_name;
         TextView txt_remark;
         ImageButton ibtn_favorite;
+        ImageButton itbn_download;
     }
 }
