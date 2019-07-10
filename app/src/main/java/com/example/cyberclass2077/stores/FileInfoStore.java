@@ -82,6 +82,7 @@ public class FileInfoStore  extends  Store{
             this.isUploadVideoSuccessful=isUploadVideoSuccessful;
         }
     }
+
     //获取视频列表事件
     public class GetVideosEvent extends StoreChangeEvent{
         public boolean isGetVideosSuccessful=false;
@@ -118,6 +119,7 @@ public class FileInfoStore  extends  Store{
             this.fileId=fileId;
         }
     }
+
     //收藏视频事件
     public class LikeVideoEvent extends StoreChangeEvent{
         public boolean isLikeSuccessful=false;
