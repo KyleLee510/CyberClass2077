@@ -47,6 +47,7 @@ public class GetCommentsConnect extends Connect<Integer> {
                         portraitsList
                 )
         );
+        store.emitStoreChange();
 
     }
     public Bitmap stringToBitmap(String string) {
