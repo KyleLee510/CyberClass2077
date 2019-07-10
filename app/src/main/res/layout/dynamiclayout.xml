@@ -88,13 +88,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
-    <TextView
-        android:id="@+id/id_amount_comment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:textSize="15sp"
-        android:text="*****评论"/>
     <!--动态发布时间-->
     <TextView
         android:id="@+id/id_time_publish"
