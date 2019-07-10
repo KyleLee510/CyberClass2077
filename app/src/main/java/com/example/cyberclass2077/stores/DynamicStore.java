@@ -5,9 +5,11 @@ import android.widget.SearchView;
 
 import com.example.cyberclass2077.actions.Action;
 import com.example.cyberclass2077.actions.GetDynamicsAction;
+import com.example.cyberclass2077.actions.GetPictureByMapAction;
 import com.example.cyberclass2077.actions.SendDynamicAction;
 import com.example.cyberclass2077.bean.DynamicPublishBean;
 import com.example.cyberclass2077.connection.Connect;
+import com.example.cyberclass2077.connection.GetDynamicPictureConnect;
 import com.example.cyberclass2077.connection.GetDynamicsConnect;
 import com.example.cyberclass2077.connection.SendDynamicConnect;
 import com.squareup.otto.Subscribe;
@@ -48,7 +50,15 @@ public class DynamicStore  extends Store{
                 System.out.println("Already send");
                 ((GetDynamicsConnect)connect).sendGetDynamicsRequest((String)action.getData());
                 break;
+            case GetPictureByMapAction
+                    .ACTION_GET_PICTURE_BY_ID_DYNAMIC:
+                connect=null;
+                connect=new GetDynamicPictureConnect();
+                Integer id=(Integer) ((Map)action.getData()).get("id");
+                ((GetDynamicPictureConnect)connect).sendGetDynamicPictureRequest(id);
+                break;
                 default:
+
 
         }
 
