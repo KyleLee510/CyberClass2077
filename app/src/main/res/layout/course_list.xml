@@ -5,18 +5,18 @@
     android:background="@color/qmui_config_color_gray_1"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <SearchView
-        android:id="@+id/course_search1"
-        android:layout_width="match_parent"
-        app:defaultQueryHint="搜索用户"
-        android:layout_marginBottom="20dp"
-        android:layout_height="60dp">
-    </SearchView>
+    <!--<SearchView-->
+        <!--android:id="@+id/course_search"-->
+        <!--android:layout_width="match_parent"-->
+        <!--app:defaultQueryHint="搜索用户"-->
+        <!--android:layout_height="60dp">-->
+    <!--</SearchView>-->
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/id_course_list"/>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/id_course_list"/>
+
 
 
 </LinearLayout>

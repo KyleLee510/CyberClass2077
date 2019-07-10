@@ -19,14 +19,20 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.cyberclass2077.R;
+import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.adapter.CourseFragmentAdapter;
 import com.example.cyberclass2077.adapter.MutiChoiceAdapter;
+import com.example.cyberclass2077.bean.CourseBean;
+import com.example.cyberclass2077.dispatcher.Dispatcher;
+import com.example.cyberclass2077.stores.FileInfoStore;
 import com.example.cyberclass2077.views.TabFragment;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Fragment1 extends Fragment {
+
 
     private ViewPager pager;
     private CourseFragmentAdapter fragmentAdapter;
@@ -34,10 +40,12 @@ public class Fragment1 extends Fragment {
     private TabLayout tabLayout;
     private String TAG="Fragment1";
 
+    //多选框控件
     MutiChoiceDialog dialogFragment2;
 
 
     private TextView selected_tag;
+
 
 
     @Override
@@ -46,6 +54,7 @@ public class Fragment1 extends Fragment {
         dialogFragment2 =  new MutiChoiceDialog();
 
     }
+
 
 
     @Override
@@ -93,9 +102,10 @@ public class Fragment1 extends Fragment {
             }
 
         });
+
+
         return view;
     }
-
 
 
 
@@ -209,4 +219,5 @@ public class Fragment1 extends Fragment {
             });
         }
     }
+
 }

@@ -18,6 +18,7 @@ public class GetVideosConnect extends Connect<Map> {
         if(userName.equals("")){
             userName="visitor";
         }
+        System.out.println("this is print");
         String pattern=(String)map.get("pattern");
         String tag=(String)map.get("tag");
         String searchUserName=(String)map.get("searchUserName");

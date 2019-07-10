@@ -182,4 +182,20 @@ public class ActionsCreator {
 
     }
 
+    //获取视频封面图片请求
+    //参数是fileId
+    //返回结果在FileInfoStore的GetVideoPictureEvent里
+    // 是一个boolean和一个Bitmap
+    public void getVideoPicture(Integer fileId){
+        Map map=new HashMap();
+        map.put("id",fileId);
+        map.put("type","video");
+        dispatcher.dispatch(
+                new GetPictureByMapAction(
+                        GetPictureByMapAction.ACTION_GET_PICTURE_BY_ID_VIDEO,
+                        map
+                )
+        );
+    }
+
 }
