@@ -1,18 +1,18 @@
 package com.example.cyberclass2077.model;
 
 public class FileInfo {
-    Integer fileId;
+    Integer fileId;//文件ID
     String fileUrl;
     String fileType;
     Integer commentNum;
-    String uploadUserName;
-    String uploadTime;
+    String uploadUserName;//视频上传者名称
+    String uploadTime;//视频上传时间
     String examineAdminName;
     String examineTime;
     String examineResult;
     Integer likeNum;
-    String fileTitle;
-    String tag;
+    String fileTitle;//视频标题
+    String tag;//视频tag
 
     public String getUploadUserName() {
         return uploadUserName;
