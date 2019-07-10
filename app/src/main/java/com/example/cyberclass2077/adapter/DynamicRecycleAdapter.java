@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static android.support.constraint.Constraints.TAG;
+
 
 public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAdapter.DynamicBeanHolder> {
     private Context mContext;
@@ -36,14 +38,7 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
         mDynamicBeans= DynamicBeans;
         mContext = context;
         //初始化listForvorite和numberForivates
-        Random random=new Random();
-        for(int i=0;i<DynamicBeans.size();i++)
-        {
-            boolean b1=random.nextBoolean();
-            Integer num1=random.nextInt(5)+1;
-            listForvorite.add(b1);
-            numberForvorites.add(num1);
-        }
+
     }
 
     @Override
@@ -53,11 +48,17 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
     }
 
     @Override
-    public void onBindViewHolder(final DynamicBeanHolder holder, final int position) {
+    public void onBindViewHolder(final DynamicBeanHolder holder,final int position) {
         final DynamicItem dynamicBean = mDynamicBeans.get(position);
-        Integer number_favorite=numberForvorites.get(position);
-        boolean isFavorite=listForvorite.get(position);
-        holder.bind(dynamicBean,number_favorite,isFavorite);  //调用holder的数值赋予
+
+        Random random=new Random();
+        Integer number_favorite=random.nextInt(5)+1;
+        boolean b1=random.nextBoolean();
+        listForvorite.add(b1);
+        numberForvorites.add(number_favorite);
+
+//        boolean isFavorite=listForvorite.get(position);
+        holder.bind(dynamicBean,number_favorite,b1);  //调用holder的数值赋予
 
         //点赞功能
         holder.img_favorite.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +121,7 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
 
 
 
+
     }
     //获取List的数量来决定显示数量
     @Override
@@ -132,7 +134,9 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
         mDynamicBeans.add(newDynamic);
         //添加动画
         notifyItemInserted(position);
+        notifyDataSetChanged();
     }
+
 
     //删除数据
     public void removeData(int position, DynamicItem deleteDynamicBean) {
@@ -143,10 +147,10 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
     }
 
     public void addPicture(int position, int dynamicId, Bitmap bitmap) {
-       //通过位置来定位，找id匹配的
+        //通过位置来定位，找id匹配的
         if(mDynamicBeans.get(position).int_dynamic == dynamicId) {
-           mDynamicBeans.get(position).img_dis = bitmap;
-       }
+            mDynamicBeans.get(position).img_dis = bitmap;
+        }
     }
 
     public int getDynamicId(int position) {
@@ -196,6 +200,7 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
             {
                 img_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
             }
+
         }
     }
 }

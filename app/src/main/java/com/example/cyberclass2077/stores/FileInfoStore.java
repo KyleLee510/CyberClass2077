@@ -83,7 +83,7 @@ public class FileInfoStore  extends  Store{
         }
     }
 
-    //获取视频列表事件
+    //获取推荐视频列表事件
     public class GetVideosEventDefault extends StoreChangeEvent{
         public boolean isGetVideosSuccessful=false;
         public List<FileInfo> video_list;
@@ -104,7 +104,7 @@ public class FileInfoStore  extends  Store{
             this.video_portrait_list=video_portrait_list;
         }
     }
-    //获取视频列表事件
+    //获取收藏视频列表事件
     public class GetVideosEventLike extends StoreChangeEvent{
         public boolean isGetVideosSuccessful=false;
         public List<FileInfo> video_list;
