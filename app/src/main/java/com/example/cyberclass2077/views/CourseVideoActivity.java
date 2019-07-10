@@ -4,12 +4,14 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -27,6 +29,7 @@ public class CourseVideoActivity extends Activity {
     @BindView(R.id.vv_videoView)
     VideoView mVvVideoView;
     Unbinder mUnbinder;
+    MediaController mediaController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +39,24 @@ public class CourseVideoActivity extends Activity {
         requestSDpermission();
         initVideoPath();
         initBind();
+
+//
+//        mVvVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//            @Override
+//            public void onPrepared(MediaPlayer mp) {
+//                mVvVideoView.start();
+//            }
+//        });
     }
 
     /**
      * videoView和MediaController绑定
      */
     private void initBind() {
-        MediaController mediaController = new MediaController(this);
+
+        mVvVideoView.setLayoutParams(new LinearLayout.LayoutParams(100, 100));
+
+        mediaController = new MediaController(this);
         mVvVideoView.setMediaController(mediaController);
         mediaController.setMediaPlayer(mVvVideoView);
     }
@@ -111,6 +125,8 @@ public class CourseVideoActivity extends Activity {
         if (mVvVideoView != null) {
             mVvVideoView.suspend();
         }
+        mVvVideoView=null;
+
     }
 
 }
