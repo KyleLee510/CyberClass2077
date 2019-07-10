@@ -32,6 +32,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 
+import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
+
 public class CourseAdapter extends BaseAdapter {
     private Context context;
     private List<CourseBean> listDynamicBean;
@@ -77,63 +79,67 @@ public class CourseAdapter extends BaseAdapter {
             viewHolderGroup.txt_remark=convertView.findViewById(R.id.course_remark);
             viewHolderGroup.ibtn_favorite=convertView.findViewById(R.id.course_favorite);
             viewHolderGroup.itbn_download=convertView.findViewById(R.id.course_download);
-
-            viewHolderGroup.image_to_videoView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, CourseVideoActivity.class);
-                    intent.putExtra("islocal",false);
-                    intent.putExtra("VideoPath","http://47.100.99.130:8080/CyberClass2077/test.mp4");
-                    //intent.putExtra("VideoPath","/tencent/TIMfile_recv/20190310_174858.mp4");
-                    context.startActivity(intent);
-                }
-            });
-
-
-            viewHolderGroup.itbn_download.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "开始下载,下载地址为/Mydownload/", Toast.LENGTH_SHORT).show();
-                    downLoad("http://47.100.99.130:8080/CyberClass2077/test.mp4","test.mp4");
-                }
-            });
-
-            //点击收藏
-            viewHolderGroup.ibtn_favorite.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    if(listDynamicBean.get(position).getfavrot())  //收藏颜色
-                    {
-                        listDynamicBean.get(position).setFavorite(false);
-                        viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
-                    }
-                    else
-                    {
-                        listDynamicBean.get(position).setFavorite(true);
-                        viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
-                    }
-                }
-            });
-
-            viewHolderGroup.txt_nick_name.setText(listDynamicBean.get(position).getUserNickName());  //用户名
-            viewHolderGroup.txt_video_title.setText(listDynamicBean.get(position).getVideoTitle());   //视频名字
-            viewHolderGroup.txt_remark.setText(listDynamicBean.get(position).getTag());   //标签
-            if(listDynamicBean.get(position).getfavrot())  //收藏颜色
-            {
-//                listDynamicBean.get(position).setFavorite(false);
-                viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
-            }
-            else
-            {
-//                listDynamicBean.get(position).setFavorite(true);
-                viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
-            }
+            convertView.setTag(viewHolderGroup);
 
 
         }else
         {
             viewHolderGroup=(ViewHolderGroup)convertView.getTag();
         }
+        //点击视频播放
+        viewHolderGroup.image_to_videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CourseVideoActivity.class);
+                intent.putExtra("islocal",false);
+                intent.putExtra("VideoPath",listDynamicBean.get(position).getVideoURL());
+                //intent.putExtra("VideoPath","/tencent/TIMfile_recv/20190310_174858.mp4");
+                context.startActivity(intent);
+            }
+        });
+
+        //点击下载
+        viewHolderGroup.itbn_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "开始下载,下载地址为/Mydownload/", Toast.LENGTH_SHORT).show();
+                downLoad(listDynamicBean.get(position).getVideoURL(),String.format(listDynamicBean.get(position).getVideoTitle(),".mp4"));
+            }
+        });
+
+        //点击收藏
+        viewHolderGroup.ibtn_favorite.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if(listDynamicBean.get(position).getfavrot())  //收藏颜色
+                {
+                    Log.e("this is log","true");
+                    listDynamicBean.get(position).setFavorite(false);
+                    viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
+                }
+                else
+                {
+                    Log.e(TAG, "onClick: " );
+                    listDynamicBean.get(position).setFavorite(true);
+                    viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
+                }
+            }
+        });
+
+        viewHolderGroup.txt_nick_name.setText(listDynamicBean.get(position).getUserNickName());  //用户名
+        viewHolderGroup.txt_video_title.setText(listDynamicBean.get(position).getVideoTitle());   //视频名字
+        viewHolderGroup.txt_remark.setText(listDynamicBean.get(position).getTag());   //标签
+        if(listDynamicBean.get(position).getfavrot())  //收藏颜色
+        {
+//                listDynamicBean.get(position).setFavorite(false);
+            viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
+        }
+        else
+        {
+//                listDynamicBean.get(position).setFavorite(true);
+            viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
+        }
+
 
 
 
@@ -148,7 +154,9 @@ public class CourseAdapter extends BaseAdapter {
         TextView txt_video_title;
         TextView txt_nick_name;
         TextView txt_remark;
-        ImageButton ibtn_favorite;
+
+        ImageView ibtn_favorite;
+
         ImageButton itbn_download;
     }
 

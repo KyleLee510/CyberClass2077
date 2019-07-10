@@ -68,10 +68,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <!--收藏button-->
-        <ImageButton
+        <ImageView
             android:id="@+id/course_favorite"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            
             android:scaleType="fitXY"
             android:background="@drawable/ic_favorite_border_black_24dp"
 
