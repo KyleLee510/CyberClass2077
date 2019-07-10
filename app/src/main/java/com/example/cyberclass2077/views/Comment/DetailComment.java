@@ -107,12 +107,14 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.comment_detail_layout);
-        ImageView image = (ImageView) findViewById(R.id.detail_page_image);
+        ImageView ima_content = (ImageView) findViewById(R.id.detail_page_image);
+        ImageView img_userPortrait = (ImageView) findViewById(R.id.detail_page_userLogo);//用户头像
         //下面这句表示在intent中拿到bitmap对应的数组
         byte[]res = getIntent().getByteArrayExtra("ContentPicture");
-        image.setImageBitmap(getPicFromBytes(res,null));
+        ima_content.setImageBitmap(getPicFromBytes(res,null));
 
-
+        byte[]res2 = getIntent().getByteArrayExtra("portrait");
+        img_userPortrait.setImageBitmap(getPicFromBytes(res2,null));
         initView();
     }
 

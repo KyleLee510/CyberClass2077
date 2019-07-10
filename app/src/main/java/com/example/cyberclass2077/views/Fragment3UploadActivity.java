@@ -52,16 +52,6 @@ public class Fragment3UploadActivity extends AppCompatActivity {
     }
     void initWidget() {
 
-        listView_upload=(ListView)findViewById(R.id.id_contribution_list);
-        List<CourseBean> courseBeanList=new ArrayList<>();
-        for(int i=0;i<10;i++)
-        {
-            CourseBean courseBean=new CourseBean();
-            courseBeanList.add(courseBean);
-        }
-        listView_upload.setAdapter(new CourseAdapter(Fragment3UploadActivity.this,courseBeanList));
-
-
         //跳转到用户个人主页
         backButton = findViewById(R.id.upload_back_button);
         backButton.setOnClickListener(new View.OnClickListener() {

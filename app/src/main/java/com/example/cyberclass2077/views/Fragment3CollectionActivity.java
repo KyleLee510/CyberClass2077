@@ -27,15 +27,6 @@ public class Fragment3CollectionActivity extends AppCompatActivity {
         initWidget();
     }
     void initWidget(){
-        listView_collection = (ListView) findViewById(R.id.id_collection_list);
-        List<CourseBean> courseBeanList=new ArrayList<>();
-        for(int i=0;i<10;i++)
-        {
-            CourseBean courseBean=new CourseBean();
-            courseBeanList.add(courseBean);
-        }
-
-        listView_collection.setAdapter(new CourseAdapter(Fragment3CollectionActivity.this, courseBeanList));
 
         //跳转到用户个人主页
         img_to_backUserlayout = findViewById(R.id.img_collection_back_button);

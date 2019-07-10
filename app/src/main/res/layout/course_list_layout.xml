@@ -14,7 +14,6 @@
             android:id="@+id/to_course_video"
             android:layout_width="368dp"
             android:layout_height="207dp"
-            android:background="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -32,7 +31,8 @@
             android:src="@drawable/user"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></com.example.cyberclass2077.controllers.CircleImageView>
+            app:layout_constraintTop_toTopOf="parent">
+        </com.example.cyberclass2077.controllers.CircleImageView>
 
         <TextView
             android:id="@+id/course_video_title"
