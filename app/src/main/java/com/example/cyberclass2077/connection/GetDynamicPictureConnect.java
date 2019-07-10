@@ -35,8 +35,8 @@ public class GetDynamicPictureConnect extends Connect<Integer> {
         store.setStoreChangeEvent(
                 store.new GetDynamicPictureEvent(
                         isGetDynamicPicSuccessful,
-                        dynamicId,
-                        bitmap
+                        bitmap,
+                        dynamicId
                 )
         );
         store.emitStoreChange();

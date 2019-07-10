@@ -76,4 +76,18 @@ public class DynamicStore  extends Store{
             this.portraitList=portraitList;
         }
     }
+    public class GetDynamicPictureEvent extends StoreChangeEvent{
+        public boolean isGetDynamicPicSuccessful=false;
+        public Bitmap bitmap;
+        public Integer dynamicId;
+        public GetDynamicPictureEvent(
+                boolean isGetDynamicPicSuccessful,
+                Bitmap bitmap,
+                Integer dynamicId
+        ){
+            this.isGetDynamicPicSuccessful=isGetDynamicPicSuccessful;
+            this.bitmap=bitmap;
+            this.dynamicId=dynamicId;
+        }
+    }
 }
