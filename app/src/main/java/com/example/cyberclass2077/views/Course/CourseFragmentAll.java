@@ -137,7 +137,8 @@ public class CourseFragmentAll extends Fragment {
 
     }
 
-    @Subscribe void onGetVideoPictureEvent(FileInfoStore.GetVideoPictureEvent event) {
+    @Subscribe
+    public void onGetVideoPictureEvent(FileInfoStore.GetVideoPictureEvent event) {
         if(getNewCourseIDs.size() > 0) {
             for(int i = 0; i < getNewCourseIDs.size(); i++) {
                 courseAdapter.addPicture(i, event.fileId, event.bitmap);//传递
