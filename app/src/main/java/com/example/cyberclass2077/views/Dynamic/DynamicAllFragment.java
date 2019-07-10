@@ -43,21 +43,16 @@ import java.util.TimerTask;
 
 public class DynamicAllFragment extends Fragment {
 
-    private SwipeRefreshLayout swipeRefreshLayout;
-
     private Dispatcher dispatcher;
     private ActionsCreator actionsCreator;
     private DynamicStore dynamicStore;
-    private UserInfoStore userInfoStore;
-    private UserStore userStore;
-    private UserInfo userInfo;
-    private User user;
 
 
     private DynamicRecycleAdapter recycleAdapter; //测试
     private RecyclerView recyclerView; //测试
-    private List<DynamicItem> dynamicItems = new ArrayList<>(); //测试
+    private static List<DynamicItem> dynamicItems = new ArrayList<>(); //保存动态
     private List<GetIDandBItmap> getIDandBItmaps = new ArrayList<>();
+    private List<Integer> getNewDynamicIDs = new ArrayList<>();  //负责存储新动态的的ID
     private DynamicItem dynamicItem;
 
     @Nullable
@@ -68,13 +63,18 @@ public class DynamicAllFragment extends Fragment {
         //initView(view);//测试
         if(ToNextActivity.ISLOGIN) {
             actionsCreator.getDynamics("square");   //先获取动态内容
+            //等待数据加入
             new Handler().postDelayed(new Runnable(){
                 public void run() {
                     //execute the task
-                    for(int i = 0; i < dynamicItems.size(); i++) {
-                        Log.d("进来了","");
-                        initView(view);//测试
-                        actionsCreator.getDynamicPicture(dynamicItems.get(i).int_dynamic); //通过提供动态ID来获取图片内容
+//                    for(int i = 0; i < dynamicItems.size(); i++) {
+//                        Log.d("进来了","");
+//                        initView(view);//测试
+//                        actionsCreator.getDynamicPicture(dynamicItems.get(i).int_dynamic); //通过提供动态ID来获取图片内容
+//                    }
+                    initView(view);//测试
+                    for(int i = 0; i < getNewDynamicIDs.size(); i++) {
+                        actionsCreator.getDynamicPicture(getNewDynamicIDs.get(i)); //通过提供动态ID来获取图片内容
                     }
                 }
             }, 2000);
@@ -123,14 +123,28 @@ public class DynamicAllFragment extends Fragment {
         //在调度者里注册 用户 数据仓库，若已注册，不会重复注册
         dispatcher.register(dynamicStore);
     }
-
+    //获取动态
     @Subscribe
     public void onGetDynamics(DynamicStore.GetDynamicsEvent event) {
-        for(int i = 0;i < event.dynamicList.size();i++) {
-            dynamicItem = new DynamicItem(event.dynamicList.get(i), event.portraitList.get(i));
-            dynamicItems.add(dynamicItem);
-            //recycleAdapter.addData(0, dynamicItem); //测试
-
+        if (dynamicItems.size() >0) {
+            for(int i = 0; i <  event.dynamicList.size(); i++) {
+                //通过判断本地首个动态的id大小，如果小于返回的数据id大小，则添加该动态至首行
+                if (dynamicItems.get(0).int_dynamic < event.dynamicList.get(i).getDynamicId()) {
+                    dynamicItem = new DynamicItem(event.dynamicList.get(i), event.portraitList.get(i));
+                    dynamicItems.add(0,dynamicItem);
+                    getNewDynamicIDs.add(dynamicItem.int_dynamic); //将新动态的ID加入进去
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        else {
+            for(int i = 0;i < event.dynamicList.size();i++) {
+                dynamicItem = new DynamicItem(event.dynamicList.get(i), event.portraitList.get(i));
+                dynamicItems.add(dynamicItem);
+                getNewDynamicIDs.add(dynamicItem.int_dynamic); //将新动态的ID加入进去
+            }
         }
         if (event.isGetDynamicsSuccessful) {
             Toast.makeText(getActivity(),
@@ -139,68 +153,36 @@ public class DynamicAllFragment extends Fragment {
             ).show();
         }
     }
-
+    //获取动态图片
     @Subscribe
     public void onGetDynamicPictureEvent(DynamicStore.GetDynamicPictureEvent event) {
-        for(int i = 0; i < dynamicItems.size(); i++) {
-            //getIDandBItmaps.add(new GetIDandBItmap(event.dynamicId, event.bitmap));//获取动态图片
-            recycleAdapter.addPicture(i, event.dynamicId, event.bitmap);//传递
-        }
-
-        if (event.isGetDynamicPicSuccessful) {
+        //减少数据加载
+        if(getNewDynamicIDs.size() > 0) {
+            for(int i = 0; i < getNewDynamicIDs.size(); i++) {
+                Log.d("if", "" + i);
+                recycleAdapter.addPicture(i, event.dynamicId, event.bitmap);//传递
+            }
             Toast.makeText(getActivity(),
-                    String.format("动态图片已加载"),
+                    String.format("已加载新图片"),
                     Toast.LENGTH_SHORT
             ).show();
         }
+        else {
+            for (int i = 0; i < dynamicItems.size(); i++) {
+                //getIDandBItmaps.add(new GetIDandBItmap(event.dynamicId, event.bitmap));//获取动态图片
+                Log.d("else", "" + i);
+                recycleAdapter.addPicture(i, event.dynamicId, event.bitmap);//传递
+            }
+            Toast.makeText(getActivity(),
+                    String.format("已加载旧图片"),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+        if (event.isGetDynamicPicSuccessful) {
+//            Toast.makeText(getActivity(),
+//                    String.format("动态图片已加载"),
+//                    Toast.LENGTH_SHORT
+//            ).show();
+        }
     }
-
-
-    public void tesetCon() {
-        final Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                //执行耗时操作
-                try {
-                    Thread.sleep(5000);
-                    for(int i = 0; i < dynamicItems.size(); i++) {
-                        Log.d("进来了","");
-                        actionsCreator.getDynamicPicture(dynamicItems.get(i).int_dynamic); //通过提供动态ID来获取图片内容
-                    }
-                }
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        new Thread() {
-            public void run() {
-                Looper.prepare();
-                new Handler().post(runnable);//在子线程中直接去new 一个handler
-                Looper.loop();  //这种情况下，Runnable对象是运行在子线程中的，可以进行联网操作，但是不能更新UI
-            }
-        }.start();
-    }
-
-    public void testUI(View view) {
-        final Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                //执行耗时操作
-                try {
-                    Thread.sleep(5000);
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        new Thread() {
-            public void run() {
-                new Handler(Looper.getMainLooper()).post(runnable);//在子线程中直接去new 一个handler
-                //这种情况下，Runnable对象是运行在主线程中的，不可以进行联网操作，但是可以更新UI
-            }
-        }.start();
-    }
-
 }
