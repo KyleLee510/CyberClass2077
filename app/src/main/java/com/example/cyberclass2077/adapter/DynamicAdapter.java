@@ -74,7 +74,6 @@ public class DynamicAdapter extends BaseAdapter {
             viewHolderGroup.img_dis = convertView.findViewById(R.id.id_list_img);   //用户发表的图片
             viewHolderGroup.int_amount_favorite = convertView.findViewById(R.id.id_amount_favorite);
             viewHolderGroup.str_first_comemnt = convertView.findViewById(R.id.id_first_comment);
-            viewHolderGroup.int_amout_comment = convertView.findViewById(R.id.id_amount_comment);
             viewHolderGroup.str_time = convertView.findViewById(R.id.id_time_publish);
             viewHolderGroup.img_favorite = convertView.findViewById(R.id.id_favorite);
             viewHolderGroup.img_chat = convertView.findViewById(R.id.id_chat);

@@ -82,7 +82,7 @@ public class CourseAdapter extends BaseAdapter {
         {
             viewHolderGroup=(ViewHolderGroup)convertView.getTag();
         }
-
+            Log.e("this is test",String.valueOf(viewHolderGroup.image_to_videoView));
 
         viewHolderGroup.image_to_videoView.setOnClickListener(new View.OnClickListener() {
                 @Override
