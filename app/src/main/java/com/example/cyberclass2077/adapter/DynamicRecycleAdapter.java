@@ -84,7 +84,6 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
     public void addPicture(int position, int dynamicId, Bitmap bitmap) {
        //通过位置来定位，找id匹配的
         if(mDynamicBeans.get(position).int_dynamic == dynamicId) {
-           Log.d("set", "haole");
            mDynamicBeans.get(position).img_dis = bitmap;
        }
     }

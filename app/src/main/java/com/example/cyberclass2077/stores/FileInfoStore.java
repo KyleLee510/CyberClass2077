@@ -78,7 +78,7 @@ public class FileInfoStore  extends  Store{
     public class GetVideosEvent extends StoreChangeEvent{
         public boolean isGetVideosSuccessful=false;
         public List<FileInfo> video_list;
-        public  List<String>video_url_list;
+        public List<String>video_url_list;
         public List<Boolean>video_like_list;
         public GetVideosEvent(
                 boolean isGetVideosSuccessful,
@@ -95,8 +95,8 @@ public class FileInfoStore  extends  Store{
     //获取视频封面图片事件
     public class GetVideoPictureEvent extends StoreChangeEvent{
         public boolean isGetVideoPicSuccessful=false;
-        Bitmap bitmap;
-        Integer fileId;
+        public  Bitmap bitmap;
+        public Integer fileId;
         public GetVideoPictureEvent(
                 boolean isGetVideoPicSuccessful,
                 Bitmap bitmap,

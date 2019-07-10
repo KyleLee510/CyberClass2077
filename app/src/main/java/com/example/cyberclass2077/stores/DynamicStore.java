@@ -14,6 +14,7 @@ import com.example.cyberclass2077.connection.GetDynamicsConnect;
 import com.example.cyberclass2077.connection.SendDynamicConnect;
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,9 @@ public class DynamicStore  extends Store{
         return instance;
     }
     public boolean addDynamic(DynamicPublishBean dynamic){
+        if(dynamics==null){
+            dynamics=new ArrayList<DynamicPublishBean>();
+        }
         if (dynamic==null)
             return false;
         dynamics.add(dynamic);
