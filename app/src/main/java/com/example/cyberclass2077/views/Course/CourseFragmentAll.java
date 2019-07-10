@@ -24,21 +24,43 @@ import static android.support.constraint.Constraints.TAG;
 public class CourseFragmentAll extends Fragment {
 
     private SwipeRefreshLayout swipeRefreshLayout;
-
+    private List<CourseBean> courseBeanList=new ArrayList<>();
+    private ListView listView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.course_list, container, false);
-        ListView listView = (ListView) view.findViewById(R.id.id_course_list);
+        listView = (ListView) view.findViewById(R.id.id_course_list);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_course_layout);
-        List<CourseBean> courseBeanList=new ArrayList<>();
-        for(int i=0;i<10;i++)
+        for(int i=0;i<2;i++)
         {
             CourseBean courseBean=new CourseBean();
             courseBeanList.add(courseBean);
         }
         listView.setAdapter(new CourseAdapter(getActivity(),courseBeanList));
 
+//        View view1=inflater.inflate(R.layout.course_top_menu_layout,container,false);
+//        final SearchView searchView=view1.findViewById(R.id.course_search);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                Log.e(TAG, "onQueryTextSubmit: " );
+//
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                Log.e(TAG, "onQueryTextChange: " );
+//                courseBeanList = new ArrayList<>();
+//                for(int i=0;i<18;i++) {
+//
+//                    courseBeanList.add(new CourseBean());
+//                }
+//                listView.setAdapter(new CourseAdapter(getActivity(),courseBeanList));
+//                return false;
+//            }
+//        });
 //        View view1=inflater.inflate(R.layout.course_top_menu_layout,container,false);
 //        SearchView searchView=view1.findViewById(R.id.course_search);
 //        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -55,8 +77,8 @@ public class CourseFragmentAll extends Fragment {
 //            }
 //        });
 
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light, android.R.color.holo_orange_light);
+//        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+//                android.R.color.holo_green_light, android.R.color.holo_orange_light);
         /*
         //给swipeRefreshLayout绑定刷新监听
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
