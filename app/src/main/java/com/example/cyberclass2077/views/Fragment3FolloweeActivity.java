@@ -27,15 +27,7 @@ public class Fragment3FolloweeActivity extends AppCompatActivity {
     }
 
     void initWidget(){
-        listView_followee = (ListView)findViewById(R.id.id_followee_list);
-        List<UserListBean> userListBeansList = new ArrayList<>();
-        for(int i=0;i<10;i++)
-        {
-            UserListBean userListBean=new UserListBean();
-            userListBeansList.add(userListBean);
-        }
 
-        listView_followee.setAdapter(new UserListAdapter(Fragment3FolloweeActivity.this, userListBeansList));
 
         //跳转到个人主页
         img_to_backUserlayout = findViewById(R.id.img_followee_back_button);

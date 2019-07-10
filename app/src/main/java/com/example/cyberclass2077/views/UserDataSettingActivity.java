@@ -246,12 +246,6 @@ public class UserDataSettingActivity extends AppCompatActivity {
                 String picturePath = data.getStringExtra(PictureSelector.PICTURE_PATH);
                 im_user_photo.setImageBitmap(BitmapFactory.decodeFile(picturePath));
                 im_user_photo.setScaleType(ImageView.ScaleType.FIT_XY);
-                /*如果使用 Glide 加载图片，则需要禁止 Glide 从缓存中加载，因为裁剪后保存的图片地址是相同的*/
-                /*RequestOptions requestOptions = RequestOptions
-                        .circleCropTransform()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true);
-                Glide.with(this).load(picturePath).apply(requestOptions).into(mIvImage);*/
             }
         }
     }

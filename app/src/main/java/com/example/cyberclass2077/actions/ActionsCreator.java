@@ -210,5 +210,33 @@ public class ActionsCreator {
                 )
         );
     }
+    //获取评论的请求
+    //参数为要获取的动态的Id
+    public void getComments(Integer dynamicId){
+        dispatcher.dispatch(
+                new GetCommentsAction(
+                        GetCommentsAction.ACTION_GET_COMMENTS,
+                        dynamicId
+                )
+        );
+    }
+    //发送收藏/点赞的请求
+    public void sendLike(
+            String entityType,
+            Integer entityId
+    ){
+        Map map=new HashMap();
+        String userName=UserStore.getInstance().getUser().getUserName();
+        map.put("username",userName);
+        map.put("entityType",entityType);
+        map.put("entityId",entityId);
+        dispatcher.dispatch(
+                new SendLikeAction(
+                        SendLikeAction.ACTION_SEND_LIKE,
+                        map
+                )
+        );
+    }
+
 
 }

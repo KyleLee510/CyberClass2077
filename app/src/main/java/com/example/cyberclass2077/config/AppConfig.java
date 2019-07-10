@@ -21,6 +21,8 @@ public class AppConfig {
     public final static String VIDEOS_GET=BASE_URL_PATH.concat("/get_video_list");
     public final static String VIDEOS_GET_PICTURE=BASE_URL_PATH.concat("/get_video_picture");
     public final static String COMMENT_SEND=BASE_URL_PATH.concat("/send_comment");
+    public final static String COMMENT_GET=BASE_URL_PATH.concat("/get_comments");
+    public final static String LIKE_SEND=BASE_URL_PATH.concat("/likeEntity");
 
 
 }
