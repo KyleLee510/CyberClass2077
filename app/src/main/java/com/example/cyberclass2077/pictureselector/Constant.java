@@ -15,6 +15,7 @@ public class Constant {
     public static final String BASE_DIR   =  APP_NAME + File.separator;//PictureSelector/
     public static final String DIR_ROOT   = FileUtils.getRootPath() + File.separator + Constant.BASE_DIR;//文件夹根目录 /storage/emulated/0/PictureSelector/
     public static final String TEMP_PICTUREPATH = "/storage/emulated/0/PictureSelector.temp.jpg"; //临时的图片保存路径
+    public static final String TEMP_PICTUREPATHNOJPG =  "/storage/emulated/0/PictureSelector.temp"; //临时的图片保存路径无.jpg
     public static final String USERPHOTO_PATH = "/storage/emulated/0/Android/data/com.example.cyberclass2077/cache/DIRECTORY_PICTURES"; //用户图像的保存路径
     public static final String USERPHOTO_NAME = "userPhoto";
     public static final int CANCEL = 0;//取消

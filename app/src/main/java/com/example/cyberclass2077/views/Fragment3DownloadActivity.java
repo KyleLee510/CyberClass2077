@@ -28,14 +28,6 @@ public class Fragment3DownloadActivity extends AppCompatActivity {
     }
 
     void initWidget() {
-        listView_download=(ListView) findViewById(R.id.id_download_list);
-        List<CourseBean> courseBeanList=new ArrayList<>();
-        for(int i=0;i<10;i++)
-        {
-            CourseBean courseBean=new CourseBean();
-            courseBeanList.add(courseBean);
-        }
-        listView_download.setAdapter(new CourseAdapter(Fragment3DownloadActivity.this, courseBeanList));
 
         //跳转到用户个人主页
         img_to_backUserlayout = findViewById(R.id.img_download_back_button);

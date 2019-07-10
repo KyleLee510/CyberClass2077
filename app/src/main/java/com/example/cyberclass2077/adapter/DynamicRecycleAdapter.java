@@ -19,6 +19,7 @@ import com.example.cyberclass2077.controllers.ToNextActivity;
 import com.example.cyberclass2077.views.Comment.DetailComment;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -48,10 +49,25 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
                 Intent intent = new Intent(mContext, DetailComment.class);
                 intent.putExtra("Dynamic_ID", dynamicBean.int_dynamic); //传递动态ID
                 intent.putExtra("Content", dynamicBean.str_describe); //传递动态内容
+
                 ByteArrayOutputStream output = new ByteArrayOutputStream();//初始化一个流对象
                 dynamicBean.img_dis.compress(Bitmap.CompressFormat.JPEG, 100, output);//把bitmap100%高质量压缩 到 output对象里
                 byte[] result = output.toByteArray();
-                intent.putExtra("portrait", dynamicBean.bit_user_portrait);//传递用户头像
+                try {
+                    output.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                ByteArrayOutputStream output2 = new ByteArrayOutputStream();//初始化一个流对象
+                dynamicBean.bit_user_portrait.compress(Bitmap.CompressFormat.JPEG, 100, output2);//把bitmap100%高质量压缩 到 output对象里
+                byte[] result2 = output2.toByteArray();
+                try {
+                    output2.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                intent.putExtra("portrait", result2);   //传递用户头像
                 intent.putExtra("ContentPicture", result); //传递用户发表图片
                 mContext.startActivity(intent);
             }
