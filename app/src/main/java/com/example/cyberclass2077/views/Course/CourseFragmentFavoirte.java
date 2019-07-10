@@ -103,7 +103,7 @@ public class CourseFragmentFavoirte extends Fragment {
     }
 
     @Subscribe
-    public void onGetVideoList(FileInfoStore.GetVideosEvent event){
+    public void onGetVideoList(FileInfoStore.GetVideosEventLike event){
         Log.d("tag","" + event.video_portrait_list.size());
         //if(event.video_portrait_list.size() != 0) {
         if (courseBeanList.size() >0) {

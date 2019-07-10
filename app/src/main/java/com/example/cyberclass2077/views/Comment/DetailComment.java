@@ -67,6 +67,7 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
     private Integer dynamicId;
     private String str_publish_userName;
     private List<CommentDetailBean>getCommentsDetailBeanList=new ArrayList<>();
+    private Bitmap userBitmap;
 
 
     private void initDependencies() {
@@ -169,7 +170,7 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
         //下面这句表示在intent中拿到bitmap对应的数组
         byte[]res1 = getIntent().getByteArrayExtra("portrait");
         image1.setImageBitmap(getPicFromBytes(res1,null));
-
+        userBitmap=getPicFromBytes(res1,null);
         //内容
         String str_content=getIntent().getStringExtra("Content");
         Log.e(TAG, "onCreate: "+str_content );
@@ -233,36 +234,36 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
     /**
      * 初始化评论和回复列表
      */
-    private void initExpandableListView(final List<CommentDetailBean> commentList,List<Bitmap> bitmapList){
+    private void initExpandableListView(final List<CommentDetailBean> commentList,List<Bitmap> bitmapList,Bitmap userBitmap){
         expandableListView.setGroupIndicator(null);
         //默认展开所有回复
-        adapter = new CommentExpandAdapter(this, commentList,bitmapList);
+        adapter = new CommentExpandAdapter(this, commentList,bitmapList,userBitmap);
         expandableListView.setAdapter(adapter);
         for(int i = 0; i<commentList.size(); i++){
             expandableListView.expandGroup(i);
         }
-//        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-//            @Override
-//            public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
-//                boolean isExpanded = expandableListView.isGroupExpanded(groupPosition);
-//                Log.e(TAG, "onGroupClick: 当前的评论id>>>"+commentList.get(groupPosition).getId());
-////                if(isExpanded){
-////                    expandableListView.collapseGroup(groupPosition);
-////                }else {
-////                    expandableListView.expandGroup(groupPosition, true);
-////                }
-//                showReplyDialog(groupPosition);
-//                return true;
-//            }
-//        });
+        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
+                boolean isExpanded = expandableListView.isGroupExpanded(groupPosition);
+                Log.e(TAG, "onGroupClick: 当前的评论id>>>"+commentList.get(groupPosition).getId());
+//                if(isExpanded){
+//                    expandableListView.collapseGroup(groupPosition);
+//                }else {
+//                    expandableListView.expandGroup(groupPosition, true);
+//                }
+                showReplyDialog(groupPosition);
+                return true;
+            }
+        });
 
-//        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-//            @Override
-//            public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-//                Toast.makeText(DetailComment.this,"点击了回复",Toast.LENGTH_SHORT).show();
-//                return false;
-//            }
-//        });
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
+                Toast.makeText(DetailComment.this,"点击了回复",Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
 
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
@@ -345,6 +346,7 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
                     Log.e(TAG, "onClick: comment" );
 
                     actionsCreator.sendComment(comment1);
+//                    actionsCreator.getComments(dynamicId);
 
                 }else {
                     Toast.makeText(DetailComment.this,"评论内容不能为空",Toast.LENGTH_SHORT).show();
@@ -385,22 +387,22 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
         final Button bt_comment = (Button) commentView.findViewById(R.id.dialog_comment_bt);
         commentText.setHint("回复 " + commentsList.get(position).getNickName() + " 的评论:");
         dialog.setContentView(commentView);
-        bt_comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String replyContent = commentText.getText().toString().trim();
-                if(!TextUtils.isEmpty(replyContent)){
-
-                    dialog.dismiss();
-                    ReplyDetailBean detailBean = new ReplyDetailBean("小红",replyContent);
-                    adapter.addTheReplyData(detailBean, position);
-                    expandableListView.expandGroup(position);
-                    Toast.makeText(DetailComment.this,"回复成功",Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(DetailComment.this,"回复内容不能为空",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        bt_comment.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String replyContent = commentText.getText().toString().trim();
+//                if(!TextUtils.isEmpty(replyContent)){
+//
+//                    dialog.dismiss();
+//                    ReplyDetailBean detailBean = new ReplyDetailBean("小红",replyContent);
+//                    adapter.addTheReplyData(detailBean, position);
+//                    expandableListView.expandGroup(position);
+//                    Toast.makeText(DetailComment.this,"回复成功",Toast.LENGTH_SHORT).show();
+//                }else {
+//                    Toast.makeText(DetailComment.this,"回复内容不能为空",Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
         commentText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -450,7 +452,7 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
                 CommentDetailBean commentDetailBean=new CommentDetailBean(str_nickName,str_time,str_content);
                 getCommentsDetailBeanList.add(commentDetailBean);
             }
-            initExpandableListView(getCommentsDetailBeanList,event.comment_portrait_list);
+            initExpandableListView(getCommentsDetailBeanList,event.comment_portrait_list,userBitmap);
             Log.e(TAG, "onGetComements: "+event.commentList.size() );
             Toast.makeText(this,
                 String.format("加载评论成功"),
