@@ -135,22 +135,22 @@ public class CourseAdapter extends BaseAdapter {
         viewHolderGroup.ibtn_favorite.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(listDynamicBean.get(position).getfavrot())  //收藏颜色
-                {
-                    Log.e("this is log","true");
-                    listDynamicBean.get(position).setFavorite(false);
-                    Toast.makeText(context, "取消收藏", Toast.LENGTH_SHORT).show();
-                    viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
+                if(ToNextActivity.ISLOGIN){
+                    boolean the_like = listDynamicBean.get(position).getfavrot();
+                    listDynamicBean.get(position).setFavorite(!the_like);
 
+                    actionsCreator.sendLike("video",listDynamicBean.get(position).getCourseID(),!the_like);
+                    if(!the_like)
+                    {
+                        Toast.makeText(context, "收藏成功", Toast.LENGTH_SHORT).show();
+                        viewHolderGroup.ibtn_favorite.setImageResource(R.drawable.ic_favorite_black_24dp);
+                    }
+                    else {
+                        Toast.makeText(context, "收藏失败", Toast.LENGTH_SHORT).show();
+                        viewHolderGroup.ibtn_favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                    }
+                }
 
-                }
-                else
-                {
-                    Log.e(TAG, "onClick: " );
-                    listDynamicBean.get(position).setFavorite(true);
-                    Toast.makeText(context, "收藏成功", Toast.LENGTH_SHORT).show();
-                    viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
-                }
             }
         });
 
@@ -160,17 +160,18 @@ public class CourseAdapter extends BaseAdapter {
         viewHolderGroup.course_uploader.setImageBitmap(listDynamicBean.get(position).img_user); //设置视频上传头像
         viewHolderGroup.image_to_videoView.setImageBitmap(listDynamicBean.get(position).img_cover);//设置视频上传封面
 
+        Log.e("this_is_course_title",String.valueOf(listDynamicBean.get(position).getVideoTitle()));
+        Log.e("this_is_courseID",String.valueOf(listDynamicBean.get(position).getCourseID()));
+        Log.e("this_is_course_status",String.valueOf(listDynamicBean.get(position).getfavrot()));
         if(listDynamicBean.get(position).getfavrot())  //收藏颜色
         {
-//                listDynamicBean.get(position).setFavorite(false);
-            viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
-            actionsCreator.sendLike("video",listDynamicBean.get(position).getCourseID(),false);
+//                listDynamicBean.get(position).setFavorite(false);//已收藏
+            viewHolderGroup.ibtn_favorite.setImageResource(R.drawable.ic_favorite_black_24dp);
         }
         else
         {
-//                listDynamicBean.get(position).setFavorite(true);
-            viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
-            actionsCreator.sendLike("video",listDynamicBean.get(position).getCourseID(),true);
+//                listDynamicBean.get(position).setFavorite(true);//未收藏
+            viewHolderGroup.ibtn_favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
         }
 
         return convertView;
@@ -273,12 +274,13 @@ public class CourseAdapter extends BaseAdapter {
 
     @Subscribe
     public void is_successful(FileInfoStore.LikeVideoEvent event){
+        Log.e("收藏返回","+++++");
         if(event.isLikeSuccessful)
         {
             Toast.makeText(context,"通讯成功",Toast.LENGTH_SHORT).show();
         }
         else{
-
+            Toast.makeText(context,"通讯失败",Toast.LENGTH_SHORT).show();
         }
     }
 
