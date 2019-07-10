@@ -87,6 +87,7 @@ public class CourseFragmentAll extends Fragment {
 
     @Subscribe
     public void onGetVideoList(FileInfoStore.GetVideosEvent event){
+        Log.e("this is qianduan test","Favorite");
         Log.d("tag","" + event.video_portrait_list.size());
         //if(event.video_portrait_list.size() != 0) {
             if (courseBeanList.size() >0) {
