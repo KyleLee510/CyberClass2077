@@ -63,9 +63,7 @@ public class CourseFragmentFavoirte extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_course_fav_layout);
         initDependencies();
         courseAdapter = new CourseAdapter(getActivity(), courseBeanList);
-
         listView.setAdapter(courseAdapter);
-
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
