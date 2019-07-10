@@ -40,7 +40,7 @@
     <!--用户发表图片-->
     <ImageView
         android:id="@+id/id_list_img"
-        android:src="@drawable/lizi"
+        android:src="@drawable/right"
         android:layout_width="match_parent"
         android:layout_margin="4dp"
         android:layout_height="300dp"/>

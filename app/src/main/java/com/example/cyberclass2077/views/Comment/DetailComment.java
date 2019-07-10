@@ -29,7 +29,9 @@ import com.example.cyberclass2077.adapter.CommentExpandAdapter;
 import com.example.cyberclass2077.bean.CommentBean;
 import com.example.cyberclass2077.bean.CommentDetailBean;
 import com.example.cyberclass2077.bean.ReplyDetailBean;
+import com.example.cyberclass2077.controllers.ToNextActivity;
 import com.example.cyberclass2077.view.CommentExpandableListView;
+import com.example.cyberclass2077.views.MainActivity;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -107,7 +109,7 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.comment_detail_layout);
         ImageView image = (ImageView) findViewById(R.id.detail_page_image);
         //下面这句表示在intent中拿到bitmap对应的数组
-        byte[]res = getIntent().getByteArrayExtra("bitmap");
+        byte[]res = getIntent().getByteArrayExtra("ContentPicture");
         image.setImageBitmap(getPicFromBytes(res,null));
 
 
@@ -203,6 +205,9 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){
+            ToNextActivity.to_NextActivityFinish(DetailComment.this,
+                    MainActivity.class,
+                    ToNextActivity.FRAGMENT2);
             finish();
             return true;
         }
