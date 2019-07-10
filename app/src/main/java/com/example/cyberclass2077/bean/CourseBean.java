@@ -1,33 +1,79 @@
 package com.example.cyberclass2077.bean;
 
 public class CourseBean {
-    public String videoPath;
-    public Integer userImage;
-    public  String videoTitle;
-    public String userNickName;
-    public boolean isFavorite;
-    public String videoRemark;
+     Integer CourseID;        //课程ID
+ //   public String userImage;
+      String videoTitle;      //视频标题
+     String userNickName;     //视频上传者名称
+     String uploadTime;              //视频上传时间
+    public  String tag;                     //视频tag
 
-    public void setVideoPath(String videoPath){this.videoPath=videoPath;}
-    public String getVideoPath(){return videoPath;}
+     String videoURL;
+     boolean isFavorite;
+    public CourseBean(){};
 
-    public void setUserImage(String videoPath){this.userImage=userImage;}
-    public Integer getUserImage(){return userImage;}
+    public CourseBean(Integer courseID,String videoTitle,String userNickName,String uploadTime,String tag,String videoURL,boolean isFavorite){
+        this.CourseID =courseID;
+        this.videoTitle =videoTitle;
+        this.userNickName =userNickName;
+        this.uploadTime = uploadTime;
+        this.tag = tag;
+        this.videoURL =videoURL;
+        this.isFavorite =isFavorite;
+    }
 
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
 
-    public void setVideoTitle(String videoPath){this.videoTitle=videoTitle;}
-    public String getVideoTitle(){return videoTitle;}
+    public void setCourseID(Integer courseID) {
+        CourseID = courseID;
+    }
 
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
-    public void setUserNickName(String videoPath){this.userNickName=userNickName;}
-    public String getUserNickName(){return userNickName;}
+    public void setUploadTime(String uploadTime) {
+        this.uploadTime = uploadTime;
+    }
 
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
+    }
 
-    public void setIsFavorite(String videoPath){this.isFavorite=isFavorite;}
-    public boolean getIsFavorite(){return isFavorite;}
+    public void setVideoTitle(String videoTitle) {
+        this.videoTitle = videoTitle;
+    }
 
+    public void setVideoURL(String videoURL) {
+        this.videoURL = videoURL;
+    }
 
-    public void setVideoRemark(String videoPath){this.videoRemark=videoRemark;}
-    public String getVideoRemark(){return videoRemark;}
+    public Integer getCourseID() {
+        return CourseID;
+    }
 
+    public String getTag() {
+        return tag;
+    }
+
+    public String getUploadTime() {
+        return uploadTime;
+    }
+
+    public String getUserNickName() {
+        return userNickName;
+    }
+
+    public String getVideoTitle() {
+        return videoTitle;
+    }
+
+    public String getVideoURL() {
+        return videoURL;
+    }
+    public boolean getfavrot(){
+        return isFavorite;
+    }
 }

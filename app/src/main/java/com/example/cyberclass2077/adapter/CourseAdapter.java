@@ -180,7 +180,6 @@ public class CourseAdapter extends BaseAdapter {
                 file.mkdirs();
             }
         }
-
         /**
          * 创建一个文件
          * @param FileName 文件名

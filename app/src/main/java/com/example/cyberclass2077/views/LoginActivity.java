@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private Dispatcher dispatcher;
     private ActionsCreator actionsCreator;
     private UserStore userStore;
+
     private final int PERMISSION_CODE_FIRST = 0x14;//权限请求码
 
     @Override
