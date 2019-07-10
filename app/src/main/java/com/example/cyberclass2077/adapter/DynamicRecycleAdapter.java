@@ -51,7 +51,7 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
                 ByteArrayOutputStream output = new ByteArrayOutputStream();//初始化一个流对象
                 dynamicBean.img_dis.compress(Bitmap.CompressFormat.JPEG, 100, output);//把bitmap100%高质量压缩 到 output对象里
                 byte[] result = output.toByteArray();
-                intent.putExtra("portrait", dynamicBean.bit_user_portrait);//传递用户头像
+                //intent.putExtra("portrait", dynamicBean.bit_user_portrait);//传递用户头像
                 intent.putExtra("ContentPicture", result); //传递用户发表图片
                 mContext.startActivity(intent);
             }

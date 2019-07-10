@@ -115,13 +115,16 @@ public class CourseAdapter extends BaseAdapter {
                 {
                     Log.e("this is log","true");
                     listDynamicBean.get(position).setFavorite(false);
-                    viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
+                    Toast.makeText(context, "取消收藏", Toast.LENGTH_SHORT).show();
+                    viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
+
                 }
                 else
                 {
                     Log.e(TAG, "onClick: " );
                     listDynamicBean.get(position).setFavorite(true);
-                    viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
+                    Toast.makeText(context, "收藏成功", Toast.LENGTH_SHORT).show();
+                    viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
                 }
             }
         });
@@ -132,12 +135,12 @@ public class CourseAdapter extends BaseAdapter {
         if(listDynamicBean.get(position).getfavrot())  //收藏颜色
         {
 //                listDynamicBean.get(position).setFavorite(false);
-            viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
+            viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
         }
         else
         {
 //                listDynamicBean.get(position).setFavorite(true);
-            viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
+            viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
         }
 
 
