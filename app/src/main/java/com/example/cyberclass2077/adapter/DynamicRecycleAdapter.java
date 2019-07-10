@@ -2,9 +2,11 @@ package com.example.cyberclass2077.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +72,19 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
         //删除动画
         notifyItemRemoved(position);
         notifyDataSetChanged();
+    }
+
+    public void addPicture(int position, int dynamicId, Bitmap bitmap) {
+       //通过位置来定位，找id匹配的
+        if(mDynamicBeans.get(position).int_dynamic == dynamicId) {
+           Log.d("set", "haole");
+           mDynamicBeans.get(position).img_dis = bitmap;
+       }
+    }
+
+    public int getDynamicId(int position) {
+        //返回当前位置的动态id
+        return mDynamicBeans.get(position).int_dynamic;
     }
 
     //ViewHold容纳View
