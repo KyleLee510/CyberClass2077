@@ -210,5 +210,15 @@ public class ActionsCreator {
                 )
         );
     }
+    //获取评论的请求
+    //参数为要获取的动态的Id
+    public void getComments(Integer dynamicId){
+        dispatcher.dispatch(
+                new GetCommentsAction(
+                        GetCommentsAction.ACTION_GET_COMMENTS,
+                        dynamicId
+                )
+        );
+    }
 
 }

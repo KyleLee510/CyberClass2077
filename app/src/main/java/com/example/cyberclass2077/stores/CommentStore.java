@@ -1,8 +1,12 @@
 package com.example.cyberclass2077.stores;
 
+import android.graphics.Bitmap;
+
 import com.example.cyberclass2077.actions.Action;
+import com.example.cyberclass2077.actions.GetCommentsAction;
 import com.example.cyberclass2077.actions.SendCommentAction;
 import com.example.cyberclass2077.connection.Connect;
+import com.example.cyberclass2077.connection.GetCommentsConnect;
 import com.example.cyberclass2077.connection.SendCommentConnect;
 import com.example.cyberclass2077.model.Comment;
 import com.squareup.otto.Subscribe;
@@ -42,6 +46,13 @@ public class CommentStore extends Store {
                 ((SendCommentConnect)connect).sendCommentRequest((String)action.getData());
                 break;
             }
+            case GetCommentsAction
+                    .ACTION_GET_COMMENTS:{
+                connect=null;
+                connect=new GetCommentsConnect();
+                ((GetCommentsConnect)connect).sendGetCommentsConnect((Integer)action.getData());
+                break;
+            }
             default:{
             }
         }
@@ -54,6 +65,20 @@ public class CommentStore extends Store {
                 boolean isSendCommentSuccessful
         ){
             this.isSendCommentSuccessful=isSendCommentSuccessful;
+        }
+    }
+    public class GetCommentsEvent extends StoreChangeEvent{
+        public boolean isGetCommentsSuccessful=false;
+        public List<Comment> commentList;
+        public List<Bitmap>comment_portrait_list;
+        public GetCommentsEvent(
+                boolean isGetCommentsSuccessful,
+                List<Comment> commentList,
+                List<Bitmap>comment_portrait_list
+                ){
+            this.isGetCommentsSuccessful=isGetCommentsSuccessful;
+            this.commentList=commentList;
+            this.comment_portrait_list=comment_portrait_list;
         }
     }
 }

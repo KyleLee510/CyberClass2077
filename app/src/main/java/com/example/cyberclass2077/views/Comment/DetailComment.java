@@ -42,6 +42,9 @@ import com.squareup.otto.Subscribe;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -63,6 +66,7 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
     private Comment comment1=new Comment();
     private Integer dynamicId;
     private String str_publish_userName;
+    private List<CommentDetailBean>getCommentsDetailBeanList=new ArrayList<>();
 
 
     private void initDependencies() {
@@ -161,11 +165,10 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
         byte[]res = getIntent().getByteArrayExtra("ContentPicture");
         image.setImageBitmap(getPicFromBytes(res,null));
 
-//        ImageView image1 = (ImageView) findViewById(R.id.detail_page_userLogo);//用户头像
-//        //下面这句表示在intent中拿到bitmap对应的数组
-//        byte[]res1 = getIntent().getByteArrayExtra("portrait");
-//        image1.setImageBitmap(getPicFromBytes(res1,null));
-//        image1.setScaleType(ImageView.ScaleType.FIT_XY);
+        ImageView image1 = (ImageView) findViewById(R.id.detail_page_userLogo);//用户头像
+        //下面这句表示在intent中拿到bitmap对应的数组
+        byte[]res1 = getIntent().getByteArrayExtra("portrait");
+        image1.setImageBitmap(getPicFromBytes(res1,null));
 
         //内容
         String str_content=getIntent().getStringExtra("Content");
@@ -194,8 +197,7 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
         //获取用户userName填充comment1
         str_publish_userName=UserStore.getInstance().getUser().getUserName();
         comment1.setPublisherName(str_publish_userName);
-
-
+        actionsCreator.getComments(dynamicId);
         initView();
     }
 
@@ -225,42 +227,42 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle("详情");
         commentsList = generateTestData();
-        initExpandableListView(commentsList);
+//        initExpandableListView(commentsList);
     }
 
     /**
      * 初始化评论和回复列表
      */
-    private void initExpandableListView(final List<CommentDetailBean> commentList){
+    private void initExpandableListView(final List<CommentDetailBean> commentList,List<Bitmap> bitmapList){
         expandableListView.setGroupIndicator(null);
         //默认展开所有回复
-        adapter = new CommentExpandAdapter(this, commentList);
+        adapter = new CommentExpandAdapter(this, commentList,bitmapList);
         expandableListView.setAdapter(adapter);
         for(int i = 0; i<commentList.size(); i++){
             expandableListView.expandGroup(i);
         }
-        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
-                boolean isExpanded = expandableListView.isGroupExpanded(groupPosition);
-                Log.e(TAG, "onGroupClick: 当前的评论id>>>"+commentList.get(groupPosition).getId());
-//                if(isExpanded){
-//                    expandableListView.collapseGroup(groupPosition);
-//                }else {
-//                    expandableListView.expandGroup(groupPosition, true);
-//                }
-                showReplyDialog(groupPosition);
-                return true;
-            }
-        });
+//        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+//            @Override
+//            public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
+//                boolean isExpanded = expandableListView.isGroupExpanded(groupPosition);
+//                Log.e(TAG, "onGroupClick: 当前的评论id>>>"+commentList.get(groupPosition).getId());
+////                if(isExpanded){
+////                    expandableListView.collapseGroup(groupPosition);
+////                }else {
+////                    expandableListView.expandGroup(groupPosition, true);
+////                }
+//                showReplyDialog(groupPosition);
+//                return true;
+//            }
+//        });
 
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-                Toast.makeText(DetailComment.this,"点击了回复",Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
+//        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+//            @Override
+//            public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
+//                Toast.makeText(DetailComment.this,"点击了回复",Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+//        });
 
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
@@ -281,7 +283,7 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
     private List<CommentDetailBean> generateTestData(){
         Gson gson = new Gson();
         commentBean = gson.fromJson(testJson, CommentBean.class);
-        List<CommentDetailBean> commentList = commentBean.getData().getList();
+        List<CommentDetailBean> commentList = new ArrayList<>();
         return commentList;
     }
 
@@ -333,8 +335,12 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
                     dialog.dismiss();
                     CommentDetailBean detailBean = new CommentDetailBean("小明", commentContent,"刚刚");
                     adapter.addTheCommentData(detailBean);
-                    Toast.makeText(DetailComment.this,"评论成功",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(DetailComment.this,"评论成功",Toast.LENGTH_SHORT).show();
                     comment1.setContent(commentContent);
+                    SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date=new Date(System.currentTimeMillis());
+                    String time=simpleDateFormat.format(date);
+                    comment1.setCommentTime(time);
 
                     Log.e(TAG, "onClick: comment" );
 
@@ -423,9 +429,33 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
     {
         if(event.isSendCommentSuccessful) {
             Toast.makeText(this,
-                    String.format("评论成功"),
+                    String.format("评论成功!"),
                     Toast.LENGTH_SHORT
             ).show();
+        }
+    }
+
+    @Subscribe
+    public  void onGetComements(CommentStore.GetCommentsEvent event)
+    {
+        Log.e(TAG, "onGetComements1: "+event.commentList.size() );
+
+        if(event.isGetCommentsSuccessful)
+        {
+            for(int i=0;i<event.commentList.size();i++)
+            {
+                String str_nickName=event.commentList.get(i).getPublisherName();
+                String str_time=event.commentList.get(i).getCommentTime();
+                String str_content=event.commentList.get(i).getContent();
+                CommentDetailBean commentDetailBean=new CommentDetailBean(str_nickName,str_time,str_content);
+                getCommentsDetailBeanList.add(commentDetailBean);
+            }
+            initExpandableListView(getCommentsDetailBeanList,event.comment_portrait_list);
+            Log.e(TAG, "onGetComements: "+event.commentList.size() );
+            Toast.makeText(this,
+                String.format("加载评论成功"),
+                Toast.LENGTH_SHORT
+        ).show();
         }
     }
 
