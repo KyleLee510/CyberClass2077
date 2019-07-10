@@ -1,6 +1,8 @@
 package com.example.cyberclass2077.views.Comment;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +29,9 @@ import com.example.cyberclass2077.adapter.CommentExpandAdapter;
 import com.example.cyberclass2077.bean.CommentBean;
 import com.example.cyberclass2077.bean.CommentDetailBean;
 import com.example.cyberclass2077.bean.ReplyDetailBean;
+import com.example.cyberclass2077.controllers.ToNextActivity;
 import com.example.cyberclass2077.view.CommentExpandableListView;
+import com.example.cyberclass2077.views.MainActivity;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -102,8 +107,29 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.comment_detail_layout);
+        ImageView image = (ImageView) findViewById(R.id.detail_page_image);
+        //下面这句表示在intent中拿到bitmap对应的数组
+        byte[]res = getIntent().getByteArrayExtra("ContentPicture");
+        image.setImageBitmap(getPicFromBytes(res,null));
+
+
         initView();
     }
+
+    //下面的这个方法是将byte数组转化为Bitmap对象的一个方法
+    public static Bitmap getPicFromBytes(byte[] bytes, BitmapFactory.Options opts) {
+
+        if (bytes != null)
+            if (opts != null)
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length,  opts);
+            else
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        return null;
+
+    }
+
+
+
 
     private void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -179,6 +205,9 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){
+            ToNextActivity.to_NextActivityFinish(DetailComment.this,
+                    MainActivity.class,
+                    ToNextActivity.FRAGMENT2);
             finish();
             return true;
         }

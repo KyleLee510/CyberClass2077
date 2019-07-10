@@ -2,9 +2,11 @@ package com.example.cyberclass2077.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import com.example.cyberclass2077.bean.DynamicItem;
 import com.example.cyberclass2077.controllers.ToNextActivity;
 import com.example.cyberclass2077.views.Comment.DetailComment;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 
@@ -43,7 +46,13 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, DetailComment.class);
-                intent.putExtra("Dynamic_ID", dynamicBean.int_dynamic);
+                intent.putExtra("Dynamic_ID", dynamicBean.int_dynamic); //传递动态ID
+                intent.putExtra("Content", dynamicBean.str_describe); //传递动态内容
+                ByteArrayOutputStream output = new ByteArrayOutputStream();//初始化一个流对象
+                dynamicBean.img_dis.compress(Bitmap.CompressFormat.JPEG, 100, output);//把bitmap100%高质量压缩 到 output对象里
+                byte[] result = output.toByteArray();
+                intent.putExtra("portrait", dynamicBean.bit_user_portrait);//传递用户头像
+                intent.putExtra("ContentPicture", result); //传递用户发表图片
                 mContext.startActivity(intent);
             }
         });
@@ -70,6 +79,19 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
         //删除动画
         notifyItemRemoved(position);
         notifyDataSetChanged();
+    }
+
+    public void addPicture(int position, int dynamicId, Bitmap bitmap) {
+       //通过位置来定位，找id匹配的
+        if(mDynamicBeans.get(position).int_dynamic == dynamicId) {
+           Log.d("set", "haole");
+           mDynamicBeans.get(position).img_dis = bitmap;
+       }
+    }
+
+    public int getDynamicId(int position) {
+        //返回当前位置的动态id
+        return mDynamicBeans.get(position).int_dynamic;
     }
 
     //ViewHold容纳View
