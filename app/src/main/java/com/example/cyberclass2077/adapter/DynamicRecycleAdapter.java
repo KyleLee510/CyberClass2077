@@ -80,6 +80,7 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
 
 
 
+
     }
     //获取List的数量来决定显示数量
     @Override
@@ -92,7 +93,9 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
         mDynamicBeans.add(newDynamic);
         //添加动画
         notifyItemInserted(position);
+        notifyDataSetChanged();
     }
+
 
     //删除数据
     public void removeData(int position, DynamicItem deleteDynamicBean) {
@@ -145,7 +148,6 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
             img_favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp); //点赞
             img_chat.setImageResource(R.drawable.ic_chat_bubble_outline_black_24dp); //评论
             txt_publishTime.setText(mdynamicBean.str_time);
-
 
         }
     }

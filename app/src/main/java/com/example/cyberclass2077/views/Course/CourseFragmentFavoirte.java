@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,8 @@ public class CourseFragmentFavoirte extends Fragment {
     private CourseBean courseBean;
     private List<Integer> getNewCourseIDs = new ArrayList<>();
 
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     public void onResume() {
         super.onResume();
@@ -57,36 +60,30 @@ public class CourseFragmentFavoirte extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view=inflater.inflate(R.layout.course_list_favorite, container, false);
         listView = (ListView) view.findViewById(R.id.id_course_favorite_list);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_course_fav_layout);
         initDependencies();
+        courseAdapter = new CourseAdapter(getActivity(), courseBeanList);
 
-        if(ToNextActivity.ISLOGIN) {
-            actionsCreator.getVideos("like","notag");
+        listView.setAdapter(courseAdapter);
 
-            new Handler().postDelayed(new Runnable(){
-                public void run() {
-                    //execute the task
-                    courseAdapter = new CourseAdapter(getActivity(), courseBeanList);
-                    listView.setAdapter(courseAdapter);
-                    for(int i = 0; i < getNewCourseIDs.size(); i++) {
-                        actionsCreator.getVideoPicture(getNewCourseIDs.get(i)); //通过提供动态ID来获取图片内容
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //刷新
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //结束后停止刷新
+                        if(ToNextActivity.ISLOGIN) {
+                            actionsCreator.getVideos("like","notag");
+                        }
+                        swipeRefreshLayout.setRefreshing(false);
                     }
-                }
-            }, 2000);
-        }
+                }, 1000);
+            }
+        });
 
-
-//        listView=(ListView)view.findViewById(R.id.id_course_list);
-//        courseBeanList=new ArrayList<>();
-//        for(int i=0;i<10;i++)
-//        {
-//            //CourseBean courseBean=new CourseBean();
-//            //courseBeanList.add(courseBean);
-//        }
-//
-//        adapter=new CourseAdapter(getActivity(),courseBeanList);
-//        listView.setAdapter(adapter);
-//
-
+        actionsCreator.getVideos("like","notag");
         return view;
     }
 
@@ -104,59 +101,68 @@ public class CourseFragmentFavoirte extends Fragment {
 
     @Subscribe
     public void onGetVideoList(FileInfoStore.GetVideosEventLike event){
-        Log.d("tag","" + event.video_portrait_list.size());
-        //if(event.video_portrait_list.size() != 0) {
-        if (courseBeanList.size() >0) {
-            for(int i = 0; i <  event.video_list.size(); i++) {
-                //通过判断本地首个动态的id大小，如果小于返回的数据id大小，则添加该动态至首行
-                if (courseBeanList.get(0).getCourseID() < event.video_list.get(i).getFileId()) {
+        if(ToNextActivity.ISLOGIN) {
+            if (courseBeanList.size() >0) {
+                for(int i = 0; i <  event.video_list.size(); i++) {
+                    //通过判断本地首个动态的id大小，如果小于返回的数据id大小，则添加该动态至首行
+                    if (courseBeanList.get(0).getCourseID() < event.video_list.get(i).getFileId()) {
+                        CourseBean courseBean = new CourseBean();
+                        courseBean.setCourseID(event.video_list.get(i).getFileId());//设置视频ID
+                        courseBean.setFavorite(event.video_like_list.get(i));   //设置最爱
+                        courseBean.setTag(event.video_list.get(i).getTag());    //设置标签
+                        courseBean.setUploadTime(event.video_list.get(i).getUploadTime()); //设置上传时间
+                        courseBean.setUserNickName(event.video_list.get(i).getUploadUserName());    //设置上传者用户名
+                        courseBean.setVideoTitle(event.video_list.get(i).getFileTitle());   //设置上传文件标题
+                        courseBean.setVideoURL(event.video_url_list.get(i));    //设置URL
+                        courseBean.img_user = event.video_portrait_list.get(i); //设置视频上传者头像
+                        courseBeanList.add(0,courseBean);
+                        getNewCourseIDs.add(courseBean.getCourseID()); //将新动态的ID加入进去
+                    }
+                    else {
+                        break;
+                    }
+                }
+            }
+            else {
+                for(int i = 0; i < event.video_list.size(); i++) {
                     CourseBean courseBean = new CourseBean();
-                    courseBean.setCourseID(event.video_list.get(i).getFileId());//设置视频ID
-                    courseBean.setFavorite(event.video_like_list.get(i));   //设置最爱
-                    courseBean.setTag(event.video_list.get(i).getTag());    //设置标签
-                    courseBean.setUploadTime(event.video_list.get(i).getUploadTime()); //设置上传时间
-                    courseBean.setUserNickName(event.video_list.get(i).getUploadUserName());    //设置上传者用户名
-                    courseBean.setVideoTitle(event.video_list.get(i).getFileTitle());   //设置上传文件标题
-                    courseBean.setVideoURL(event.video_url_list.get(i));    //设置URL
-                    courseBean.img_user = event.video_portrait_list.get(i); //设置视频上传者头像
+                    courseBean.setCourseID(event.video_list.get(i).getFileId());
+                    courseBean.setFavorite(event.video_like_list.get(i));
+                    courseBean.setTag(event.video_list.get(i).getTag());
+                    courseBean.setUploadTime(event.video_list.get(i).getUploadTime());
+                    courseBean.setUserNickName(event.video_list.get(i).getUploadUserName());
+                    courseBean.setVideoTitle(event.video_list.get(i).getFileTitle());
+                    courseBean.setVideoURL(event.video_url_list.get(i));
+                    courseBean.img_user = event.video_portrait_list.get(i); //设置视频上传者封面
                     courseBeanList.add(0,courseBean);
                     getNewCourseIDs.add(courseBean.getCourseID()); //将新动态的ID加入进去
                 }
-                else {
-                    break;
+            }
+            //}
+
+            if(event.isGetVideosSuccessful==true)
+            {
+                Toast.makeText(getActivity(),
+                        String.format("已获取在线视频"),
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+
+            new Handler().postDelayed(new Runnable(){
+                public void run() {
+                    //execute the task
+                    courseAdapter = new CourseAdapter(getActivity(), courseBeanList);
+                    listView.setAdapter(courseAdapter);
+                    for(int i = 0; i < getNewCourseIDs.size(); i++) {
+                        actionsCreator.getVideoPicture(getNewCourseIDs.get(i)); //通过提供动态ID来获取图片内容
+                    }
                 }
-            }
+            }, 2000);
         }
-        else {
-            for(int i = 0; i < event.video_list.size(); i++) {
-                CourseBean courseBean = new CourseBean();
-                courseBean.setCourseID(event.video_list.get(i).getFileId());
-                courseBean.setFavorite(event.video_like_list.get(i));
-                courseBean.setTag(event.video_list.get(i).getTag());
-                courseBean.setUploadTime(event.video_list.get(i).getUploadTime());
-                courseBean.setUserNickName(event.video_list.get(i).getUploadUserName());
-                courseBean.setVideoTitle(event.video_list.get(i).getFileTitle());
-                courseBean.setVideoURL(event.video_url_list.get(i));
-                courseBean.img_user = event.video_portrait_list.get(i); //设置视频上传者封面
-                courseBeanList.add(0,courseBean);
-                getNewCourseIDs.add(courseBean.getCourseID()); //将新动态的ID加入进去
-            }
-        }
-        //}
-
-        if(event.isGetVideosSuccessful==true)
-        {
-            Toast.makeText(getActivity(),
-                    String.format("已获取在线视频"),
-                    Toast.LENGTH_SHORT
-            ).show();
-        }
-
     }
 
     @Subscribe
     public void onGetVideoPictureEvent(FileInfoStore.GetVideoPictureEvent event) {
-        Log.e("this is qianduan test","Favorite");
         if(getNewCourseIDs.size() > 0) {
             for(int i = 0; i < getNewCourseIDs.size(); i++) {
                 courseAdapter.addPicture(i, event.fileId, event.bitmap);//传递

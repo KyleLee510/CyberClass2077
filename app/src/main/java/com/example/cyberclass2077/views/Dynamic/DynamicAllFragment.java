@@ -55,30 +55,33 @@ public class DynamicAllFragment extends Fragment {
     private List<Integer> getNewDynamicIDs = new ArrayList<>();  //负责存储新动态的的ID
     private DynamicItem dynamicItem;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.dynamic_recycleview_all_layout, container, false);//测试
         initDependencies();
-        //initView(view);//测试
-        if(ToNextActivity.ISLOGIN) {
-            actionsCreator.getDynamics("square");   //先获取动态内容
-            //等待数据加入
-            new Handler().postDelayed(new Runnable(){
-                public void run() {
-                    //execute the task
-//                    for(int i = 0; i < dynamicItems.size(); i++) {
-//                        Log.d("进来了","");
-//                        initView(view);//测试
-//                        actionsCreator.getDynamicPicture(dynamicItems.get(i).int_dynamic); //通过提供动态ID来获取图片内容
-//                    }
-                    initView(view);//测试
-                    for(int i = 0; i < getNewDynamicIDs.size(); i++) {
-                        actionsCreator.getDynamicPicture(getNewDynamicIDs.get(i)); //通过提供动态ID来获取图片内容
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_square_layout);
+        initView(view);//测试
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //刷新
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //结束后停止刷新
+                        if(ToNextActivity.ISLOGIN) {
+                            initView(view);
+                            actionsCreator.getDynamics("square");
+                        }
+                        swipeRefreshLayout.setRefreshing(false);
                     }
-                }
-            }, 2000);
-        }
+                }, 1000);
+            }
+        });
+        actionsCreator.getDynamics("square");   //先获取动态内容
         return view;
     }
 
@@ -126,40 +129,50 @@ public class DynamicAllFragment extends Fragment {
     //获取动态
     @Subscribe
     public void onGetDynamics(DynamicStore.GetDynamicsEvent event) {
-        if (dynamicItems.size() >0) {
-            for(int i = 0; i <  event.dynamicList.size(); i++) {
-                //通过判断本地首个动态的id大小，如果小于返回的数据id大小，则添加该动态至首行
-                if (dynamicItems.get(0).int_dynamic < event.dynamicList.get(i).getDynamicId()) {
-                    dynamicItem = new DynamicItem(event.dynamicList.get(i), event.portraitList.get(i));
-                    dynamicItems.add(0,dynamicItem);
-                    getNewDynamicIDs.add(dynamicItem.int_dynamic); //将新动态的ID加入进去
+        if(ToNextActivity.ISLOGIN) {
+            if (event.isGetDynamicsSuccessful) {
+                if (dynamicItems.size() >0) {
+                    for(int i = 0; i < dynamicItems.size(); i++) {
+                        //通过判断本地首个动态的id大小，如果小于返回的数据id大小，则添加该动态至首行
+                        if (dynamicItems.get(0).int_dynamic < event.dynamicList.get(i).getDynamicId()) {
+                            dynamicItem = new DynamicItem(event.dynamicList.get(i), event.portraitList.get(i));
+                            dynamicItems.add(0, dynamicItem);
+                            getNewDynamicIDs.add(0, dynamicItem.int_dynamic); //将新动态的ID加入进去
+                            //recycleAdapter.addData(0, dynamicItem);
+                        }
+                        else {
+                            break;
+                        }
+                    }
                 }
                 else {
-                    break;
+                    for(int i = 0;i < event.dynamicList.size();i++) {
+                        dynamicItem = new DynamicItem(event.dynamicList.get(i), event.portraitList.get(i));
+                        dynamicItems.add(dynamicItem);
+                        getNewDynamicIDs.add(dynamicItem.int_dynamic); //将新动态的ID加入进去
+                    }
                 }
             }
+            //等待数据加入
+            new Handler().postDelayed(new Runnable(){
+                public void run() {
+                    //execute the task
+                    for(int i = 0; i < getNewDynamicIDs.size(); i++) {
+                        actionsCreator.getDynamicPicture(getNewDynamicIDs.get(i)); //通过提供动态ID来获取图片内容
+                    }
+                }
+            }, 2000);
+
         }
-        else {
-            for(int i = 0;i < event.dynamicList.size();i++) {
-                dynamicItem = new DynamicItem(event.dynamicList.get(i), event.portraitList.get(i));
-                dynamicItems.add(dynamicItem);
-                getNewDynamicIDs.add(dynamicItem.int_dynamic); //将新动态的ID加入进去
-            }
-        }
-        if (event.isGetDynamicsSuccessful) {
-            Toast.makeText(getActivity(),
-                    String.format("已获取动态"),
-                    Toast.LENGTH_SHORT
-            ).show();
-        }
+
     }
     //获取动态图片
     @Subscribe
     public void onGetDynamicPictureEvent(DynamicStore.GetDynamicPictureEvent event) {
         //减少数据加载
+
         if(getNewDynamicIDs.size() > 0) {
             for(int i = 0; i < getNewDynamicIDs.size(); i++) {
-                Log.d("if", "" + i);
                 recycleAdapter.addPicture(i, event.dynamicId, event.bitmap);//传递
             }
             Toast.makeText(getActivity(),
@@ -169,20 +182,16 @@ public class DynamicAllFragment extends Fragment {
         }
         else {
             for (int i = 0; i < dynamicItems.size(); i++) {
-                //getIDandBItmaps.add(new GetIDandBItmap(event.dynamicId, event.bitmap));//获取动态图片
-                Log.d("else", "" + i);
                 recycleAdapter.addPicture(i, event.dynamicId, event.bitmap);//传递
             }
             Toast.makeText(getActivity(),
-                    String.format("已加载旧图片"),
+                    String.format("已加载图片"),
                     Toast.LENGTH_SHORT
             ).show();
         }
         if (event.isGetDynamicPicSuccessful) {
-//            Toast.makeText(getActivity(),
-//                    String.format("动态图片已加载"),
-//                    Toast.LENGTH_SHORT
-//            ).show();
+
         }
+
     }
 }
