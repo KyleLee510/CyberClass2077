@@ -2,6 +2,7 @@ package com.example.cyberclass2077.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.util.Log;
@@ -42,8 +43,6 @@ public class CourseAdapter extends BaseAdapter {
         this.context=context;
         this.listDynamicBean=listDynamicBean;
         this.inflater=LayoutInflater.from(context);
-
-
     }
 
     @Override
@@ -60,10 +59,9 @@ public class CourseAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return 0;
     }
-
+    ViewHolderGroup viewHolderGroup;
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolderGroup viewHolderGroup;
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if(inflater==null)
         {
             inflater=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
@@ -79,32 +77,67 @@ public class CourseAdapter extends BaseAdapter {
             viewHolderGroup.txt_remark=convertView.findViewById(R.id.course_remark);
             viewHolderGroup.ibtn_favorite=convertView.findViewById(R.id.course_favorite);
             viewHolderGroup.itbn_download=convertView.findViewById(R.id.course_download);
-        }else
-        {
-            viewHolderGroup=(ViewHolderGroup)convertView.getTag();
-        }
 
-
-        viewHolderGroup.image_to_videoView.setOnClickListener(new View.OnClickListener() {
+            viewHolderGroup.image_to_videoView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     Intent intent = new Intent(context, CourseVideoActivity.class);
                     intent.putExtra("islocal",false);
                     intent.putExtra("VideoPath","http://47.100.99.130:8080/CyberClass2077/test.mp4");
                     //intent.putExtra("VideoPath","/tencent/TIMfile_recv/20190310_174858.mp4");
                     context.startActivity(intent);
                 }
-            }
-        );
+            });
 
-        viewHolderGroup.itbn_download.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "开始下载,下载地址为/Mydownload/", Toast.LENGTH_SHORT).show();
-                downLoad("http://47.100.99.130:8080/CyberClass2077/test.mp4","test.mp4");
+
+            viewHolderGroup.itbn_download.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "开始下载,下载地址为/Mydownload/", Toast.LENGTH_SHORT).show();
+                    downLoad("http://47.100.99.130:8080/CyberClass2077/test.mp4","test.mp4");
+                }
+            });
+
+            //点击收藏
+            viewHolderGroup.ibtn_favorite.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    if(listDynamicBean.get(position).getfavrot())  //收藏颜色
+                    {
+                        listDynamicBean.get(position).setFavorite(false);
+                        viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
+                    }
+                    else
+                    {
+                        listDynamicBean.get(position).setFavorite(true);
+                        viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
+                    }
+                }
+            });
+
+            viewHolderGroup.txt_nick_name.setText(listDynamicBean.get(position).getUserNickName());  //用户名
+            viewHolderGroup.txt_video_title.setText(listDynamicBean.get(position).getVideoTitle());   //视频名字
+            viewHolderGroup.txt_remark.setText(listDynamicBean.get(position).getTag());   //标签
+            if(listDynamicBean.get(position).getfavrot())  //收藏颜色
+            {
+//                listDynamicBean.get(position).setFavorite(false);
+                viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
             }
-        });
+            else
+            {
+//                listDynamicBean.get(position).setFavorite(true);
+                viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
+            }
+
+
+        }else
+        {
+            viewHolderGroup=(ViewHolderGroup)convertView.getTag();
+        }
+
+
+
+
 
         return convertView;
     }

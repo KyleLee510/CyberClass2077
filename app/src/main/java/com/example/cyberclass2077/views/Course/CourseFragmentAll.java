@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -36,7 +37,7 @@ public class CourseFragmentAll extends Fragment {
     private Dispatcher dispatcher;
     private ActionsCreator actionsCreator;
     private FileInfoStore fileInfoStore;
-    private List<CourseBean> courseBeanList;
+    private List<CourseBean> courseBeanList = new ArrayList<>();;
 
     @Override
     public void onResume() {
@@ -60,26 +61,26 @@ public class CourseFragmentAll extends Fragment {
         initDependencies();
 
 
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_course_layout);
-        for(int i=0;i<2;i++)
-        {
-            CourseBean courseBean_old=new CourseBean();
-            courseBeanList_old.add(courseBean_old);
-        }
-        listView.setAdapter(new CourseAdapter(getActivity(),courseBeanList_old));
+//        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_course_layout);
+//        for(int i=0;i<2;i++)
+//        {
+//            CourseBean courseBean_old=new CourseBean();
+//            courseBeanList_old.add(courseBean_old);
+//        }
+//        listView.setAdapter(new CourseAdapter(getActivity(),courseBeanList_old));
 
-        SearchView searchView=view.findViewById(R.id.course_search);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+//        SearchView searchView=view.findViewById(R.id.course_search);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        });
 //        View view1=inflater.inflate(R.layout.course_top_menu_layout,container,false);
 //        final SearchView searchView=view1.findViewById(R.id.course_search);
 //        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -174,6 +175,9 @@ public class CourseFragmentAll extends Fragment {
 
                 courseBeanList.add(courseBean);
             }
+            Log.e(TAG, "getVideoList: "+event.video_list.size() );
+            CourseAdapter courseAdapter=new CourseAdapter(getActivity(),courseBeanList);
+            listView.setAdapter(courseAdapter);
 
         }
         else{
