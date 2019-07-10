@@ -50,7 +50,7 @@ public class Fragment1 extends Fragment {
     private Dispatcher dispatcher;
     private ActionsCreator actionsCreator;
     private FileInfoStore fileInfoStore;
-    private CourseBean courseBean;
+    private List<CourseBean> courseBeanList;
 
 
     @Override
@@ -144,7 +144,7 @@ public class Fragment1 extends Fragment {
         if(event.isGetVideosSuccessful==true)
         {
             for(int i = 0;i < event.video_list.size();i++) {
-                courseBean = new CourseBean();
+                CourseBean courseBean = new CourseBean();
                 courseBean.setCourseID(event.video_list.get(i).getFileId());
                 Log.e("get_video_test",String.valueOf(courseBean.getCourseID()));
                 courseBean.setFavorite(event.video_like_list.get(i));
@@ -159,10 +159,9 @@ public class Fragment1 extends Fragment {
                 Log.e("get_video_test",courseBean.getVideoTitle());
                 courseBean.setVideoURL(event.video_url_list.get(i));
                 Log.e("get_video_test",courseBean.getVideoURL());
-
-
-
+                courseBeanList.add(courseBean);
             }
+
         }
         else{
 

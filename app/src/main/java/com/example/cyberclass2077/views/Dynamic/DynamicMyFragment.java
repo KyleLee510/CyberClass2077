@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.cyberclass2077.R;
-import com.example.cyberclass2077.adapter.DynamicAdapter;
+
 import com.example.cyberclass2077.bean.DynamicBean;
 
 import java.util.ArrayList;

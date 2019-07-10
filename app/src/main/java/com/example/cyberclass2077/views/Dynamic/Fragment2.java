@@ -17,20 +17,7 @@ import android.widget.Toast;
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.adapter.CommentFragmentAdapter;
-import com.example.cyberclass2077.adapter.CourseFragmentAdapter;
-import com.example.cyberclass2077.adapter.DynamicAdapter;
-import com.example.cyberclass2077.bean.DynamicPublishBean;
-import com.example.cyberclass2077.controllers.ToNextActivity;
-import com.example.cyberclass2077.dispatcher.Dispatcher;
-import com.example.cyberclass2077.model.User;
-import com.example.cyberclass2077.model.UserInfo;
-import com.example.cyberclass2077.stores.DynamicStore;
-import com.example.cyberclass2077.stores.UserInfoStore;
-import com.example.cyberclass2077.stores.UserStore;
-import com.squareup.otto.Subscribe;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Fragment2 extends Fragment{

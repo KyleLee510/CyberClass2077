@@ -104,6 +104,7 @@ public class ActionsCreator {
                 )
         );
     }
+    //发送动态请求
     public void sendDynamic(DynamicPublishBean dynamic,Bitmap bitmap){
         Map map=new HashMap();
         map.put("dynamic",dynamic);
@@ -157,6 +158,21 @@ public class ActionsCreator {
         Map map=new HashMap();
         map.put("pattern",pattern);
         map.put("tag",tag);
+        map.put("searchUserName","none");
+        dispatcher.dispatch(
+                new GetVideosAction(
+                        GetVideosAction.ACTION_GET_VIDEOS,
+                        map
+                )
+        );
+
+    }
+    //重载的上面的方法，增加了搜索名字段。
+    public void getVideos(String pattern,String tag,String searchUserName){
+        Map map=new HashMap();
+        map.put("pattern",pattern);
+        map.put("tag",tag);
+        map.put("searchUserName",searchUserName);
         dispatcher.dispatch(
                 new GetVideosAction(
                         GetVideosAction.ACTION_GET_VIDEOS,

@@ -2,14 +2,13 @@ package com.example.cyberclass2077.bean;
 
 public class CourseBean {
      Integer CourseID;        //课程ID
- //   public String userImage;
       String videoTitle;      //视频标题
      String userNickName;     //视频上传者名称
      String uploadTime;              //视频上传时间
     public  String tag;                     //视频tag
 
-     String videoURL;
-     boolean isFavorite;
+     String videoURL;                   //视频URL
+     boolean isFavorite;                //是否已收藏
     public CourseBean(){};
 
     public CourseBean(Integer courseID,String videoTitle,String userNickName,String uploadTime,String tag,String videoURL,boolean isFavorite){

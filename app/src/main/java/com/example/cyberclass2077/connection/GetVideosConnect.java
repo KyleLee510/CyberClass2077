@@ -21,11 +21,13 @@ public class GetVideosConnect extends Connect<Map> {
         System.out.println("this is print");
         String pattern=(String)map.get("pattern");
         String tag=(String)map.get("tag");
+        String searchUserName=(String)map.get("searchUserName");
         RequestBody requestBody = new MultipartBuilder()
                 .type(MultipartBuilder.FORM)
                 .addFormDataPart("username",userName)
                 .addFormDataPart("pattern",pattern)
                 .addFormDataPart("tag",tag)
+                .addFormDataPart("searchusername",searchUserName)
                 .build();
         postMulitiData(
                 AppConfig.VIDEOS_GET,

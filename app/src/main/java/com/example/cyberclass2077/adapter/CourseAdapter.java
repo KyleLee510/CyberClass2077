@@ -79,8 +79,6 @@ public class CourseAdapter extends BaseAdapter {
             viewHolderGroup.txt_remark=convertView.findViewById(R.id.course_remark);
             viewHolderGroup.ibtn_favorite=convertView.findViewById(R.id.course_favorite);
             viewHolderGroup.itbn_download=convertView.findViewById(R.id.course_download);
-
-
         }else
         {
             viewHolderGroup=(ViewHolderGroup)convertView.getTag();
