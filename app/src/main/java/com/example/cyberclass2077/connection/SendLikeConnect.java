@@ -22,7 +22,7 @@ public class SendLikeConnect extends Connect<Map> {
                 .addFormDataPart("username",userName)
                 .addFormDataPart("entityType",entityType)
                 .addFormDataPart("entityId",Id)
-                .addFormDataPart("isLikeOrNot",isLikeOrNotStr)
+                .addFormDataPart("likeornot",isLikeOrNotStr)
                 .build();
         postMulitiData(
                 AppConfig.LIKE_SEND,

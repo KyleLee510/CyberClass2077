@@ -18,11 +18,15 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.cyberclass2077.R;
+import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.bean.CourseBean;
 import com.example.cyberclass2077.controllers.CircleImageView;
 import com.example.cyberclass2077.controllers.ToNextActivity;
+import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.pictureselector.FileUtils;
+import com.example.cyberclass2077.stores.FileInfoStore;
 import com.example.cyberclass2077.views.CourseVideoActivity;
+import com.squareup.otto.Subscribe;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,6 +43,11 @@ public class CourseAdapter extends BaseAdapter {
     private Context context;
     private List<CourseBean> listDynamicBean;
     private LayoutInflater inflater;
+
+    private Dispatcher dispatcher;
+    private ActionsCreator actionsCreator;
+    private FileInfoStore fileInfoStore;
+
 
 
     public CourseAdapter(Context context,List<CourseBean> listDynamicBean)
@@ -62,6 +71,7 @@ public class CourseAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return 0;
     }
+
 
     public void addPicture(int position, int courseId, Bitmap bitmap) {
         //通过位置来定位，找id匹配的
@@ -91,6 +101,9 @@ public class CourseAdapter extends BaseAdapter {
             viewHolderGroup.txt_remark=convertView.findViewById(R.id.course_remark);    //标签
             viewHolderGroup.ibtn_favorite=convertView.findViewById(R.id.course_favorite); //点赞
             viewHolderGroup.itbn_download=convertView.findViewById(R.id.course_download); //下载
+
+            initDependencies();
+
             convertView.setTag(viewHolderGroup);
         }
         else
@@ -129,6 +142,7 @@ public class CourseAdapter extends BaseAdapter {
                     Toast.makeText(context, "取消收藏", Toast.LENGTH_SHORT).show();
                     viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
 
+
                 }
                 else
                 {
@@ -150,15 +164,31 @@ public class CourseAdapter extends BaseAdapter {
         {
 //                listDynamicBean.get(position).setFavorite(false);
             viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
+            actionsCreator.sendLike("video",listDynamicBean.get(position).getCourseID(),false);
         }
         else
         {
 //                listDynamicBean.get(position).setFavorite(true);
             viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
+            actionsCreator.sendLike("video",listDynamicBean.get(position).getCourseID(),true);
         }
 
         return convertView;
     }
+
+
+    private void initDependencies() {
+        //获取调度者单例
+        dispatcher = Dispatcher.get();
+        //获取动作创建者单例
+        actionsCreator = ActionsCreator.get(dispatcher);
+        //获取 文件 数据仓库
+        fileInfoStore = FileInfoStore.getInstance();
+        //在调度者里注册 文件 数据仓库
+        dispatcher.register(fileInfoStore);
+        //fileInfoStore.register(this);
+    }
+
 
     class ViewHolderGroup{
         ImageView image_to_videoView; //视频封面
@@ -240,4 +270,16 @@ public class CourseAdapter extends BaseAdapter {
             return new File(path, FileName);
         }
     }
+
+    @Subscribe
+    public void is_successful(FileInfoStore.LikeVideoEvent event){
+        if(event.isLikeSuccessful)
+        {
+            Toast.makeText(context,"通讯成功",Toast.LENGTH_SHORT).show();
+        }
+        else{
+
+        }
+    }
+
 }

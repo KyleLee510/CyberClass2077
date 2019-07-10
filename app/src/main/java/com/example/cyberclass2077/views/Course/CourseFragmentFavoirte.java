@@ -99,11 +99,11 @@ public class CourseFragmentFavoirte extends Fragment {
         fileInfoStore = FileInfoStore.getInstance();
         //在调度者里注册 文件 数据仓库
         dispatcher.register(fileInfoStore);
-        // fileInfoStore.register(this);
+       //  fileInfoStore.register(this);
     }
 
     @Subscribe
-    public void onGetVideoList(FileInfoStore.GetVideosEvent event){
+    public void onGetVideoList(FileInfoStore.GetVideosEventLike event){
         Log.d("tag","" + event.video_portrait_list.size());
         //if(event.video_portrait_list.size() != 0) {
         if (courseBeanList.size() >0) {
