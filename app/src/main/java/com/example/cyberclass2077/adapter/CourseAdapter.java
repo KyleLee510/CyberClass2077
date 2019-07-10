@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.cyberclass2077.R;
@@ -102,60 +103,8 @@ public class CourseAdapter extends BaseAdapter {
         viewHolderGroup.itbn_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(context, "开始下载,下载地址为/Mydownload/", Toast.LENGTH_SHORT).show();
                 downLoad("http://47.100.99.130:8080/CyberClass2077/test.mp4","test.mp4");
-               // downLoad("http://www.google.com","nothing");
-//                Log.e("download_test", "点击函数" );
-//                new Thread(new Runnable() {
-//                    @Override
-//                        public void run() {
-//                        try{
-//                            Log.e("download_test", "进入下载" );
-//                            URL url = new URL("http://47.100.99.130:8080/CyberClass2077/test.mp4");
-//                            //打开连接
-//                            Log.e("download_test", "获取URL" );
-//                            URLConnection conn = url.openConnection();
-//                            //打开输入流
-//                            Log.e("download_test", "打开输入流" );
-//                            InputStream is = conn.getInputStream();
-//                            //获得长度
-//                            int contentLength = conn.getContentLength();
-//                            //创建文件夹 MyDownLoad，在存储卡下
-//                            String dirName = Environment.getExternalStorageDirectory() + "/MyDownLoad/";
-//                            File file = new File(dirName);
-//                            Log.e("download_test", "创建文件夹前" );
-//                            //不存在则创建
-//                            if (!file.exists()) {
-//                                file.mkdir();
-//                            }
-//                            Log.e("download_test", "创建文件夹" );
-//                            //下载后的文件名
-//                            String fileName = dirName + "test" +".mp4";
-//                            File file1 = new File(fileName);
-//                            //存在则删除
-//                            if (file1.exists()) {
-//                                file1.delete();
-//                            }
-//                            //创建字节流
-//                            Log.e("download_test", "创建文件名" );
-//                            byte[] bs = new byte[1024];
-//                            int len;
-//                            OutputStream os = new FileOutputStream(fileName);
-//                            //写数据
-//                            Log.e("download_test", "开始下载" );
-//                            while ((len = is.read(bs)) != -1) {
-//                                os.write(bs, 0, len);
-//                            }
-//                            //完成后关闭流
-//                            os.close();
-//                            is.close();
-//                            Log.e("download_test", "下载完成了~" + dirName );
-//                        }
-//                        catch (Exception e){
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }).start();
-//
             }
         });
 
@@ -184,17 +133,17 @@ public class CourseAdapter extends BaseAdapter {
                     Log.e("download_test", "进入下载" );
                     URL url = new URL(path);
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    con.setConnectTimeout(5000);
-                    con.setReadTimeout(5000);
-                    con.setRequestProperty("Charset", "UTF-8");
-                    con.setRequestMethod("POST");
+                    con.setConnectTimeout(1000);
+                    con.setReadTimeout(1000);
+                    //con.setRequestProperty("Charset", "UTF-8");
+                    con.setRequestMethod("GET");
                     Log.e("download_test", "进入下载2" );
                     Log.e("download_test", String.valueOf(con.getResponseCode()));
                     Log.e("download_test", "进入下载3" );
 
+
                     if (con.getResponseCode() == 200) {
                         Log.e("download_test", "http正常" );
-                        con.setRequestMethod("GET");
                         InputStream is = con.getInputStream();//获取输入流
                         FileOutputStream fileOutputStream = null;//文件输出流
                         if (is != null) {
