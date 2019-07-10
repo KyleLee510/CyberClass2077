@@ -9,11 +9,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.cyberclass2077.R;
@@ -30,6 +32,7 @@ public class Fragment1 extends Fragment {
     private CourseFragmentAdapter fragmentAdapter;
     private List<TabFragment> fragmentList;
     private TabLayout tabLayout;
+    private String TAG="Fragment1";
 
     MutiChoiceDialog dialogFragment2;
 
@@ -47,7 +50,26 @@ public class Fragment1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
 
+
         View view=inflater.inflate(R.layout.course_top_menu_layout, container,false);
+
+
+        //搜索
+//        SearchView searchView=view.findViewById(R.id.course_search);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                Log.e(TAG, "onQueryTextSubmit: " );
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                Log.e(TAG, "onQueryTextChange: " );
+//                return false;
+//            }
+//        });
+
         pager = view.findViewById(R.id.page);
         tabLayout = view.findViewById(R.id.tab_layout);
 
@@ -182,7 +204,6 @@ public class Fragment1 extends Fragment {
                     listPosition.addAll(save_listPosition);
                     sparseArray =save_sparseArray.clone();
                     dismiss();
-
                 }
             });
         }

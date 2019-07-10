@@ -99,7 +99,6 @@ public class DynamicAdapter extends BaseAdapter {
         viewHolderGroup.int_amount_favorite.setText(listDynamicBean.get(position).getLikeNum().toString()+"👍");
         viewHolderGroup.int_amout_comment.setText(listDynamicBean.get(position).getCommentNum().toString()+"评论");
         viewHolderGroup.str_describe.setText(listDynamicBean.get(position).getContent());
-
 //        关注
 //        viewHolderGroup.img_favorite.setOnClickListener(new View.OnClickListener() {
 //            @Override
