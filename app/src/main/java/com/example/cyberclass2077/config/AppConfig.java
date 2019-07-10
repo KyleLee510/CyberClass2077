@@ -18,6 +18,6 @@ public class AppConfig {
     public final static String DYNAMIC_SEND=BASE_URL_PATH.concat("/send_dynamic");
     public final static String DYNAMIC_GET=BASE_URL_PATH.concat("/get_dynamics");
     public final static String DYNAMIC_GET_PICTURE= BASE_URL_PATH.concat("/get_dynamic_picture");
-
+    public final static String VIDEOS_GET=BASE_URL_PATH.concat("/get_video_list");
 
 }
