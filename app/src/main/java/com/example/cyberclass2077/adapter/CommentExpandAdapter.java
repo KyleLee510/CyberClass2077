@@ -1,6 +1,7 @@
 package com.example.cyberclass2077.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,8 +15,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.cyberclass2077.R;
+import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.bean.CommentDetailBean;
 import com.example.cyberclass2077.bean.ReplyDetailBean;
+import com.example.cyberclass2077.dispatcher.Dispatcher;
+import com.example.cyberclass2077.stores.CommentStore;
+import com.example.cyberclass2077.stores.DynamicStore;
+import com.example.cyberclass2077.stores.UserStore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +41,16 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     private List<ReplyDetailBean> replyBeanList;
     private Context context;
     private int pageIndex = 1;
+    private List<Bitmap> bitmapList;
+    private Bitmap userBitmap;
 
-    public CommentExpandAdapter(Context context, List<CommentDetailBean> commentBeanList) {
+
+
+    public CommentExpandAdapter(Context context, List<CommentDetailBean> commentBeanList, List<Bitmap> bitmapList,Bitmap userBitmap) {
         this.context = context;
         this.commentBeanList = commentBeanList;
+        this.bitmapList=bitmapList;
+        this.userBitmap=userBitmap;
     }
 
     @Override
@@ -94,11 +106,14 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         }else {
             groupHolder = (GroupHolder) convertView.getTag();
         }
-        Glide.with(context).load(R.drawable.user_other)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .error(R.mipmap.ic_launcher)
-                .centerCrop()
-                .into(groupHolder.logo);
+
+        if(groupPosition<bitmapList.size()) {
+            groupHolder.logo.setImageBitmap(bitmapList.get(groupPosition));
+        }
+        else
+        {
+            groupHolder.logo.setImageBitmap(userBitmap);
+        }
         groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getNickName());
         groupHolder.tv_time.setText(commentBeanList.get(groupPosition).getCreateDate());
         groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getContent());
