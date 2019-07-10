@@ -63,9 +63,9 @@ public class DynamicAllFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dynamic_recycleview_all_layout, container, false);//测试
+        final View view = inflater.inflate(R.layout.dynamic_recycleview_all_layout, container, false);//测试
         initDependencies();
-        initView(view);//测试
+        //initView(view);//测试
         if(ToNextActivity.ISLOGIN) {
             actionsCreator.getDynamics("square");   //先获取动态内容
             new Handler().postDelayed(new Runnable(){
@@ -73,6 +73,7 @@ public class DynamicAllFragment extends Fragment {
                     //execute the task
                     for(int i = 0; i < dynamicItems.size(); i++) {
                         Log.d("进来了","");
+                        initView(view);//测试
                         actionsCreator.getDynamicPicture(dynamicItems.get(i).int_dynamic); //通过提供动态ID来获取图片内容
                     }
                 }
@@ -142,7 +143,6 @@ public class DynamicAllFragment extends Fragment {
     @Subscribe
     public void onGetDynamicPictureEvent(DynamicStore.GetDynamicPictureEvent event) {
         for(int i = 0; i < dynamicItems.size(); i++) {
-            Log.d("测试", "" + dynamicItems.size());
             //getIDandBItmaps.add(new GetIDandBItmap(event.dynamicId, event.bitmap));//获取动态图片
             recycleAdapter.addPicture(i, event.dynamicId, event.bitmap);//传递
         }
