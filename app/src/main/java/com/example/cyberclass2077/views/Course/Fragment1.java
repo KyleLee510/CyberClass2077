@@ -44,6 +44,7 @@ public class Fragment1 extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dialogFragment2 =  new MutiChoiceDialog();
+
     }
 
 

@@ -49,6 +49,12 @@ public class DynamicAdapter extends BaseAdapter {
         return 0;
     }
 
+    public void addDate(int position, DynamicPublishBean dynamicBean, Bitmap portrait) {
+        listDynamicBean.add(position, dynamicBean);
+        listportrait.add(position, portrait);
+        notifyDataSetChanged();
+    }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolderGroup viewHolderGroup;
@@ -60,10 +66,10 @@ public class DynamicAdapter extends BaseAdapter {
         {
             convertView = inflater.inflate(R.layout.dynamiclayout,null);
             viewHolderGroup = new ViewHolderGroup();
-            viewHolderGroup.img_head = convertView.findViewById(R.id.id_group_img);
-            viewHolderGroup.str_user_name = convertView.findViewById(R.id.id_group_name);
-            viewHolderGroup.str_describe = convertView.findViewById(R.id.id_describe);
-            viewHolderGroup.img_dis = convertView.findViewById(R.id.id_list_img);
+            viewHolderGroup.img_head = convertView.findViewById(R.id.id_group_img); //头像
+            viewHolderGroup.str_user_name = convertView.findViewById(R.id.id_group_name); //用户名
+            viewHolderGroup.str_describe = convertView.findViewById(R.id.id_describe); //发表内容
+            viewHolderGroup.img_dis = convertView.findViewById(R.id.id_list_img);   //用户发表的图片
             viewHolderGroup.int_amount_favorite = convertView.findViewById(R.id.id_amount_favorite);
             viewHolderGroup.str_first_comemnt = convertView.findViewById(R.id.id_first_comment);
             viewHolderGroup.int_amout_comment = convertView.findViewById(R.id.id_amount_comment);
@@ -129,6 +135,7 @@ public class DynamicAdapter extends BaseAdapter {
 
         return convertView;
     }
+
     class ViewHolderGroup {
         ImageView img_head;
         TextView str_user_name;
