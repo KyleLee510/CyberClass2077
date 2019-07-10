@@ -221,15 +221,18 @@ public class ActionsCreator {
         );
     }
     //发送收藏/点赞的请求
+    //如果收藏，ikLikeOrNot设为true,取消收藏，设为false
     public void sendLike(
             String entityType,
-            Integer entityId
+            Integer entityId,
+            Boolean isLikeOrNot
     ){
         Map map=new HashMap();
         String userName=UserStore.getInstance().getUser().getUserName();
         map.put("username",userName);
         map.put("entityType",entityType);
         map.put("entityId",entityId);
+        map.put("isLikeOrNot",isLikeOrNot);
         dispatcher.dispatch(
                 new SendLikeAction(
                         SendLikeAction.ACTION_SEND_LIKE,

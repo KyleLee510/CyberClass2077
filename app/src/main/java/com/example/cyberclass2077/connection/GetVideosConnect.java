@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GetVideosConnect extends Connect<Map> {
+    volatile String myPattern;
     public GetVideosConnect(){}
     public void sendGetVideosRequest(Map map){
         String userName= UserStore.getInstance().getUser().getUserName();
@@ -25,8 +26,10 @@ public class GetVideosConnect extends Connect<Map> {
         }
         System.out.println("this is print");
         String pattern=(String)map.get("pattern");
+        myPattern=pattern;
         String tag=(String)map.get("tag");
         String searchUserName=(String)map.get("searchUserName");
+
         RequestBody requestBody = new MultipartBuilder()
                 .type(MultipartBuilder.FORM)
                 .addFormDataPart("username",userName)
@@ -62,15 +65,30 @@ public class GetVideosConnect extends Connect<Map> {
         List<Boolean>video_like_list=JSON.parseArray(video_like_list_str,Boolean.class);
 
         FileInfoStore store=FileInfoStore.getInstance();
-        store.setStoreChangeEvent(
-                store.new GetVideosEvent(
-                        isGetVideosSuccessful,
-                        video_list,
-                        video_url_list,
-                        video_like_list,
-                        portraitsList
-                )
-        );
+        if (myPattern.equals("default")){
+            store.setStoreChangeEvent(
+                    store.new GetVideosEventDefault(
+                            isGetVideosSuccessful,
+                            video_list,
+                            video_url_list,
+                            video_like_list,
+                            portraitsList
+                    )
+            );
+
+        }
+        else if(myPattern.equals("like")){
+            store.setStoreChangeEvent(
+                    store.new GetVideosEventLike(
+                            isGetVideosSuccessful,
+                            video_list,
+                            video_url_list,
+                            video_like_list,
+                            portraitsList
+                    )
+            );
+        }
+
         store.emitStoreChange();
 
     }
