@@ -220,5 +220,23 @@ public class ActionsCreator {
                 )
         );
     }
+    //发送收藏/点赞的请求
+    public void sendLike(
+            String entityType,
+            Integer entityId
+    ){
+        Map map=new HashMap();
+        String userName=UserStore.getInstance().getUser().getUserName();
+        map.put("username",userName);
+        map.put("entityType",entityType);
+        map.put("entityId",entityId);
+        dispatcher.dispatch(
+                new SendLikeAction(
+                        SendLikeAction.ACTION_SEND_LIKE,
+                        map
+                )
+        );
+    }
+
 
 }

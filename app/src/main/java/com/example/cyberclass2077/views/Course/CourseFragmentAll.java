@@ -1,22 +1,22 @@
 package com.example.cyberclass2077.views.Course;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ListView;
-import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.adapter.CourseAdapter;
 import com.example.cyberclass2077.bean.CourseBean;
+import com.example.cyberclass2077.bean.DynamicItem;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.stores.FileInfoStore;
 import com.squareup.otto.Subscribe;
@@ -24,20 +24,18 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.support.constraint.Constraints.TAG;
-
 public class CourseFragmentAll extends Fragment {
 
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private List<CourseBean> courseBeanList_old=new ArrayList<>();
     private ListView listView;
-
-
+    private CourseAdapter courseAdapter;
 
     private Dispatcher dispatcher;
     private ActionsCreator actionsCreator;
     private FileInfoStore fileInfoStore;
-    private List<CourseBean> courseBeanList = new ArrayList<>();;
+    private static List<CourseBean> courseBeanList = new ArrayList<>();
+    private CourseBean courseBean;
+    private List<Integer> getNewCourseIDs = new ArrayList<>();
+
 
     @Override
     public void onResume() {
@@ -54,84 +52,21 @@ public class CourseFragmentAll extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.course_list, container, false);
+        final View view=inflater.inflate(R.layout.course_list, container, false);
         listView = (ListView) view.findViewById(R.id.id_course_list);
-
-
         initDependencies();
-
-
-//        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_course_layout);
-//        for(int i=0;i<2;i++)
-//        {
-//            CourseBean courseBean_old=new CourseBean();
-//            courseBeanList_old.add(courseBean_old);
-//        }
-//        listView.setAdapter(new CourseAdapter(getActivity(),courseBeanList_old));
-
-//        SearchView searchView=view.findViewById(R.id.course_search);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                return false;
-//            }
-//        });
-//        View view1=inflater.inflate(R.layout.course_top_menu_layout,container,false);
-//        final SearchView searchView=view1.findViewById(R.id.course_search);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                Log.e(TAG, "onQueryTextSubmit: " );
-//
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                Log.e(TAG, "onQueryTextChange: " );
-//                courseBeanList = new ArrayList<>();
-//                for(int i=0;i<18;i++) {
-//
-//                    courseBeanList.add(new CourseBean());
-//                }
-//                listView.setAdapter(new CourseAdapter(getActivity(),courseBeanList));
-//                return false;
-//            }
-//        });
-//        View view1=inflater.inflate(R.layout.course_top_menu_layout,container,false);
-//        SearchView searchView=view1.findViewById(R.id.course_search);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                Log.e(TAG, "onQueryTextSubmit: " );
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                Log.e(TAG, "onQueryTextChange: " );
-//                return false;
-//            }
-//        });
-
-//        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-//                android.R.color.holo_green_light, android.R.color.holo_orange_light);
-        /*
-        //给swipeRefreshLayout绑定刷新监听
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                //设置2秒的时间来执行以下事件
-            }
-        });
-        */
-        Log.e("get_video_test","actionCreator前");
         actionsCreator.getVideos("default","notag");
+
+        new Handler().postDelayed(new Runnable(){
+            public void run() {
+                //execute the task
+                courseAdapter = new CourseAdapter(getActivity(), courseBeanList);
+                listView.setAdapter(courseAdapter);
+                for(int i = 0; i < getNewCourseIDs.size(); i++) {
+                    actionsCreator.getVideoPicture(getNewCourseIDs.get(i)); //通过提供动态ID来获取图片内容
+                }
+            }
+        }, 2000);
         return view;
     }
 
@@ -151,37 +86,74 @@ public class CourseFragmentAll extends Fragment {
 
 
     @Subscribe
-    public void getVideoList(FileInfoStore.GetVideosEvent event){
-        Log.e("get_video_test","there");
-        Log.e("get_video_test",String.valueOf(event.isGetVideosSuccessful));
+    public void onGetVideoList(FileInfoStore.GetVideosEvent event){
+        Log.d("tag","" + event.video_portrait_list.size());
+        //if(event.video_portrait_list.size() != 0) {
+            if (courseBeanList.size() >0) {
+                for(int i = 0; i <  event.video_list.size(); i++) {
+                    //通过判断本地首个动态的id大小，如果小于返回的数据id大小，则添加该动态至首行
+                    if (courseBeanList.get(0).getCourseID() < event.video_list.get(i).getFileId()) {
+                        CourseBean courseBean = new CourseBean();
+                        courseBean.setCourseID(event.video_list.get(i).getFileId());//设置视频ID
+                        courseBean.setFavorite(event.video_like_list.get(i));   //设置最爱
+                        courseBean.setTag(event.video_list.get(i).getTag());    //设置标签
+                        courseBean.setUploadTime(event.video_list.get(i).getUploadTime()); //设置上传时间
+                        courseBean.setUserNickName(event.video_list.get(i).getUploadUserName());    //设置上传者用户名
+                        courseBean.setVideoTitle(event.video_list.get(i).getFileTitle());   //设置上传文件标题
+                        courseBean.setVideoURL(event.video_url_list.get(i));    //设置URL
+                        courseBean.img_user = event.video_portrait_list.get(i); //设置视频上传者头像
+                        courseBeanList.add(0,courseBean);
+                        getNewCourseIDs.add(courseBean.getCourseID()); //将新动态的ID加入进去
+                    }
+                    else {
+                        break;
+                    }
+                }
+            }
+            else {
+                for(int i = 0; i < event.video_list.size(); i++) {
+                    CourseBean courseBean = new CourseBean();
+                    courseBean.setCourseID(event.video_list.get(i).getFileId());
+                    courseBean.setFavorite(event.video_like_list.get(i));
+                    courseBean.setTag(event.video_list.get(i).getTag());
+                    courseBean.setUploadTime(event.video_list.get(i).getUploadTime());
+                    courseBean.setUserNickName(event.video_list.get(i).getUploadUserName());
+                    courseBean.setVideoTitle(event.video_list.get(i).getFileTitle());
+                    courseBean.setVideoURL(event.video_url_list.get(i));
+                    courseBean.img_user = event.video_portrait_list.get(i); //设置视频上传者封面
+                    courseBeanList.add(0,courseBean);
+                    getNewCourseIDs.add(courseBean.getCourseID()); //将新动态的ID加入进去
+                }
+            }
+        //}
+
         if(event.isGetVideosSuccessful==true)
         {
-            for(int i = 0;i < event.video_list.size();i++) {
-                CourseBean courseBean = new CourseBean();
-                courseBean.setCourseID(event.video_list.get(i).getFileId());
-                Log.e("get_video_test",String.valueOf(courseBean.getCourseID()));
-                courseBean.setFavorite(event.video_like_list.get(i));
-                Log.e("get_video_test",String.valueOf(courseBean.getfavrot()));
-                courseBean.setTag(event.video_list.get(i).getTag());
-                Log.e("get_video_test",courseBean.getTag());
-                courseBean.setUploadTime(event.video_list.get(i).getUploadTime());
-                Log.e("get_video_test",courseBean.getUploadTime());
-                courseBean.setUserNickName(event.video_list.get(i).getUploadUserName());
-                Log.e("get_video_test",courseBean.getUserNickName());
-                courseBean.setVideoTitle(event.video_list.get(i).getFileTitle());
-                Log.e("get_video_test",courseBean.getVideoTitle());
-                courseBean.setVideoURL(event.video_url_list.get(i));
-                Log.e("get_video_test",courseBean.getVideoURL());
-
-                courseBeanList.add(courseBean);
-            }
-            Log.e(TAG, "getVideoList: "+event.video_list.size() );
-            CourseAdapter courseAdapter=new CourseAdapter(getActivity(),courseBeanList);
-            listView.setAdapter(courseAdapter);
-
+            Toast.makeText(getActivity(),
+                    String.format("已获取在线视频"),
+                    Toast.LENGTH_SHORT
+            ).show();
         }
-        else{
 
+    }
+
+    @Subscribe
+    public void onGetVideoPictureEvent(FileInfoStore.GetVideoPictureEvent event) {
+        if(getNewCourseIDs.size() > 0) {
+            for(int i = 0; i < getNewCourseIDs.size(); i++) {
+                courseAdapter.addPicture(i, event.fileId, event.bitmap);//传递
+            }
+        }
+        else {
+            for (int i = 0; i < courseBeanList.size(); i++) {
+                courseAdapter.addPicture(i, event.fileId, event.bitmap);//传递
+            }
+        }
+        if (event.isGetVideoPicSuccessful) {
+            Toast.makeText(getActivity(),
+                    String.format("已加载封面"),
+                    Toast.LENGTH_SHORT
+            ).show();
         }
     }
 

@@ -154,6 +154,7 @@ public class DynamicPublish extends AppCompatActivity{
                 dynamicPublishBean.setDate(time);
 
                 actionsCreator.sendDynamic(dynamicPublishBean, BitmapFactory.decodeFile(Constant.TEMP_PICTUREPATH)); //发布动态
+                ToNextActivity.to_NextActivityFinish(DynamicPublish.this, MainActivity.class, ToNextActivity.FRAGMENT2);
 
             }
         });

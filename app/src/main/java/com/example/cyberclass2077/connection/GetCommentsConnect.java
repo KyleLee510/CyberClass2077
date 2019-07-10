@@ -48,6 +48,7 @@ public class GetCommentsConnect extends Connect<Integer> {
                 )
         );
         store.emitStoreChange();
+
     }
     public Bitmap stringToBitmap(String string) {
         // 将字符串转换成Bitmap类型

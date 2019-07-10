@@ -2,6 +2,7 @@ package com.example.cyberclass2077.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Environment;
 import android.os.StrictMode;
@@ -61,6 +62,16 @@ public class CourseAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return 0;
     }
+
+    public void addPicture(int position, int courseId, Bitmap bitmap) {
+        //通过位置来定位，找id匹配的
+        if(listDynamicBean.get(position).getCourseID() == courseId) {
+            listDynamicBean.get(position).img_cover = bitmap;
+        }
+    }
+
+
+
     ViewHolderGroup viewHolderGroup;
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -68,21 +79,21 @@ public class CourseAdapter extends BaseAdapter {
         {
             inflater=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         }
+
         if(convertView==null)
         {
             convertView=inflater.inflate(R.layout.course_list_layout,null);
             viewHolderGroup=new ViewHolderGroup();
-            viewHolderGroup.image_to_videoView=convertView.findViewById(R.id.to_course_video);
-            viewHolderGroup.course_uploader=convertView.findViewById(R.id.course_uploader_image);
-            viewHolderGroup.txt_video_title=convertView.findViewById(R.id.course_video_title);
-            viewHolderGroup.txt_nick_name=convertView.findViewById(R.id.course_nick_name);
-            viewHolderGroup.txt_remark=convertView.findViewById(R.id.course_remark);
-            viewHolderGroup.ibtn_favorite=convertView.findViewById(R.id.course_favorite);
-            viewHolderGroup.itbn_download=convertView.findViewById(R.id.course_download);
+            viewHolderGroup.image_to_videoView=convertView.findViewById(R.id.to_course_video); //视频播放和封面
+            viewHolderGroup.course_uploader=convertView.findViewById(R.id.course_uploader_image); //用户头像
+            viewHolderGroup.txt_video_title=convertView.findViewById(R.id.course_video_title); //视频标题
+            viewHolderGroup.txt_nick_name=convertView.findViewById(R.id.course_nick_name);  //用户名
+            viewHolderGroup.txt_remark=convertView.findViewById(R.id.course_remark);    //标签
+            viewHolderGroup.ibtn_favorite=convertView.findViewById(R.id.course_favorite); //点赞
+            viewHolderGroup.itbn_download=convertView.findViewById(R.id.course_download); //下载
             convertView.setTag(viewHolderGroup);
-
-
-        }else
+        }
+        else
         {
             viewHolderGroup=(ViewHolderGroup)convertView.getTag();
         }
@@ -115,13 +126,16 @@ public class CourseAdapter extends BaseAdapter {
                 {
                     Log.e("this is log","true");
                     listDynamicBean.get(position).setFavorite(false);
-                    viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
+                    Toast.makeText(context, "取消收藏", Toast.LENGTH_SHORT).show();
+                    viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
+
                 }
                 else
                 {
                     Log.e(TAG, "onClick: " );
                     listDynamicBean.get(position).setFavorite(true);
-                    viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
+                    Toast.makeText(context, "收藏成功", Toast.LENGTH_SHORT).show();
+                    viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
                 }
             }
         });
@@ -129,35 +143,33 @@ public class CourseAdapter extends BaseAdapter {
         viewHolderGroup.txt_nick_name.setText(listDynamicBean.get(position).getUserNickName());  //用户名
         viewHolderGroup.txt_video_title.setText(listDynamicBean.get(position).getVideoTitle());   //视频名字
         viewHolderGroup.txt_remark.setText(listDynamicBean.get(position).getTag());   //标签
+        viewHolderGroup.course_uploader.setImageBitmap(listDynamicBean.get(position).img_user); //设置视频上传头像
+        viewHolderGroup.image_to_videoView.setImageBitmap(listDynamicBean.get(position).img_cover);//设置视频上传封面
+
         if(listDynamicBean.get(position).getfavrot())  //收藏颜色
         {
 //                listDynamicBean.get(position).setFavorite(false);
-            viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
+            viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
         }
         else
         {
 //                listDynamicBean.get(position).setFavorite(true);
-            viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
+            viewHolderGroup.ibtn_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
         }
-
-
-
-
-
 
         return convertView;
     }
 
     class ViewHolderGroup{
-        ImageView image_to_videoView;
-        CircleImageView course_uploader;
+        ImageView image_to_videoView; //视频封面
+        ImageView course_uploader; //视频上传者头像
         TextView txt_video_title;
         TextView txt_nick_name;
         TextView txt_remark;
 
         ImageView ibtn_favorite;
 
-        ImageButton itbn_download;
+        ImageButton itbn_download; //下载控件
     }
 
     public  void downLoad(final String path, final String FileName) {

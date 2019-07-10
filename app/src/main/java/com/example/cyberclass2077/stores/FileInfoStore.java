@@ -5,10 +5,12 @@ import android.graphics.Bitmap;
 import com.example.cyberclass2077.actions.Action;
 import com.example.cyberclass2077.actions.GetPictureByMapAction;
 import com.example.cyberclass2077.actions.GetVideosAction;
+import com.example.cyberclass2077.actions.SendLikeAction;
 import com.example.cyberclass2077.actions.UploadVideoAction;
 import com.example.cyberclass2077.connection.Connect;
 import com.example.cyberclass2077.connection.GetVideoPictureConnect;
 import com.example.cyberclass2077.connection.GetVideosConnect;
+import com.example.cyberclass2077.connection.SendLikeConnect;
 import com.example.cyberclass2077.connection.UploadVideoConnect;
 import com.example.cyberclass2077.model.FileInfo;
 import com.squareup.otto.Subscribe;
@@ -61,6 +63,12 @@ public class FileInfoStore  extends  Store{
                 Integer id=(Integer) ((Map)action.getData()).get("id");
                 ((GetVideoPictureConnect)connect).sendGetVideoPictureRequest(id);
                 break;
+            case SendLikeAction
+                        .ACTION_SEND_LIKE:
+                connect=null;
+                connect=new SendLikeConnect();
+                ((SendLikeConnect)connect).sendLikeRequest((Map)action.getData());
+                break;
             default:
 
 
@@ -108,6 +116,15 @@ public class FileInfoStore  extends  Store{
             this.isGetVideoPicSuccessful=isGetVideoPicSuccessful;
             this.bitmap=bitmap;
             this.fileId=fileId;
+        }
+    }
+    //收藏视频事件
+    public class LikeVideoEvent extends StoreChangeEvent{
+        public boolean isLikeSuccessful=false;
+        public LikeVideoEvent(
+                boolean isLikeSuccessful
+        ){
+            this.isLikeSuccessful=isLikeSuccessful;
         }
     }
 }
