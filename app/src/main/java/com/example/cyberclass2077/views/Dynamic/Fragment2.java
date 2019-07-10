@@ -18,6 +18,10 @@ import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.adapter.CommentFragmentAdapter;
 
+import com.squareup.otto.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Fragment2 extends Fragment{
