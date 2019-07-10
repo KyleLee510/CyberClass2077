@@ -54,8 +54,6 @@ public class CourseVideoActivity extends Activity {
      */
     private void initBind() {
 
-        mVvVideoView.setLayoutParams(new LinearLayout.LayoutParams(100, 100));
-
         mediaController = new MediaController(this);
         mVvVideoView.setMediaController(mediaController);
         mediaController.setMediaPlayer(mVvVideoView);
