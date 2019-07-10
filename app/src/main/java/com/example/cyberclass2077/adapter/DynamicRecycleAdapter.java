@@ -46,14 +46,25 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, DetailComment.class);
-                intent.putExtra("Dynamic_ID", dynamicBean.int_dynamic); //传递动态ID
+                intent.putExtra("Dynamic_ID", dynamicBean.int_dynamic+""); //传递动态ID
                 intent.putExtra("Content", dynamicBean.str_describe); //传递动态内容
+
                 ByteArrayOutputStream output = new ByteArrayOutputStream();//初始化一个流对象
                 dynamicBean.img_dis.compress(Bitmap.CompressFormat.JPEG, 100, output);//把bitmap100%高质量压缩 到 output对象里
                 byte[] result = output.toByteArray();
-                intent.putExtra("portrait", dynamicBean.bit_user_portrait);//传递用户头像
+
+                ByteArrayOutputStream output2 = new ByteArrayOutputStream();//初始化一个流对象
+                dynamicBean.img_dis.compress(Bitmap.CompressFormat.JPEG, 100, output);//把bitmap100%高质量压缩 到 output对象里
+                byte[] result2 = output2.toByteArray();
+
+                intent.putExtra("portrait", result2);//传递用户头像
                 intent.putExtra("ContentPicture", result); //传递用户发表图片
+
+                intent.putExtra("time",dynamicBean.str_time);
+                intent.putExtra("username",dynamicBean.str_user_name);
+
                 mContext.startActivity(intent);
+
             }
         });
 
@@ -124,6 +135,8 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
             img_favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp); //点赞
             img_chat.setImageResource(R.drawable.ic_chat_bubble_outline_black_24dp); //评论
             txt_publishTime.setText(mdynamicBean.str_time);
+
+
         }
     }
 }
