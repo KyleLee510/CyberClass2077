@@ -78,25 +78,28 @@ public class FileInfoStore  extends  Store{
     public class GetVideosEvent extends StoreChangeEvent{
         public boolean isGetVideosSuccessful=false;
         public List<FileInfo> video_list;
-        public  List<String>video_url_list;
+        public List<String>video_url_list;
         public List<Boolean>video_like_list;
+        public List<Bitmap>video_portrait_list;
         public GetVideosEvent(
                 boolean isGetVideosSuccessful,
                 List<FileInfo> video_list,
                 List<String>video_url_list,
-                List<Boolean>video_like_list
+                List<Boolean>video_like_list,
+                List<Bitmap>video_portrait_list
         ){
             this.isGetVideosSuccessful=isGetVideosSuccessful;
             this.video_list=video_list;
             this.video_url_list=video_url_list;
             this.video_like_list=video_like_list;
+            this.video_portrait_list=video_portrait_list;
         }
     }
     //获取视频封面图片事件
     public class GetVideoPictureEvent extends StoreChangeEvent{
         public boolean isGetVideoPicSuccessful=false;
-        Bitmap bitmap;
-        Integer fileId;
+        public  Bitmap bitmap;
+        public Integer fileId;
         public GetVideoPictureEvent(
                 boolean isGetVideoPicSuccessful,
                 Bitmap bitmap,

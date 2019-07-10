@@ -2,8 +2,10 @@ package com.example.cyberclass2077.actions;
 
 import android.graphics.Bitmap;
 
+import com.alibaba.fastjson.JSON;
 import com.example.cyberclass2077.bean.DynamicPublishBean;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
+import com.example.cyberclass2077.model.Comment;
 import com.example.cyberclass2077.model.User;
 import com.example.cyberclass2077.model.UserInfo;
 import com.example.cyberclass2077.stores.UserStore;
@@ -194,6 +196,17 @@ public class ActionsCreator {
                 new GetPictureByMapAction(
                         GetPictureByMapAction.ACTION_GET_PICTURE_BY_ID_VIDEO,
                         map
+                )
+        );
+    }
+
+    //发送一级评论的请求
+    public void sendComment(Comment comment){
+        String commentStr= JSON.toJSONString(comment);
+        dispatcher.dispatch(
+                new SendCommentAction(
+                        SendCommentAction.ACTION_SEND_COMMENT_LEVEL_ONE,
+                        commentStr
                 )
         );
     }
