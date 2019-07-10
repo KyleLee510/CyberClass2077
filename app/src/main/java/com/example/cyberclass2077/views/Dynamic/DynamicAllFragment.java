@@ -3,6 +3,7 @@ package com.example.cyberclass2077.views.Dynamic;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,7 @@ import com.example.cyberclass2077.adapter.DynamicRecycleAdapter;
 import com.example.cyberclass2077.bean.DynamicBean;
 import com.example.cyberclass2077.bean.DynamicItem;
 import com.example.cyberclass2077.bean.DynamicPublishBean;
+import com.example.cyberclass2077.bean.GetIDandBItmap;
 import com.example.cyberclass2077.controllers.ToNextActivity;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
@@ -36,6 +38,8 @@ import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class DynamicAllFragment extends Fragment {
 
@@ -49,47 +53,31 @@ public class DynamicAllFragment extends Fragment {
     private UserInfo userInfo;
     private User user;
 
-    //private DynamicAdapter adapter;
 
     private DynamicRecycleAdapter recycleAdapter; //测试
     private RecyclerView recyclerView; //测试
     private List<DynamicItem> dynamicItems = new ArrayList<>(); //测试
+    private List<GetIDandBItmap> getIDandBItmaps = new ArrayList<>();
     private DynamicItem dynamicItem;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //View view=inflater.inflate(R.layout.dynamic_all_layout, container, false);
-        View view=inflater.inflate(R.layout.dynamic_recycleview_all_layout, container, false);//测试
+        View view = inflater.inflate(R.layout.dynamic_recycleview_all_layout, container, false);//测试
         initDependencies();
         initView(view);//测试
-        //swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_square_layout);
         if(ToNextActivity.ISLOGIN) {
-            actionsCreator.getDynamics("square");
-        }
-
-        /*
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light, android.R.color.holo_orange_light);
-
-        //给swipeRefreshLayout绑定刷新监听
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                //设置2秒的时间来执行以下事件
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                        actionsCreator.getDynamics("square");
-                        //data.add(0, "刷新后新增的item");
-                        //dynamicAdapter.notifyDataSetChanged();
-                        swipeRefreshLayout.setRefreshing(false);
+            actionsCreator.getDynamics("square");   //先获取动态内容
+            new Handler().postDelayed(new Runnable(){
+                public void run() {
+                    //execute the task
+                    for(int i = 0; i < dynamicItems.size(); i++) {
+                        Log.d("进来了","");
+                        actionsCreator.getDynamicPicture(dynamicItems.get(i).int_dynamic); //通过提供动态ID来获取图片内容
                     }
-                }, 2000);
-            }
-        });
-        */
-
-
+                }
+            }, 2000);
+        }
         return view;
     }
 
@@ -139,8 +127,8 @@ public class DynamicAllFragment extends Fragment {
     public void onGetDynamics(DynamicStore.GetDynamicsEvent event) {
         for(int i = 0;i < event.dynamicList.size();i++) {
             dynamicItem = new DynamicItem(event.dynamicList.get(i), event.portraitList.get(i));
-            //dynamicItems.add(dynamicItem);
-            recycleAdapter.addData(0, dynamicItem); //测试
+            dynamicItems.add(dynamicItem);
+            //recycleAdapter.addData(0, dynamicItem); //测试
 
         }
         if (event.isGetDynamicsSuccessful) {
@@ -149,6 +137,70 @@ public class DynamicAllFragment extends Fragment {
                     Toast.LENGTH_SHORT
             ).show();
         }
+    }
+
+    @Subscribe
+    public void onGetDynamicPictureEvent(DynamicStore.GetDynamicPictureEvent event) {
+        for(int i = 0; i < dynamicItems.size(); i++) {
+            Log.d("测试", "" + dynamicItems.size());
+            //getIDandBItmaps.add(new GetIDandBItmap(event.dynamicId, event.bitmap));//获取动态图片
+            recycleAdapter.addPicture(i, event.dynamicId, event.bitmap);//传递
+        }
+
+        if (event.isGetDynamicPicSuccessful) {
+            Toast.makeText(getActivity(),
+                    String.format("动态图片已加载"),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+    }
+
+
+    public void tesetCon() {
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                //执行耗时操作
+                try {
+                    Thread.sleep(5000);
+                    for(int i = 0; i < dynamicItems.size(); i++) {
+                        Log.d("进来了","");
+                        actionsCreator.getDynamicPicture(dynamicItems.get(i).int_dynamic); //通过提供动态ID来获取图片内容
+                    }
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread() {
+            public void run() {
+                Looper.prepare();
+                new Handler().post(runnable);//在子线程中直接去new 一个handler
+                Looper.loop();  //这种情况下，Runnable对象是运行在子线程中的，可以进行联网操作，但是不能更新UI
+            }
+        }.start();
+    }
+
+    public void testUI(View view) {
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                //执行耗时操作
+                try {
+                    Thread.sleep(5000);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread() {
+            public void run() {
+                new Handler(Looper.getMainLooper()).post(runnable);//在子线程中直接去new 一个handler
+                //这种情况下，Runnable对象是运行在主线程中的，不可以进行联网操作，但是可以更新UI
+            }
+        }.start();
     }
 
 }

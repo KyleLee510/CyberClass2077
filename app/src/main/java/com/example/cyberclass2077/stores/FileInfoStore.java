@@ -1,8 +1,10 @@
 package com.example.cyberclass2077.stores;
 
 import com.example.cyberclass2077.actions.Action;
+import com.example.cyberclass2077.actions.GetVideosAction;
 import com.example.cyberclass2077.actions.UploadVideoAction;
 import com.example.cyberclass2077.connection.Connect;
+import com.example.cyberclass2077.connection.GetVideosConnect;
 import com.example.cyberclass2077.connection.UploadVideoConnect;
 import com.example.cyberclass2077.model.FileInfo;
 import com.squareup.otto.Subscribe;
@@ -41,7 +43,13 @@ public class FileInfoStore  extends  Store{
                 connect=new UploadVideoConnect();
                 ((UploadVideoConnect)connect).sendUploadVideoRequest((Map)action.getData());
                 break;
-                default:
+            case GetVideosAction
+                        .ACTION_GET_VIDEOS:
+                connect=null;
+                connect=new GetVideosConnect();
+                ((GetVideosConnect)connect).sendGetVideosRequest((Map)action.getData());
+                break;
+            default:
 
 
         }
@@ -52,6 +60,23 @@ public class FileInfoStore  extends  Store{
         public boolean isUploadVideoSuccessful=false;
         public UploadVideoEvent(boolean isUploadVideoSuccessful){
             this.isUploadVideoSuccessful=isUploadVideoSuccessful;
+        }
+    }
+    public class GetVideosEvent extends StoreChangeEvent{
+        public boolean isGetVideosSuccessful=false;
+        List<FileInfo> video_list;
+        List<String>video_url_list;
+        List<Boolean>video_like_list;
+        public GetVideosEvent(
+                boolean isGetVideosSuccessful,
+                List<FileInfo> video_list,
+                List<String>video_url_list,
+                List<Boolean>video_like_list
+        ){
+            this.isGetVideosSuccessful=isGetVideosSuccessful;
+            this.video_list=video_list;
+            this.video_url_list=video_url_list;
+            this.video_like_list=video_like_list;
         }
     }
 }

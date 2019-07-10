@@ -14,7 +14,7 @@ public class DynamicItem {
     //public Integer int_amount_comment;
     public String str_time;
     //public boolean isLike;
-    public int int_dynamic;
+    public int int_dynamic; //动态id
     public  DynamicItem(DynamicPublishBean dynamicPublishBean, Bitmap bitmap){
         bit_user_portrait = bitmap;
         str_user_name = dynamicPublishBean.getUserName();
