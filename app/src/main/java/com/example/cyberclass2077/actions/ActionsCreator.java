@@ -129,5 +129,41 @@ public class ActionsCreator {
         );
 
     }
+    //获取动态图片请求
+    //根据之前返回的List<DynamicPublishBean>中的的DynamicPublishBean的dynamicId来调用这个接口
+    //返回的数据在DynamicStore的GetDynamicPictureEvent里
+    //包含图片对应的动态ID,dynamicId以及图片的Bitmap形式
+    public void getDynamicPicture(Integer dynamicId){
+        Map map=new HashMap();
+        map.put("id",dynamicId);
+        map.put("type","dynamic");
+        dispatcher.dispatch(
+                new GetPictureByMapAction(
+                        GetPictureByMapAction.ACTION_GET_PICTURE_BY_ID_DYNAMIC,
+                        map
+                )
+        );
+    }
+
+    //获取视频列表的请求
+    //返回值包括：
+    //1.是否成功
+    //2.List<FileInfo>
+    //3.List<String> ，URL的list，其中每个String按序对应上面列表每个视频
+    //4.List<Boolean>，作为参数的userName是否点赞了这个视频。
+    //该接口的第一个参数为模式，收藏对应"like"，推荐对应"default"
+    //该接口的第二个参数为选择的标签，默认为"notag"
+    public void getVideos(String pattern,String tag){
+        Map map=new HashMap();
+        map.put("pattern",pattern);
+        map.put("tag",tag);
+        dispatcher.dispatch(
+                new GetVideosAction(
+                        GetVideosAction.ACTION_GET_VIDEOS,
+                        map
+                )
+        );
+
+    }
 
 }

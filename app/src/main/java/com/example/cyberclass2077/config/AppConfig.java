@@ -1,5 +1,8 @@
 package com.example.cyberclass2077.config;
 
+import java.net.URI;
+import java.net.URL;
+
 public class AppConfig {
     public final static String BASE_URL_PATH = "http://47.100.99.130:8089";
     public final static String LOGIN=BASE_URL_PATH.concat("/login");
@@ -14,5 +17,7 @@ public class AppConfig {
     public final static String FILE_UPLOAD_VIDEO=BASE_URL_PATH.concat("/upload_video");
     public final static String DYNAMIC_SEND=BASE_URL_PATH.concat("/send_dynamic");
     public final static String DYNAMIC_GET=BASE_URL_PATH.concat("/get_dynamics");
+    public final static String DYNAMIC_GET_PICTURE= BASE_URL_PATH.concat("/get_dynamic_picture");
+    public final static String VIDEOS_GET=BASE_URL_PATH.concat("/get_video_list");
 
 }
