@@ -19,9 +19,13 @@ import java.util.Map;
 public class GetDynamicsConnect extends Connect<String> {
     public GetDynamicsConnect(){ }
     public void sendGetDynamicsRequest(String getType){
+        String userName= UserStore.getInstance().getUser().getUserName();
+        if(userName.equals("")){
+            userName="visitor";
+        }
         RequestBody requestBody = new MultipartBuilder()
                 .type(MultipartBuilder.FORM)
-                .addFormDataPart("username", UserStore.getInstance().getUser().getUserName())
+                .addFormDataPart("username",userName)
                 .addFormDataPart("gettype",getType)
                 .build();
         postMulitiData(

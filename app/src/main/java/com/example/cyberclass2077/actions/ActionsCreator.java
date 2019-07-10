@@ -129,5 +129,20 @@ public class ActionsCreator {
         );
 
     }
+    //获取动态图片请求
+    //根据之前返回的List<DynamicPublishBean>中的的DynamicPublishBean的dynamicId来调用这个接口
+    //返回的数据在DynamicStore的GetDynamicPictureEvent里
+    //包含图片对应的动态ID,dynamicId以及图片的Bitmap形式
+    public void getDynamicPicture(Integer dynamicId){
+        Map map=new HashMap();
+        map.put("id",dynamicId);
+        map.put("type","dynamic");
+        dispatcher.dispatch(
+                new GetPictureByMapAction(
+                        GetPictureByMapAction.ACTION_GET_PICTURE_BY_ID_DYNAMIC,
+                        map
+                )
+        );
+    }
 
 }
