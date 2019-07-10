@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
+import com.example.cyberclass2077.controllers.ToNextActivity;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.model.User;
 import com.example.cyberclass2077.model.UserInfo;
@@ -167,14 +168,9 @@ public class UserDataSettingActivity extends AppCompatActivity {
         to_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //点击事件方法
-                Intent intent = new Intent(UserDataSettingActivity.this, MainActivity.class);
-                intent.putExtra("fragment",2);
-                startActivity(intent);
-                finish();
-                //需要在finish和startActivity之后进行
-                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+                ToNextActivity.to_NextActivityFinish(UserDataSettingActivity.this,
+                        MainActivity.class,
+                        ToNextActivity.FRAGMENT3);
             }
         });
 

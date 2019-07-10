@@ -58,6 +58,7 @@ public class GetDynamicsConnect extends Connect<String> {
                         portraitsList
                 )
         );
+        System.out.println("Already emit");
         store.emitStoreChange();
     }
     public Bitmap stringToBitmap(String string) {

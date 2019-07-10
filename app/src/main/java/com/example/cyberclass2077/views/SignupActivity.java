@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
+import com.example.cyberclass2077.controllers.ToNextActivity;
 import com.example.cyberclass2077.dispatcher.Dispatcher;
 import com.example.cyberclass2077.pictureselector.Constant;
 import com.example.cyberclass2077.pictureselector.ImageUtils;
@@ -81,12 +82,7 @@ public class SignupActivity extends AppCompatActivity{
         vCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignupActivity.this,LoginActivity.class);
-                startActivity(intent);
-                finish();
-                //需要在finish和startActivity之后进行
-                //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-                overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+                ToNextActivity.to_NextActivityFinish(SignupActivity.this, LoginActivity.class);
             }
         });
         //信息确认提交
@@ -127,12 +123,7 @@ public class SignupActivity extends AppCompatActivity{
                     Toast.LENGTH_SHORT
             ).show();
             //在这里加入注册成功后的页面跳转代码
-            Intent intent = new Intent(SignupActivity.this,LoginActivity.class);
-            startActivity(intent);
-            finish();
-            //需要在finish和startActivity之后进行
-            //第一个参数是需要打开的Activity进入时的动画，第二个是需要关闭的Activity离开时的动画
-            overridePendingTransition(R.anim.anim_slide_from_right, R.anim.anim_slide_from_right);
+            ToNextActivity.to_NextActivityFinish(SignupActivity.this, LoginActivity.class);
         }
         else{
             Toast.makeText(this,
