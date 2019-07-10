@@ -1,6 +1,8 @@
 package com.example.cyberclass2077.views.Comment;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -102,8 +105,29 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.comment_detail_layout);
+        ImageView image = (ImageView) findViewById(R.id.detail_page_image);
+        //下面这句表示在intent中拿到bitmap对应的数组
+        byte[]res = getIntent().getByteArrayExtra("bitmap");
+        image.setImageBitmap(getPicFromBytes(res,null));
+
+
         initView();
     }
+
+    //下面的这个方法是将byte数组转化为Bitmap对象的一个方法
+    public static Bitmap getPicFromBytes(byte[] bytes, BitmapFactory.Options opts) {
+
+        if (bytes != null)
+            if (opts != null)
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length,  opts);
+            else
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        return null;
+
+    }
+
+
+
 
     private void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);

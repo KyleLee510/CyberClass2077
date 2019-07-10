@@ -39,6 +39,18 @@ public class CourseFragmentAll extends Fragment {
         }
         listView.setAdapter(new CourseAdapter(getActivity(),courseBeanList));
 
+        SearchView searchView=view.findViewById(R.id.course_search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 //        View view1=inflater.inflate(R.layout.course_top_menu_layout,container,false);
 //        final SearchView searchView=view1.findViewById(R.id.course_search);
 //        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

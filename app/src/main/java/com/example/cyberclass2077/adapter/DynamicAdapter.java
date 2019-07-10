@@ -2,7 +2,7 @@ package com.example.cyberclass2077.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,15 +13,17 @@ import android.widget.TextView;
 
 
 import com.example.cyberclass2077.R;
-import com.example.cyberclass2077.bean.DynamicBean;
 import com.example.cyberclass2077.bean.DynamicPublishBean;
 import com.example.cyberclass2077.views.Comment.DetailComment;
-import com.example.cyberclass2077.views.Dynamic.DynamicPublish;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-public class DynamicAdapter extends BaseAdapter {
+import static android.support.constraint.Constraints.TAG;
 
+public class DynamicAdapter extends BaseAdapter {
+    byte[] result;  //将bitmap转化的byte数组
+    Bitmap bitmap;
     private Context context;
     private List<DynamicPublishBean> listDynamicBean;
     private List<Bitmap> listportrait;
@@ -82,6 +84,7 @@ public class DynamicAdapter extends BaseAdapter {
             viewHolderGroup=(ViewHolderGroup)convertView.getTag();
         }
 
+        Log.e(TAG, "getView: " );
         viewHolderGroup.img_head.setImageResource(R.drawable.ic_close_black_24dp);
         viewHolderGroup.img_chat.setOnClickListener(new View.OnClickListener()
         {
@@ -96,6 +99,20 @@ public class DynamicAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Intent intent1=new Intent(context, DetailComment.class);
                 context.startActivity(intent1);
+            }
+        });
+
+        viewHolderGroup.img_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e(TAG, "onClickimg_chat: " );
+                bitmap = BitmapFactory.decodeResource(null,R.drawable.lizi);
+                ByteArrayOutputStream output = new ByteArrayOutputStream();//初始化一个流对象
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);//把bitmap100%高质量压缩 到 output对象里
+                result = output.toByteArray();//转换成功了  result就是一个bit的资源数组
+//                Intent intent1=new Intent(context, DetailComment.class);
+//                intent1.putExtra("bitmap",result);
+//                context.startActivity(intent1);
             }
         });
 
