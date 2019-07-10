@@ -25,7 +25,7 @@ import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.adapter.DynamicRecycleAdapter;
 import com.example.cyberclass2077.bean.DynamicBean;
 import com.example.cyberclass2077.bean.DynamicItem;
-import com.example.cyberclass2077.bean.DynamicPublishBean;
+
 import com.example.cyberclass2077.bean.GetIDandBItmap;
 import com.example.cyberclass2077.controllers.ToNextActivity;
 import com.example.cyberclass2077.dispatcher.Dispatcher;

@@ -31,7 +31,7 @@ public class CourseFragmentFavoirte extends Fragment {
         View view=inflater.inflate(R.layout.course_list, container, false);
         listView=(ListView)view.findViewById(R.id.id_course_list);
        courseBeanList=new ArrayList<>();
-        for(int i=0;i<2;i++)
+        for(int i=0;i<10;i++)
         {
             CourseBean courseBean=new CourseBean();
             courseBeanList.add(courseBean);
