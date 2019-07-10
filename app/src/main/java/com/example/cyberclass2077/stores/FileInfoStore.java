@@ -1,9 +1,13 @@
 package com.example.cyberclass2077.stores;
 
+import android.graphics.Bitmap;
+
 import com.example.cyberclass2077.actions.Action;
+import com.example.cyberclass2077.actions.GetPictureByMapAction;
 import com.example.cyberclass2077.actions.GetVideosAction;
 import com.example.cyberclass2077.actions.UploadVideoAction;
 import com.example.cyberclass2077.connection.Connect;
+import com.example.cyberclass2077.connection.GetVideoPictureConnect;
 import com.example.cyberclass2077.connection.GetVideosConnect;
 import com.example.cyberclass2077.connection.UploadVideoConnect;
 import com.example.cyberclass2077.model.FileInfo;
@@ -38,7 +42,8 @@ public class FileInfoStore  extends  Store{
     @Subscribe
     public void onAction(Action action){
         switch (action.getType()){
-            case UploadVideoAction.ACTION_UPLOAD_VIDEO:
+            case UploadVideoAction
+                    .ACTION_UPLOAD_VIDEO:
                 connect=null;
                 connect=new UploadVideoConnect();
                 ((UploadVideoConnect)connect).sendUploadVideoRequest((Map)action.getData());
@@ -48,6 +53,13 @@ public class FileInfoStore  extends  Store{
                 connect=null;
                 connect=new GetVideosConnect();
                 ((GetVideosConnect)connect).sendGetVideosRequest((Map)action.getData());
+                break;
+            case GetPictureByMapAction
+                        .ACTION_GET_PICTURE_BY_ID_VIDEO:
+                connect=null;
+                connect=new GetVideoPictureConnect();
+                Integer id=(Integer) ((Map)action.getData()).get("id");
+                ((GetVideoPictureConnect)connect).sendGetVideoPictureRequest(id);
                 break;
             default:
 
@@ -62,6 +74,7 @@ public class FileInfoStore  extends  Store{
             this.isUploadVideoSuccessful=isUploadVideoSuccessful;
         }
     }
+    //获取视频列表事件
     public class GetVideosEvent extends StoreChangeEvent{
         public boolean isGetVideosSuccessful=false;
         List<FileInfo> video_list;
@@ -77,6 +90,21 @@ public class FileInfoStore  extends  Store{
             this.video_list=video_list;
             this.video_url_list=video_url_list;
             this.video_like_list=video_like_list;
+        }
+    }
+    //获取视频封面图片事件
+    public class GetVideoPictureEvent extends StoreChangeEvent{
+        public boolean isGetVideoPicSuccessful=false;
+        Bitmap bitmap;
+        Integer fileId;
+        public GetVideoPictureEvent(
+                boolean isGetVideoPicSuccessful,
+                Bitmap bitmap,
+                Integer fileId
+        ){
+            this.isGetVideoPicSuccessful=isGetVideoPicSuccessful;
+            this.bitmap=bitmap;
+            this.fileId=fileId;
         }
     }
 }
