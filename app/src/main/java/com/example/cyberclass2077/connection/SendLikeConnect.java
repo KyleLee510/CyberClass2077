@@ -15,11 +15,14 @@ public class SendLikeConnect extends Connect<Map> {
         String entityType=(String)map.get("entityType");
         Integer entityId=(Integer)map.get("entityId");
         String Id=entityId.toString();
+        Boolean isLikeOrNot=(Boolean)map.get("isLikeOrNot");
+        String isLikeOrNotStr=isLikeOrNot.toString();
         RequestBody requestBody = new MultipartBuilder()
                 .type(MultipartBuilder.FORM)
                 .addFormDataPart("username",userName)
                 .addFormDataPart("entityType",entityType)
                 .addFormDataPart("entityId",Id)
+                .addFormDataPart("isLikeOrNot",isLikeOrNotStr)
                 .build();
         postMulitiData(
                 AppConfig.LIKE_SEND,
