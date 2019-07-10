@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,16 +21,29 @@ import com.example.cyberclass2077.views.Comment.DetailComment;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAdapter.DynamicBeanHolder> {
     private Context mContext;
     private List<DynamicItem> mDynamicBeans;
+    private List<Boolean> listForvorite=new ArrayList<>();
+    private List<Integer> numberForvorites=new ArrayList<>();
 
     public DynamicRecycleAdapter(List<DynamicItem> DynamicBeans, Context context) {
         mDynamicBeans= DynamicBeans;
         mContext = context;
+        //初始化listForvorite和numberForivates
+        Random random=new Random();
+        for(int i=0;i<DynamicBeans.size();i++)
+        {
+            boolean b1=random.nextBoolean();
+            Integer num1=random.nextInt(5)+1;
+            listForvorite.add(b1);
+            numberForvorites.add(num1);
+        }
     }
 
     @Override
@@ -39,9 +53,35 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
     }
 
     @Override
-    public void onBindViewHolder(final DynamicBeanHolder holder, int position) {
+    public void onBindViewHolder(final DynamicBeanHolder holder, final int position) {
         final DynamicItem dynamicBean = mDynamicBeans.get(position);
-        holder.bind(dynamicBean);  //调用holder的数值赋予
+        Integer number_favorite=numberForvorites.get(position);
+        boolean isFavorite=listForvorite.get(position);
+        holder.bind(dynamicBean,number_favorite,isFavorite);  //调用holder的数值赋予
+
+        //点赞功能
+        holder.img_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listForvorite.get(position))
+                {
+                    listForvorite.set(position,false);
+                    holder.img_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
+                    Integer num1=numberForvorites.get(position)-1;
+                    numberForvorites.set(position,num1);
+                    holder.txt_amount_favorite.setText(num1.toString()+'赞');
+                }
+                else
+                {
+                    listForvorite.set(position,true);
+                    holder.img_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
+                    Integer num1=numberForvorites.get(position)+1;
+                    numberForvorites.set(position,num1);
+                    holder.txt_amount_favorite.setText(num1.toString()+'赞');
+                }
+            }
+        });
+
         //提供评论跳转
         holder.img_chat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +163,7 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
         ImageView img_favorite; //用户点赞
         ImageView img_chat; //跳转评论
         TextView txt_publishTime; //动态发布时间
+        TextView txt_amount_favorite;  //用户点赞次数
 
 
         public DynamicBeanHolder(@NonNull View itemView) {
@@ -134,9 +175,10 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
             img_favorite = itemView.findViewById(R.id.id_favorite);
             img_chat = itemView.findViewById(R.id.id_chat);
             txt_publishTime = itemView.findViewById(R.id.id_time_publish);
+            txt_amount_favorite=itemView.findViewById(R.id.id_amount_favorite);
         }
         private DynamicItem mdynamicBean;
-        public void bind(DynamicItem dynamicBean){
+        public void bind(DynamicItem dynamicBean,Integer number_favorite,boolean isFavorite){
             mdynamicBean = dynamicBean;
             img_portrait.setImageBitmap(mdynamicBean.bit_user_portrait);
             txt_userName.setText(mdynamicBean.str_user_name);
@@ -145,8 +187,15 @@ public class DynamicRecycleAdapter extends RecyclerView.Adapter<DynamicRecycleAd
             img_favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp); //点赞
             img_chat.setImageResource(R.drawable.ic_chat_bubble_outline_black_24dp); //评论
             txt_publishTime.setText(mdynamicBean.str_time);
-
-
+            txt_amount_favorite.setText(number_favorite.toString()+"赞");
+            if(isFavorite)
+            {
+                img_favorite.setColorFilter(Color.parseColor("#FF5C5C"));
+            }
+            else
+            {
+                img_favorite.setColorFilter(Color.parseColor("#aaaaaa"));
+            }
         }
     }
 }

@@ -36,9 +36,9 @@ public class Fragment2 extends Fragment{
         pager.setAdapter(commentFragmentAdapter);
 
 
-        TabLayout tabLayout = view.findViewById(R.id.comment_top_tab_layout);
+//        TabLayout tabLayout = view.findViewById(R.id.comment_top_tab_layout);
 
-        tabLayout.setupWithViewPager(pager);//与ViewPage建立关系
+//        tabLayout.setupWithViewPager(pager);//与ViewPage建立关系
 
         //添加发布动态跳转事件
         final ImageButton btn_publish=view.findViewById(R.id.id_btn_publish);

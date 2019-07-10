@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.cyberclass2077.R;
@@ -24,6 +26,8 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.support.constraint.Constraints.TAG;
+
 public class CourseFragmentAll extends Fragment {
 
     private ListView listView;
@@ -35,6 +39,7 @@ public class CourseFragmentAll extends Fragment {
     private static List<CourseBean> courseBeanList = new ArrayList<>();
     private CourseBean courseBean;
     private List<Integer> getNewCourseIDs = new ArrayList<>();
+    private List<CourseBean> courseSearchBeans=new ArrayList<>();
 
 
     @Override
@@ -54,6 +59,38 @@ public class CourseFragmentAll extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view=inflater.inflate(R.layout.course_list, container, false);
         listView = (ListView) view.findViewById(R.id.id_course_list);
+        final SearchView searchView=view.findViewById(R.id.course_search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.e(TAG, "onQueryTextSubmit123: " );
+                String str_search_text=searchView.getQuery().toString();
+                courseSearchBeans=new ArrayList<>();
+                for(int i=0;i<courseBeanList.size();i++)
+                {
+                    if(str_search_text.equals(courseBeanList.get(i).getUserNickName()))
+                    {
+                        courseSearchBeans.add(courseBeanList.get(i));
+                    }
+                }
+                CourseAdapter adapter_cy=new CourseAdapter(getActivity(),courseSearchBeans);
+                listView.setAdapter(adapter_cy);
+                if(str_search_text.equals("all"))
+                {
+                    ;CourseAdapter adapter_cy1=new CourseAdapter(getActivity(),courseBeanList);
+                    listView.setAdapter(adapter_cy1);
+                }
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.e(TAG, "onQueryTextChange: " );
+
+                return false;
+            }
+        });
         initDependencies();
         actionsCreator.getVideos("default","notag");
 
