@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.example.cyberclass2077.R;
 import com.example.cyberclass2077.actions.ActionsCreator;
-import com.example.cyberclass2077.adapter.DynamicAdapter;
+
 import com.example.cyberclass2077.adapter.DynamicRecycleAdapter;
 import com.example.cyberclass2077.bean.DynamicBean;
 import com.example.cyberclass2077.bean.DynamicItem;
