@@ -70,7 +70,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     }
 
     @Subscribe
-    void onUpdatePasswordEvent(UserStore.UpdatePasswordEvent event) {
+    public void onUpdatePasswordEvent(UserStore.UpdatePasswordEvent event) {
         if(event.isUpdatePasswordSuccessful) {
             Toast.makeText(this,
                     String.format("修改成功!",userStore.getUser().getUserName()),
