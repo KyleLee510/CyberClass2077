@@ -25,15 +25,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cyberclass2077.R;
+import com.example.cyberclass2077.actions.ActionsCreator;
 import com.example.cyberclass2077.adapter.CommentExpandAdapter;
 import com.example.cyberclass2077.bean.CommentBean;
 import com.example.cyberclass2077.bean.CommentDetailBean;
 import com.example.cyberclass2077.bean.ReplyDetailBean;
 import com.example.cyberclass2077.controllers.ToNextActivity;
+import com.example.cyberclass2077.dispatcher.Dispatcher;
+import com.example.cyberclass2077.model.Comment;
+import com.example.cyberclass2077.stores.CommentStore;
+import com.example.cyberclass2077.stores.UserStore;
 import com.example.cyberclass2077.view.CommentExpandableListView;
 import com.example.cyberclass2077.views.MainActivity;
 import com.google.gson.Gson;
+import com.squareup.otto.Subscribe;
 
+import org.w3c.dom.Text;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -48,6 +59,48 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
     private CommentBean commentBean;
     private List<CommentDetailBean> commentsList;
     private BottomSheetDialog dialog;
+
+    private CommentStore commentStore;
+    private Dispatcher dispatcher;
+    private ActionsCreator actionsCreator;
+    private Comment comment1=new Comment();
+    private Integer dynamicId;
+    private String str_publish_userName;
+    private List<CommentDetailBean>getCommentsDetailBeanList=new ArrayList<>();
+    private Bitmap userBitmap;
+
+
+    private void initDependencies() {
+
+        //获取调度者单例
+        dispatcher = Dispatcher.get();
+        //获取动作创建者单例
+        actionsCreator = ActionsCreator.get(dispatcher);
+        //获取 用户 数据仓库单例
+        commentStore = CommentStore.getInstance();
+        //在调度者里注册 用户 数据仓库，若已注册，不会重复注册
+        dispatcher.register(commentStore);
+        commentStore.register(this);
+    }
+
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        commentStore.register(this);
+//    }
+//
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        commentStore.unregister(this);
+//    }
+
+
 
     private String testJson = "{\n" +
             "\t\"code\": 1000,\n" +
@@ -106,15 +159,46 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initDependencies();
         setContentView(R.layout.comment_detail_layout);
-        ImageView ima_content = (ImageView) findViewById(R.id.detail_page_image);
-        ImageView img_userPortrait = (ImageView) findViewById(R.id.detail_page_userLogo);//用户头像
+        ImageView image = (ImageView) findViewById(R.id.detail_page_image);//内容图片
         //下面这句表示在intent中拿到bitmap对应的数组
         byte[]res = getIntent().getByteArrayExtra("ContentPicture");
-        ima_content.setImageBitmap(getPicFromBytes(res,null));
+        image.setImageBitmap(getPicFromBytes(res,null));
 
-        byte[]res2 = getIntent().getByteArrayExtra("portrait");
-        img_userPortrait.setImageBitmap(getPicFromBytes(res2,null));
+        ImageView image1 = (ImageView) findViewById(R.id.detail_page_userLogo);//用户头像
+        //下面这句表示在intent中拿到bitmap对应的数组
+        byte[]res1 = getIntent().getByteArrayExtra("portrait");
+        image1.setImageBitmap(getPicFromBytes(res1,null));
+        userBitmap=getPicFromBytes(res1,null);
+        //内容
+        String str_content=getIntent().getStringExtra("Content");
+        Log.e(TAG, "onCreate: "+str_content );
+        TextView textView=findViewById(R.id.detail_page_story);
+        textView.setText(str_content);
+
+        //用户名
+        String str_user_name=getIntent().getStringExtra("username");
+        TextView text_userName=findViewById(R.id.detail_page_userName);
+        text_userName.setText(str_user_name);
+
+        //时间
+        String str_time=getIntent().getStringExtra("time");
+        TextView text_time=findViewById(R.id.detail_page_time);
+        text_time.setText(str_time);
+
+
+
+        //获取Dynamicid
+        String sID=getIntent().getStringExtra("Dynamic_ID");
+        Log.e(TAG, "onCreate: "+sID );
+        comment1.setDynamicId(Integer.parseInt(sID));
+        dynamicId=Integer.parseInt(sID);
+
+        //获取用户userName填充comment1
+        str_publish_userName=UserStore.getInstance().getUser().getUserName();
+        comment1.setPublisherName(str_publish_userName);
+        actionsCreator.getComments(dynamicId);
         initView();
     }
 
@@ -144,16 +228,16 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle("详情");
         commentsList = generateTestData();
-        initExpandableListView(commentsList);
+//        initExpandableListView(commentsList);
     }
 
     /**
      * 初始化评论和回复列表
      */
-    private void initExpandableListView(final List<CommentDetailBean> commentList){
+    private void initExpandableListView(final List<CommentDetailBean> commentList,List<Bitmap> bitmapList,Bitmap userBitmap){
         expandableListView.setGroupIndicator(null);
         //默认展开所有回复
-        adapter = new CommentExpandAdapter(this, commentList);
+        adapter = new CommentExpandAdapter(this, commentList,bitmapList,userBitmap);
         expandableListView.setAdapter(adapter);
         for(int i = 0; i<commentList.size(); i++){
             expandableListView.expandGroup(i);
@@ -200,7 +284,7 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
     private List<CommentDetailBean> generateTestData(){
         Gson gson = new Gson();
         commentBean = gson.fromJson(testJson, CommentBean.class);
-        List<CommentDetailBean> commentList = commentBean.getData().getList();
+        List<CommentDetailBean> commentList = new ArrayList<>();
         return commentList;
     }
 
@@ -219,7 +303,6 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.detail_page_do_comment){
-
             showCommentDialog();
         }
     }
@@ -253,7 +336,17 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
                     dialog.dismiss();
                     CommentDetailBean detailBean = new CommentDetailBean("小明", commentContent,"刚刚");
                     adapter.addTheCommentData(detailBean);
-                    Toast.makeText(DetailComment.this,"评论成功",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(DetailComment.this,"评论成功",Toast.LENGTH_SHORT).show();
+                    comment1.setContent(commentContent);
+                    SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date=new Date(System.currentTimeMillis());
+                    String time=simpleDateFormat.format(date);
+                    comment1.setCommentTime(time);
+
+                    Log.e(TAG, "onClick: comment" );
+
+                    actionsCreator.sendComment(comment1);
+//                    actionsCreator.getComments(dynamicId);
 
                 }else {
                     Toast.makeText(DetailComment.this,"评论内容不能为空",Toast.LENGTH_SHORT).show();
@@ -294,22 +387,22 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
         final Button bt_comment = (Button) commentView.findViewById(R.id.dialog_comment_bt);
         commentText.setHint("回复 " + commentsList.get(position).getNickName() + " 的评论:");
         dialog.setContentView(commentView);
-        bt_comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String replyContent = commentText.getText().toString().trim();
-                if(!TextUtils.isEmpty(replyContent)){
-
-                    dialog.dismiss();
-                    ReplyDetailBean detailBean = new ReplyDetailBean("小红",replyContent);
-                    adapter.addTheReplyData(detailBean, position);
-                    expandableListView.expandGroup(position);
-                    Toast.makeText(DetailComment.this,"回复成功",Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(DetailComment.this,"回复内容不能为空",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        bt_comment.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String replyContent = commentText.getText().toString().trim();
+//                if(!TextUtils.isEmpty(replyContent)){
+//
+//                    dialog.dismiss();
+//                    ReplyDetailBean detailBean = new ReplyDetailBean("小红",replyContent);
+//                    adapter.addTheReplyData(detailBean, position);
+//                    expandableListView.expandGroup(position);
+//                    Toast.makeText(DetailComment.this,"回复成功",Toast.LENGTH_SHORT).show();
+//                }else {
+//                    Toast.makeText(DetailComment.this,"回复内容不能为空",Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
         commentText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -331,6 +424,41 @@ public class DetailComment extends AppCompatActivity implements View.OnClickList
             }
         });
         dialog.show();
+    }
+
+    @Subscribe
+    public void onSendComent(CommentStore.SendCommentEvent event)
+    {
+        if(event.isSendCommentSuccessful) {
+            Toast.makeText(this,
+                    String.format("评论成功!"),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+    }
+
+    @Subscribe
+    public  void onGetComements(CommentStore.GetCommentsEvent event)
+    {
+        Log.e(TAG, "onGetComements1: "+event.commentList.size() );
+
+        if(event.isGetCommentsSuccessful)
+        {
+            for(int i=0;i<event.commentList.size();i++)
+            {
+                String str_nickName=event.commentList.get(i).getPublisherName();
+                String str_time=event.commentList.get(i).getCommentTime();
+                String str_content=event.commentList.get(i).getContent();
+                CommentDetailBean commentDetailBean=new CommentDetailBean(str_nickName,str_time,str_content);
+                getCommentsDetailBeanList.add(commentDetailBean);
+            }
+            initExpandableListView(getCommentsDetailBeanList,event.comment_portrait_list,userBitmap);
+            Log.e(TAG, "onGetComements: "+event.commentList.size() );
+            Toast.makeText(this,
+                String.format("加载评论成功"),
+                Toast.LENGTH_SHORT
+        ).show();
+        }
     }
 
 

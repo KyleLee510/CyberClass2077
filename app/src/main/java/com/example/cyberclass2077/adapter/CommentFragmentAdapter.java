@@ -21,33 +21,33 @@ public class CommentFragmentAdapter extends FragmentPagerAdapter {
     {
         super(fm);
         this.fragmentList.add(new DynamicAllFragment());
-        this.fragmentList.add(new DynamicAttentionFragment());
-        this.fragmentList.add(new DynamicMyFragment());
+//        this.fragmentList.add(new DynamicAttentionFragment());
+//        this.fragmentList.add(new DynamicMyFragment());
         mTitles.add("广场");
-        mTitles.add("关注");
-        mTitles.add("我");
+//        mTitles.add("关注");
+//        mTitles.add("我");
 
     }
 
     @Override
     public Fragment getItem(int position){
-        Bundle bundle = new Bundle();
-        bundle.putString("name", mTitles.get(position));
+//        Bundle bundle = new Bundle();
+//        bundle.putString("name", mTitles.get(position));
         Fragment fragment = fragmentList.get(position);
-        fragment.setArguments(bundle);
+//        fragment.setArguments(bundle);
         return fragment;
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
-        String plateName = mTitles.get(position);
-        if (plateName == null) {
-            plateName = "";
-        } else if (plateName.length() > 15) {
-            plateName = plateName.substring(0, 15) + "...";
-        }
-        return mTitles.get(position);
-    }
+//    @Override
+//    public CharSequence getPageTitle(int position) {
+//        String plateName = mTitles.get(position);
+//        if (plateName == null) {
+//            plateName = "";
+//        } else if (plateName.length() > 15) {
+//            plateName = plateName.substring(0, 15) + "...";
+//        }
+//        return mTitles.get(position);
+//    }
 
     @Override
     public int getCount(){

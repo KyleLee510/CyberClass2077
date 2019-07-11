@@ -24,13 +24,14 @@
             android:layout_weight="1"
             android:layout_marginLeft="6dp"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/comment_item_userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="沐风"
                 android:textColor="#5B595A"
-                android:textSize="14sp"
-                android:text="沐风" />
+                android:textSize="14sp" />
             <TextView
                 android:id="@+id/comment_item_time"
                 android:layout_width="wrap_content"
@@ -55,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="6dp"
-        android:textColor="#484848"
+        android:textColor="#aaaaaa"
         android:textSize="14sp"
         android:layout_marginLeft="52dp"
         android:layout_marginRight="24dp"

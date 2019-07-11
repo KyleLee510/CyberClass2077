@@ -107,16 +107,16 @@
                             android:layout_margin="12dp"
                             android:padding="6dp"/>
                     </LinearLayout>
-                    <TextView
-                        android:id="@+id/detail_page_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="诗和远方"
-                        android:layout_marginLeft="18dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginBottom="6dp"
-                        android:textSize="18sp"
-                        android:textColor="#363636"/>
+                    <!--<TextView-->
+                        <!--android:id="@+id/detail_page_title"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="诗和远方"-->
+                        <!--android:layout_marginLeft="18dp"-->
+                        <!--android:layout_marginTop="12dp"-->
+                        <!--android:layout_marginBottom="6dp"-->
+                        <!--android:textSize="18sp"-->
+                        <!--android:textColor="#363636"/>-->
                     <TextView
                         android:id="@+id/detail_page_story"
                         android:layout_width="wrap_content"

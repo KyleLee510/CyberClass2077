@@ -3,7 +3,7 @@
     <string-array name="sort_principle">
         <item>相关性排序</item>
         <item>最新发布</item>
-        <item>最多浏览</item>>
+        <item>最多浏览</item>
         <item>时间最长</item>
     </string-array>
 </resources>
